@@ -1,6 +1,8 @@
 package com.tfg.TopTierFlix.modelo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,12 +11,14 @@ import lombok.Setter;
 public class Genero {
 	
 	@Id
-	@Column(name="id_genero")
-	//Anotaciones lombok para generar Getters y Setters
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // AUTOINCREMENT
+	@Column(name="id_genero")		
 	@Getter
 	@Setter
 	private Integer id;
 	
+	@Getter
+	@Setter
 	private String titulo;
 	
 	public Genero(Integer id, String titulo) {

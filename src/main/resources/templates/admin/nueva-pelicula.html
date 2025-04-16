@@ -2,15 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>TopTierFlix</title>
+<title>Administracion Películas</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
 	crossorigin="anonymous">
-	<!-- Funcionalidad Jquery para los cuadros de selección -->
+<!-- Funcionalidad Jquery para los cuadros de selección -->
 <link
-	href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+	href="	https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
 	rel="stylesheet">
 	<!-- Funcionalidad de Jquery para hacer zoom sobre las imagenes -->
 <link
@@ -40,7 +40,7 @@ form .invalid-feeback {
 						aria-current="page" href="#">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="/">Incio</a></li>
 					<li class="nav-item"><a class="nav-link" href="/peliculas">Peliculas</a></li>
-					<li class="nav-item"><a class="nav-link" href="/admin">Administración</a></li>
+					<li class="nav-item"><a class="nav-link" href="/admin">Administracion</a></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false"> Dropdown </a>
@@ -63,36 +63,50 @@ form .invalid-feeback {
 		</div>
 	</nav>
 
-	<div class="container my-5">
-		<h2>Películas</h2>
-			<div class="text-end">
-			<a href="/admin/peliculas/nuevo" class="btn btn-primary mb-3">
-				Agregar Película </a>
+	
+		<div class="container my-5">
+			<h2>Registro de Películas</h2>
+			<br>
+			<form action="" method="post" th:object="${pelicula}" enctype="multipart/form-data">
+				<div class="mb-3">
+					<label for="titulo" class="form-label">Titulo: </label>
+					<input type="text" id="titulo" placeholder="Introduce título" class="form-control" th:field="*{titulo}">
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
+				</div>
+				<div class="mb-3">
+					<label for="titulo" class="form-label">Sinopsis: </label>
+					<textarea type="text" id="sinopsis" placeholder="Introduce sinopsis" class="form-control" th:field="*{sinopsis}"></textarea>
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('sinopsis')}" th:errors="*{sinopsis}"></div>
+				</div>
+				<div class="mb-3">
+					<label for="titulo" class="form-label">Fecha de estreno: </label>
+					<input type="date" id="fechaEstreno" placeholder="Introduce fecha de estreno" class="form-control" th:field="*{fechaEstreno}">
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('fechaEstreno')}" th:errors="*{fechaEstreno}"></div>
+				</div>				
+				<div class="mb-3">
+					<label for="youtubeTrailerId" class="form-label">Enlace a youtube: </label>
+					<input type="text" id="youtubeTrailerId" placeholder="Introduce enlace a Youtube" class="form-control" th:field="*{youtubeTrailerId}">
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('youtubeTrailerId')}" th:errors="*{youtubeTrailerId}"></div>
+				</div>				
+				<div class="mb-3">
+					<label for="portada" class="form-label">Portada: </label>
+					<input type="file" name="portada" id="portada" class="form-control" th:field="*{portada}">
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('portada')}" th:errors="*{portada}"></div>
+				</div>
+				<div class="mb-3">
+					<label for="generos" class="form-label">Genero: </label>
+					<select id="generos" class="form-control" th:field="*{generos}" multiple>
+						<option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.titulo}"></option>
+					</select>
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('generos')}" th:errors="*{generos}"></div>
+				</div>
+				<div class="text-end">
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>	
+			</form>
 		</div>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Película</th>
-					<th>F.Estreno</th>
-				</tr>	
-			</thead>
-			<tbody>
-				<tr th:each="pelicula : ${peliculas}" th:object="${pelicula}">
-					<td></td>
-						<td>
-							<div th:text="*{titulo}" class="fs-5 fw-bold"></div>
-							<p th:text="*{sinopsis}"></p>
-							<div>
-								<span class="badge rounder-pill bg.light text-dark me-1" th:each="genero: ${generos}" th:text="${genero.titulo}"></span>
-							</div>
-						</td>
-						<td th:text="*{#temporals.format(fechaEstreno, 'dd/MM/yyyy')}"></td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+			
+	
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"

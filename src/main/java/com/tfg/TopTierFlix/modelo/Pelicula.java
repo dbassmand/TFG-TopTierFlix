@@ -4,7 +4,7 @@ package com.tfg.TopTierFlix.modelo;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.hibernate.annotations.ManyToAny;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,22 +33,33 @@ public class Pelicula {
 	@Setter
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY) //se indica que este atricuto sea autoincremental
-	@Column(name= "id_pelicula")//se indca la columna que hará referencia en la BBD
+	@Column(name= "id_pelicula")//se indca la columna que hará referencia en la BBDD
 	private Integer id;
 	
+	@Getter
+	@Setter
 	@NotBlank //Que el valor no sea null, ni vacío, ni solo espacios- Solo Strings
 	private String titulo;
 	
-	@NotBlank 
+	@NotBlank
+	@Getter
+	@Setter
+	@Column(length = 1000, nullable = false) //se añaden prpiedades para sincronizar con cambio manuales hechos desde MySQL Workbench
 	private String sinopsis;
 	
 	@NotNull
 	@DateTimeFormat(iso = ISO.DATE)
+	@Getter
+	@Setter
 	private LocalDate fechaEstreno;
 	
-	@NotBlank 
+	@NotBlank
+	@Getter
+	@Setter
 	private String youtubeTrailerId;
 	
+	@Getter
+	@Setter
 	private String rutaPortada;
 	
 	 @NotEmpty
@@ -56,15 +67,20 @@ public class Pelicula {
 	 @JoinTable(name = "genero_pelicula", //Se vinculan las claves primarias de la tabla intermedia "genero_pelicula" de la relación muchos a muchos
 	 			joinColumns = @JoinColumn(name = "id_pelicula"),
 	 			inverseJoinColumns = @JoinColumn(name="id_genero"))
-	private List<Genero> generos;
+	 @Getter
+	 @Setter
+	 private List<Genero> generos;
 	 
 	@Transient //esta notación hace que la variale sea temporal y no se almacene en la BBDD. Las portadas se almacenan en la carpeta assets
+	@Getter
+	@Setter
 	private MultipartFile portada;
 
-	private Pelicula() { //constructor vacio por defecto
+	public Pelicula() { //constructor vacio por defecto
 		super();
 	}
 
+	//constructor completo
 	public Pelicula(Integer id, @NotBlank String titulo, @NotBlank String sinopsis, @NotNull LocalDate fechaEstreno, //constructor completo
 			@NotBlank String youtubeTrailerId, String rutaPortada, @NotEmpty List<Genero> generos,
 			MultipartFile portada) {
@@ -79,6 +95,7 @@ public class Pelicula {
 		this.portada = portada;
 	}
 
+	//constructor completo menos id
 	public Pelicula(@NotBlank String titulo, @NotBlank String sinopsis, @NotNull LocalDate fechaEstreno, //constructor completo menos Id
 			@NotBlank String youtubeTrailerId, String rutaPortada, @NotEmpty List<Genero> generos,
 			MultipartFile portada) {
