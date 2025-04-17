@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<head>
+<meta charset="UTF-8">
+	
+<style>
+form .invalid-feeback {
+	display: block;}
+</style>
+</head>
+<body>	
+
+	<!-- Se añade de forma explicita la clase is-invalid de Bootstrap para activar los mensajes de validacion de campor obligatorios. 
+	Por alguna razon se deberia generar automáticamente	pero debe existir algun conflicto con Thymeleaf que no lo hace -->
+		<div layout:fragment="form">
+			
+			<br>
+			<form action="" method="post" th:object="${pelicula}" enctype="multipart/form-data" novalidate>
+				<div class="mb-3">
+					<label for="titulo" class="form-label">Título: </label>
+					<input type="text" id="titulo" placeholder="Introduce título" 
+						class="form-control" 
+						th:field="*{titulo}" 
+						th:classappend="${#fields.hasErrors('titulo')} ? 'is-invalid'">
+					<div class="invalid-feedback" 
+						th:if="${#fields.hasErrors('titulo')}" 
+						th:errors="*{titulo}"></div>
+				</div>
+				<div class="mb-3">
+					<label for="titulo" class="form-label">Sinopsis: </label>
+					<textarea type="text" id="sinopsis" placeholder="Introduce sinopsis" 
+						class="form-control" 
+						th:field="*{sinopsis}"
+						th:classappend="${#fields.hasErrors('sinopsis')} ? 'is-invalid'"></textarea>
+					<div class="invalid-feedback" 
+						th:if="${#fields.hasErrors('sinopsis')}" 
+						th:errors="*{sinopsis}"></div>
+				</div>
+				<div class="mb-3">
+					<label for="titulo" class="form-label">Fecha de estreno: </label>
+					<input type="date" id="fechaEstreno" placeholder="Introduce fecha de estreno" 
+						class="form-control" 
+						th:field="*{fechaEstreno}"
+						th:classappend="${#fields.hasErrors('fechaEstreno')} ? 'is-invalid'">
+					<div class="invalid-feedback" 
+						th:if="${#fields.hasErrors('fechaEstreno')}" 
+						th:errors="*{fechaEstreno}"></div>
+				</div>				
+				<div class="mb-3">
+					<label for="youtubeTrailerId" class="form-label">Enlace a youtube: </label>
+					<input type="text" id="youtubeTrailerId" placeholder="Introduce enlace a Youtube" 
+						class="form-control" 
+						th:field="*{youtubeTrailerId}"
+						th:classappend="${#fields.hasErrors('youtubeTrailerId')} ? 'is-invalid'">
+					<div class="invalid-feedback" 
+						th:if="${#fields.hasErrors('youtubeTrailerId')}" 
+						th:errors="*{youtubeTrailerId}"></div>
+				</div>				
+				<div class="mb-3">
+					<label for="portada" class="form-label">Portada: </label>
+					<input type="file" name="portada" id="portada" 
+						class="form-control" 
+						th:field="*{portada}" th:classappend="${#fields.hasErrors('portada')} ? 'is-invalid'">
+					<div class="invalid-feedback" 
+						th:if="${#fields.hasErrors('portada')}" 
+						th:errors="*{portada}"></div>
+				</div>
+				<div class="mb-3">
+					<label for="generos" class="form-label">Género: </label>
+					<select id="generos" class="form-control" th:field="*{generos}" multiple 
+							th:classappend="${#fields.hasErrors('generos')} ? 'is-invalid'">
+						<option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.titulo}"></option>
+					</select>
+					<div class="invalid-feedback" 
+						th:if="${#fields.hasErrors('generos')}" 
+						th:errors="*{generos}"></div>
+				</div>
+				<div class="text-end">
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>	
+			</form>
+		</div>
+			
+	
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+		crossorigin="anonymous"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/js/jquery.fancybox.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+</body>
+</html>
