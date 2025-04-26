@@ -1,33 +1,38 @@
+<!-- Index administrador -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	   xmlns:sd="http://www.thymeleaf.org/extras/spring-data"
 	  layout:decorate="~{master.html}">
 <head>
 <meta charset="UTF-8">
-<title>Administrar Películas</title>
+<title>Administrar Películas</title> 
+</head>
+<body class="body-administracion">
 
-	<div layout:fragment="content">
+	<div layout:fragment="content">		
 		<div class="container my-5">
-		<h2>Películas</h2>
-			<div class="text-end">
-			<a href="/admin/peliculas/nuevo" class="btn btn-primary mb-3">
-				Agregar Película </a>
-		</div>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Película</th>
-					<th>F.Estreno</th>
-				</tr>	
-			</thead>
-			<tbody>
-				<tr th:each="pelicula : ${peliculas}" th:object="${pelicula}">
-					<td style="width:150px;">
-						<a data-fancybox th:href="@{/assets/{filename}(filename=*{rutaPortada})}" >
-							<img th:src="@{/assets/{filename}(filename=*{rutaPortada})}" alt="" class="img-thumbnail w-100">
-						</a>
-					</td>
+
+			<h2>Películas</h2>
+				<div class="text-end">
+				<a href="/admin/peliculas/nuevo" class="btn btn-primary mb-3">
+					Agregar Película </a>
+				</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Película</th>
+						<th>F.Estreno</th>
+					</tr>	
+				</thead>
+				<tbody>
+					<tr th:each="pelicula : ${peliculas}" th:object="${pelicula}">
+						<td style="width:150px;">
+							<a data-fancybox th:href="@{/assets/{filename}(filename=*{rutaPortada})}" >
+								<img th:src="@{/assets/{filename}(filename=*{rutaPortada})}" alt="" class="img-thumbnail w-100">
+							</a>
+						</td>
 						<td>
 							<div th:text="*{titulo}" class="fs-5 fw-bold"></div>
 							<p th:text="*{sinopsis}"></p>
@@ -36,29 +41,36 @@
 							</div>
 						</td>
 						<td th:text="*{#temporals.format(fechaEstreno, 'dd/MM/yyyy')}"></td>
-					<td></td>
-					<td class="text-end">
-						<a th:href="@{/admin/peliculas/{id}/editar(id=*{id})}">Editar</a>
-						<a href="javascript:void(0)" class="text-danger ms-3" th:onclick="'eliminarPelicula(' + *{id}+')'">Eliminar</a>
-						<form th:id="'eliminarPeliculaForm'+ *{id}" th:action="@{/admin/peliculas/{id}/eliminar(id=*{id})}" method="post" class="d-none">
-						</form>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<!-- Paginador -->
-		<div class="row mt-5" th:with="page=${peliculas}">
-			<div class="col-sm-6">
-			</div>
-				<div sd:pagination-sumary>
-				</div>
-				<div class="col-sm-6">
-					<nav>
-						<ul class="pagination" sd:pagination="full"></ul>
-					</nav>
-				</div>
+						<td></td>
+						<td class="text-end">
+							<a th:href="@{/admin/peliculas/{id}/editar(id=*{id})}">Editar</a>
+							<a href="javascript:void(0)" class="text-danger ms-3" th:onclick="'eliminarPelicula(' + *{id}+')'">Eliminar</a>
+							<form th:id="'eliminarPeliculaForm'+ *{id}" th:action="@{/admin/peliculas/{id}/eliminar(id=*{id})}" method="post" class="d-none">
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<nav th:if="${peliculas.totalPages > 1}">
+				<ul class="pagination justify-content-center">
+					<li class="page-item"
+						th:classappend="${peliculas.first} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/admin(page=${peliculas.number - 1})}">Anterior</a></li>
+
+					<li class="page-item"
+						th:each="i : ${#numbers.sequence(0, peliculas.totalPages - 1)}"
+						th:classappend="${peliculas.number == i} ? 'active'"><a
+						class="page-link" th:href="@{/admin(page=${i})}"
+						th:text="${i + 1}">1</a></li>
+
+					<li class="page-item"
+						th:classappend="${peliculas.last} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/admin(page=${peliculas.number + 1})}">Siguiente</a></li>
+				</ul>
+			</nav>
 		</div>
-		</div>	
 	</div>
 	<div layout:fragment="scripts">
 		<script>

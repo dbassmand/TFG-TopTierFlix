@@ -44,7 +44,7 @@ public class Pelicula {
 	@NotBlank
 	@Getter
 	@Setter
-	@Column(length = 1000, nullable = false) //se añaden prpiedades para sincronizar con cambio manuales hechos desde MySQL Workbench
+	@Column(length = 1000, nullable = false) //se añaden prpiedades para sincronizar con cambio manuales hechos desde MySQL Workbench, hibernate asigna por defecto varchar (255)
 	private String sinopsis;
 	
 	@NotNull

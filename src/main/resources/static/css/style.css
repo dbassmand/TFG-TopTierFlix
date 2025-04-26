@@ -1,0 +1,180 @@
+
+.body-administracion{
+	background: #ffffff;
+}
+
+body{
+	background: #39393a;
+	padding-bottom: 2em;
+}
+
+form .invalid-feedback {
+  display: block;
+}
+
+.card:hover {
+  border: 3px solid #60befa;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px 5px #60befa, /* Resplandor azul */
+              0 10px 25px rgba(0, 0, 0, 0.8); /* Sombra */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out; /* Añade transición para el borde */
+}
+
+.card-body{
+	color: #ffd700; 
+	background: #5f5f61;
+	
+}
+
+.card img.card-img-top {
+  width: 100%; /* La imagen ocupa todo el ancho de la tarjeta */
+  height: auto; /* Mantiene la proporción original de la imagen */
+  object-fit: cover; /* Recorta la imagen para que cubra todo el espacio asignado */
+  max-height: 425px; /* Ajusta esta altura máxima para la imagen */
+}
+
+
+.detalle{
+	padding:10px;
+	background: #8f8f93;
+	border-radius:5px; 
+}
+
+.detalle-inicio{
+	text-aling: center;
+	padding:10px;
+	background: #8f8f93;
+	border-radius:5px; 
+}
+
+footer.bg-dark {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; 
+}
+
+footer.bg-dark p{
+	font-size: 0.8em;
+    color: #bdbfbd; 
+}
+
+footer.bg-dark a{
+	font-size: 0.8em;
+    color: #bdbfbd; 
+}
+
+
+@import url('https://fonts.cdnfonts.com/css/valonik-personal-use');
+
+.texto_superior{
+	text-align: center;
+	
+  font-size: 45px;
+  font-weight: bold;
+  color: #ffd700; /* Dorado */
+  font-family: 'Valonik Personal Use', sans-serif;                                              
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 4px 4px 10px #ff0000;
+}
+
+
+
+.neon-text {
+	font-family: 'Gambetta', serif;
+	text-align: center;
+    font-size: 4.5rem;
+    color: #fff;
+    text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e, 0 0 40px #ff005e, 0 0 80px #ff005e;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e, 0 0 40px #ff005e, 0 0 80px #ff005e;
+    }
+    100% {
+        text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 80px #00d4ff, 0 0 160px #00d4ff;
+    }
+}
+
+
+
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+
+/* Cursor */
+.cursor{
+    position: relative;
+    width: 24em;
+    margin: 0 auto;
+    border-right: 2px solid rgba(255,255,255,.75);
+    font-size: 27px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);    
+    color: #f1f1f1; font-family: 'Anonymous Pro', monospace;
+    text-shadow: 2px 2px 10px #ff0000;
+}
+/* Animation */
+.typewriter-animation {
+	
+  animation: 
+    typewriter 5s steps(50) 1s 1 normal both, 
+    blinkingCursor 500ms steps(50) infinite normal;
+}
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes blinkingCursor{
+  from { border-right-color: rgba(255,255,255,.75); }
+  to { border-right-color: transparent; }
+}
+
+
+.texto-inicio {  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.h1-inicio {
+  font-size: 40px;
+  font-family: 'Gambetta', serif;
+  letter-spacing: -3px;
+  transition: 700ms ease;
+  font-variation-settings: "wght" 311;
+  margin-bottom: 0.8rem;
+  color: PaleGoldenRod;
+  outline: none;
+  text-align: center;
+ 
+}
+
+.h1-inicio:hover {
+  font-variation-settings: "wght" 582; 
+  letter-spacing: 1px;
+}
+
+.p-inicio {
+  font-size: 1.1em;
+  line-height: 150%;
+  text-align: center;
+  color: MintCream;
+  letter-spacing: .5px;
+}
+
+
+
+
+
+
+
+
+
+
+
