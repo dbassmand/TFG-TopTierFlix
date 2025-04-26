@@ -20,13 +20,6 @@
 	/>
 	
 	<link th:href="@{/css/style.css}" rel="stylesheet">
-	<!-- 
-<style>
-    form .invalid-feedback {
-      display: block;
-    }
- </style>
-	 -->
 
 </head>
 <body>
@@ -59,11 +52,15 @@
 						</ul></li>
 					
 				</ul>
-				<form class="d-flex" role="search">
-					<input class="form-control me-2" type="search" placeholder="Search"
-						aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">Search</button>
+				
+				<!-- 
+				
+				<form th:action="@{/admin/buscar}" method="get" class="d-flex" role="search">
+					<input class="form-control me-2" type="search" placeholder="Buscar..."
+						aria-label="Search" name="termino">
+					<button class="btn btn-outline-success" type="submit">Buscar</button>
 				</form>
+				 -->
 			</div>
 		</div>
 	</nav>

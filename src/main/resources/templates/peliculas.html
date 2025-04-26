@@ -9,6 +9,15 @@
 <body>
 	<div layout:fragment="content">	
 		<h4 class="texto_superior">Todas las películas</h4>
+		<div>
+			<form th:action="@{/peliculas/buscar}" method="get" class="d-flex"
+				role="search">
+				<input class="form-control me-2" type="search"
+					placeholder="Buscar..." aria-label="Search" name="termino">
+				<button class="btn btn-outline-success" type="submit">Buscar</button>
+			</form>
+		</div>
+		
 			<div class="row">
 				<div class="row">
 					<div class="col-md-3 my-5" th:each="pelicula : ${peliculas}" th:object="${pelicula}">

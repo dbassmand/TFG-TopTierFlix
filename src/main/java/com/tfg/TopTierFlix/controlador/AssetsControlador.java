@@ -16,7 +16,7 @@ import com.tfg.TopTierFlix.servicio.AlmacenServicioImpl;
 
 import java.io.IOException;
 
-@Controller // Usamos @Controller para tener más control sobre la respuesta
+@Controller 
 @RequestMapping("/assets")
 public class AssetsControlador {
 
@@ -34,8 +34,7 @@ public class AssetsControlador {
                 contentType = MediaType.IMAGE_PNG_VALUE;
             } else if (filename.toLowerCase().endsWith(".gif")) {
                 contentType = MediaType.IMAGE_GIF_VALUE;
-            }
-            // Añade más tipos de imagen según necesites
+            }           
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.parseMediaType(contentType));

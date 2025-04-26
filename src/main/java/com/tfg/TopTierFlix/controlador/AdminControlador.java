@@ -22,16 +22,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tfg.TopTierFlix.modelo.Genero;
 import com.tfg.TopTierFlix.modelo.Pelicula;
 import com.tfg.TopTierFlix.repositorios.GeneroRepositorio;
-import com.tfg.TopTierFlix.repositorios.PeliculaRepositorio;
 import com.tfg.TopTierFlix.servicio.AlmacenServicioImpl;
+import com.tfg.TopTierFlix.servicio.PeliculaServicio;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminControlador {
 	
 	@Autowired
-	private PeliculaRepositorio peliculaRepositorio;
-	
+	private PeliculaServicio peliculaServicio;
+			
 	@Autowired
 	private GeneroRepositorio generoRepositorio;
 	
@@ -42,15 +42,29 @@ public class AdminControlador {
 	public Pelicula getPelicula(@RequestParam(required = false) Integer id) {
 	    System.out.println("Preparando objeto pelicula para ID: " + id);
 	    if (id != null) {
-	        return peliculaRepositorio.findById(id).orElse(new Pelicula());
+	        return peliculaServicio.obtenerPeliculaPorId(id);
 	    }
 	    return new Pelicula();
 	}
 		
 	@GetMapping("")
 	public ModelAndView verPaginaDeInicio(@PageableDefault(sort="titulo", size=5)Pageable pageable) { //Spring Data Web -- valores por defecto: ordenar por el campo "titulo" y mostrar 5 elementos por página
-		Page<Pelicula> peliculas = peliculaRepositorio.findAll(pageable); //Se crea objeto Page con peliculas aplicando paginación
+		Page<Pelicula> peliculas = peliculaServicio.obtenerTodasPaginado(pageable); //Se crea objeto Page con peliculas aplicando paginación
 		return new ModelAndView("admin/index").addObject("peliculas", peliculas); //se devuelve objeto ModelAndView de nombre index
+	}
+	
+	@GetMapping("/buscar")
+	public ModelAndView buscarPeliculas(@RequestParam(value = "termino", required = false) String termino,
+										@PageableDefault(sort="titulo", size=5)Pageable pageable) {
+		Page<Pelicula> resultados;
+		if (termino != null && !termino.trim().isEmpty()) {
+			resultados = peliculaServicio.buscarPeliculaPorTitulo(termino, pageable);
+		}else {
+			resultados = peliculaServicio.obtenerTodasPaginado(pageable);//me planteo que no muestre nada si no hay coincidencia de búsqueda
+		}
+		return new ModelAndView("admin/index")
+				.addObject("peliculas",resultados)
+				.addObject("terminoBusqueda",termino);
 	}
 	
 	@GetMapping("/peliculas/nuevo")
@@ -77,14 +91,14 @@ public class AdminControlador {
 		
 		String rutaPortada = servicio.almacenarArchivo(pelicula.getPortada());
 		pelicula.setRutaPortada(rutaPortada);
-		peliculaRepositorio.save(pelicula);
+		peliculaServicio.guardarPelicula(pelicula);
 		return new ModelAndView("redirect:/admin");
 	}
 	
 	@GetMapping("/peliculas/{id}/editar")
 	public ModelAndView mostrarFormilarioDeEditarPelicula(@PathVariable Integer id) {
-		//Pelicula pelicula = peliculaRepositorio.getOne(id);
-		Pelicula pelicula = peliculaRepositorio.getReferenceById(id);
+		
+		Pelicula pelicula = peliculaServicio.obtenerPeliculaPorId(id);
 		List<Genero> generos = generoRepositorio.findAll(Sort.by("titulo"));
 		
 		return new ModelAndView("admin/editar-pelicula")
@@ -111,8 +125,8 @@ public class AdminControlador {
 	                .addObject("generos", generos);
 	    }
 		
-		//Pelicula peliculaDB = peliculaRepositorio.getOne(id);
-	    Pelicula peliculaDB = peliculaRepositorio.getReferenceById(id);
+		
+	    Pelicula peliculaDB = peliculaServicio.obtenerPeliculaPorId(id);
 		peliculaDB.setTitulo(pelicula.getTitulo());
 		peliculaDB.setSinopsis(pelicula.getSinopsis());
 		peliculaDB.setFechaEstreno(pelicula.getFechaEstreno());
@@ -126,15 +140,14 @@ public class AdminControlador {
 		}
 		
 		
-		peliculaRepositorio.save(peliculaDB);
+		peliculaServicio.guardarPelicula(peliculaDB);
 		return new ModelAndView("redirect:/admin");
 	}
 	
 	@PostMapping("/peliculas/{id}/eliminar")
 	public String eliminarPelicula(@PathVariable Integer id) {
-		Pelicula pelicula = peliculaRepositorio.getReferenceById(id);
-		//Pelicula pelicula = peliculaRepositorio.getOne(id);
-		peliculaRepositorio.delete(pelicula);
+		Pelicula pelicula = peliculaServicio.obtenerPeliculaPorId(id);
+		peliculaServicio.eliminarPelicula(pelicula);
 		servicio.eliminarArchivo(pelicula.getRutaPortada());		
 		return "redirect:/admin";
 	}

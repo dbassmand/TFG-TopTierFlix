@@ -14,6 +14,16 @@
 		<div class="container my-5">
 
 			<h2>Películas</h2>
+				<br>
+				<div>
+				<form th:action="@{/admin/buscar}" method="get" class="d-flex"
+					role="search">
+					<input class="form-control me-2" type="search"
+						placeholder="Buscar..." aria-label="Search" name="termino">
+					<button class="btn btn-outline-success" type="submit">Buscar</button>
+				</form>
+			<br><br>
+			</div>
 				<div class="text-end">
 				<a href="/admin/peliculas/nuevo" class="btn btn-primary mb-3">
 					Agregar Película </a>

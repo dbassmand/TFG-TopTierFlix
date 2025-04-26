@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tfg.TopTierFlix.modelo.Pelicula;
 import com.tfg.TopTierFlix.repositorios.PeliculaRepositorio;
+import com.tfg.TopTierFlix.servicio.PeliculaServicio;
 
 @Controller
 @RequestMapping("")
@@ -24,6 +25,9 @@ public class HomeControlador {
 	
 	@Autowired
 	private PeliculaRepositorio peliculaRepositorio;
+	
+	@Autowired
+	private PeliculaServicio peliculaServicio;
 	
 	@GetMapping
 	public ModelAndView verPaginaInicio() {
@@ -38,11 +42,25 @@ public class HomeControlador {
 	    Page<Pelicula> peliculas = peliculaRepositorio.findAll(PageRequest.of(page, pageable.getPageSize(), pageable.getSort()));
 	    return new ModelAndView("peliculas").addObject("peliculas", peliculas);
 	}		
+	
+	@GetMapping("/peliculas/buscar")
+	public ModelAndView buscarPeliculasUsuario(@RequestParam(value = "termino", required = false) String termino,
+										@PageableDefault(sort="fechaEstreno", size=8, direction = Sort.Direction.DESC)Pageable pageable) {
+		Page<Pelicula> resultados;
+		if (termino != null && !termino.trim().isEmpty()) {
+			resultados = peliculaServicio.buscarPeliculaPorTitulo(termino, pageable);
+		}else {
+			
+			resultados = peliculaServicio.obtenerTodasPaginado(pageable);
+		}
+		return new ModelAndView("peliculas")
+				.addObject("peliculas",resultados)
+				.addObject("terminoBusqueda",termino);
+	}
 
 	@GetMapping("/peliculas/{id}")
 	public ModelAndView mostrarDetallesDePelicula(@PathVariable Integer id) {
-		Pelicula pelicula = peliculaRepositorio.getReferenceById(id);
-		//Pelicula pelicula = peliculaRepositorio.getOne(id);
+		Pelicula pelicula = peliculaRepositorio.getReferenceById(id);		
 		return new ModelAndView("pelicula").addObject("pelicula",pelicula);
 	}
 }
