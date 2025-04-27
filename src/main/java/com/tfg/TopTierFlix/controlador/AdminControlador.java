@@ -21,8 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tfg.TopTierFlix.modelo.Genero;
 import com.tfg.TopTierFlix.modelo.Pelicula;
-import com.tfg.TopTierFlix.repositorios.GeneroRepositorio;
 import com.tfg.TopTierFlix.servicio.AlmacenServicioImpl;
+import com.tfg.TopTierFlix.servicio.GeneroServicioImpl;
 import com.tfg.TopTierFlix.servicio.PeliculaServicio;
 
 @Controller
@@ -31,12 +31,12 @@ public class AdminControlador {
 	
 	@Autowired
 	private PeliculaServicio peliculaServicio;
-			
+				
 	@Autowired
-	private GeneroRepositorio generoRepositorio;
+	private GeneroServicioImpl generoServicio;
 	
 	@Autowired
-	private AlmacenServicioImpl servicio;
+	private AlmacenServicioImpl almacenServicio;
 	
 	@ModelAttribute("pelicula") //se vincula el formulario al objeto pelicula
 	public Pelicula getPelicula(@RequestParam(required = false) Integer id) {
@@ -69,7 +69,7 @@ public class AdminControlador {
 	
 	@GetMapping("/peliculas/nuevo")
 	public ModelAndView mostrarFormularioDeNuevaPelicula() {
-		List<Genero> generos = generoRepositorio.findAll(Sort.by("titulo"));
+		List<Genero> generos = generoServicio.obtenerTodosGeneros(Sort.by("titulo"));
 		return new ModelAndView("admin/nueva-pelicula")
 				.addObject("pelicula", new Pelicula())
 				.addObject("generos", generos);
@@ -83,13 +83,13 @@ public class AdminControlador {
 				bindingResult.rejectValue("portada", "MultipartNotEmpty");
 			}
 			
-			List<Genero> generos = generoRepositorio.findAll(Sort.by("titulo"));
+			List<Genero> generos = generoServicio.obtenerTodosGeneros(Sort.by("titulo"));
 			return new ModelAndView("admin/nueva-pelicula")
 					.addObject("pelicula", pelicula) //asigna pelicula ya existente
 					.addObject("generos", generos);
 		}
 		
-		String rutaPortada = servicio.almacenarArchivo(pelicula.getPortada());
+		String rutaPortada = almacenServicio.almacenarArchivo(pelicula.getPortada());
 		pelicula.setRutaPortada(rutaPortada);
 		peliculaServicio.guardarPelicula(pelicula);
 		return new ModelAndView("redirect:/admin");
@@ -99,7 +99,7 @@ public class AdminControlador {
 	public ModelAndView mostrarFormilarioDeEditarPelicula(@PathVariable Integer id) {
 		
 		Pelicula pelicula = peliculaServicio.obtenerPeliculaPorId(id);
-		List<Genero> generos = generoRepositorio.findAll(Sort.by("titulo"));
+		List<Genero> generos = generoServicio.obtenerTodosGeneros(Sort.by("titulo"));
 		
 		return new ModelAndView("admin/editar-pelicula")
 				.addObject("pelicula",pelicula)
@@ -119,7 +119,8 @@ public class AdminControlador {
 	        System.out.println("Errores encontrados:");
 	        bindingResult.getAllErrors().forEach(System.out::println);
 	        
-	        List<Genero> generos = generoRepositorio.findAll(Sort.by("titulo"));
+	        List<Genero> generos = generoServicio.obtenerTodosGeneros(Sort.by("titulo"));
+	        //List<Genero> generos = generoRepositorio.findAll(Sort.by("titulo"));
 	        return new ModelAndView("admin/editar-pelicula")
 	                .addObject("pelicula", pelicula)
 	                .addObject("generos", generos);
@@ -134,8 +135,8 @@ public class AdminControlador {
 		peliculaDB.setGeneros(pelicula.getGeneros());
 		
 		if(!pelicula.getPortada().isEmpty()) {
-			servicio.eliminarArchivo(peliculaDB.getRutaPortada());
-			String rutaPortada = servicio.almacenarArchivo(pelicula.getPortada());
+			almacenServicio.eliminarArchivo(peliculaDB.getRutaPortada());
+			String rutaPortada = almacenServicio.almacenarArchivo(pelicula.getPortada());
 			peliculaDB.setRutaPortada(rutaPortada);
 		}
 		
@@ -148,7 +149,7 @@ public class AdminControlador {
 	public String eliminarPelicula(@PathVariable Integer id) {
 		Pelicula pelicula = peliculaServicio.obtenerPeliculaPorId(id);
 		peliculaServicio.eliminarPelicula(pelicula);
-		servicio.eliminarArchivo(pelicula.getRutaPortada());		
+		almacenServicio.eliminarArchivo(pelicula.getRutaPortada());		
 		return "redirect:/admin";
 	}
 	

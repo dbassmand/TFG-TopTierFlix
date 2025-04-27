@@ -1,5 +1,7 @@
 package com.tfg.TopTierFlix.repositorios;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +16,7 @@ public interface PeliculaRepositorio extends JpaRepository<Pelicula, Integer>{
 	 
  Page<Pelicula> findBytituloContainingIgnoreCase(String termino, Pageable pageable);
 
+//Para obtener las 4 películas más recientes SIN filtro de término
+ List<Pelicula> findTop4ByOrderByFechaEstrenoDesc();
+  
 }
