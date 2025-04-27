@@ -1,61 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
-      layout:decorate="~{master.html}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	layout:decorate="~{master.html}">
 <head>
-    <meta charset="UTF-8">
-    <title>Administracion Películas</title>
-    
+<meta charset="UTF-8">
+<title>Administracion Películas</title>
+
 </head>
+
 <body class="body-administracion">
 
-<div layout:fragment="content"> 
-    <h2>Registro de Películas</h2>
-    <br>
-    <form action="" method="post" th:object="${pelicula}" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label for="titulo" class="form-label">Titulo: </label>
-            <input type="text" id="titulo" placeholder="Introduce título" class="form-control" th:field="*{titulo}"
-                   th:classappend="${#fields.hasErrors('titulo')} ? 'is-invalid'">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
-        </div>
-        <div class="mb-3">
-            <label for="titulo" class="form-label">Sinopsis: </label>
-            <textarea type="text" id="sinopsis" placeholder="Introduce sinopsis" class="form-control" th:field="*{sinopsis}"
-                      th:classappend="${#fields.hasErrors('sinopsis')} ? 'is-invalid'" rows="8" cols="60"></textarea>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('sinopsis')}" th:errors="*{sinopsis}"></div>
-        </div>
-        <div class="mb-3">
-            <label for="titulo" class="form-label">Fecha de estreno: </label>
-            <input type="date" id="fechaEstreno" placeholder="Introduce fecha de estreno" class="form-control" th:field="*{fechaEstreno}"
-                   th:classappend="${#fields.hasErrors('fechaEstreno')} ? 'is-invalid'">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('fechaEstreno')}" th:errors="*{fechaEstreno}"></div>
-        </div>
-        <div class="mb-3">
-            <label for="youtubeTrailerId" class="form-label">Enlace a youtube: </label>
-            <input type="text" id="youtubeTrailerId" placeholder="Introduce enlace a Youtube" class="form-control" th:field="*{youtubeTrailerId}"
-                   th:classappend="${#fields.hasErrors('youtubeTrailerId')} ? 'is-invalid'">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('youtubeTrailerId')}" th:errors="*{youtubeTrailerId}"></div>
-        </div>
-        <div class="mb-3">
-            <label for="portada" class="form-label">Portada: </label>
-            <input type="file" name="portada" id="portada" class="form-control" th:field="*{portada}"
-                   th:classappend="${#fields.hasErrors('portada')} ? 'is-invalid'">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('portada')}" th:errors="*{portada}"></div>
-        </div>
-        <div class="mb-3">
-            <label for="generos" class="form-label">Genero: </label>
-            <select id="generos" class="form-control" th:field="*{generos}" multiple
-                    th:classappend="${#fields.hasErrors('generos')} ? 'is-invalid'" size="7">
-                <option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.titulo}"></option>
-            </select>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('generos')}" th:errors="*{generos}"></div>
-        </div>
-        <div class="text-end">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-    </form>
-</div> 
+	<div layout:fragment="content">
+		<h2>Registro de Películas</h2>
+		<br>
+		<form action="" method="post" th:object="${pelicula}"
+			enctype="multipart/form-data">
+			<div class="mb-3">
+				<label for="titulo" class="form-label">Titulo: </label> <input
+					type="text" id="titulo" placeholder="Introduce título"
+					class="form-control" th:field="*{titulo}"
+					th:classappend="${#fields.hasErrors('titulo')} ? 'is-invalid'">
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('titulo')}"
+					th:errors="*{titulo}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="sinopsis" class="form-label">Sinopsis: </label>
+				<textarea type="text" id="sinopsis" placeholder="Introduce sinopsis"
+					class="form-control" th:field="*{sinopsis}"
+					th:classappend="${#fields.hasErrors('sinopsis')} ? 'is-invalid'"
+					rows="8" cols="60"></textarea>
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('sinopsis')}" th:errors="*{sinopsis}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="fechaEstreno" class="form-label">Fecha de
+					estreno: </label> <input type="date" id="fechaEstreno"
+					placeholder="Introduce fecha de estreno" class="form-control"
+					th:field="*{fechaEstreno}"
+					th:classappend="${#fields.hasErrors('fechaEstreno')} ? 'is-invalid'">
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('fechaEstreno')}"
+					th:errors="*{fechaEstreno}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="youtubeTrailerId" class="form-label">Enlace a
+					youtube: </label>
+				<div class="youtube-input-container">				
+					<input type="text" id="youtubeTrailerId" name="youtubeTrailerId"
+						class="youtube-input form-control" th:field="*{youtubeTrailerId}"
+						th:classappend="${#fields.hasErrors('youtubeTrailerId')} ? 'is-invalid'"
+						placeholder="https://www.youtube.com/watch?v=/" />
+				</div>
+				<small class="form-text text-muted">Introduce solo la parte
+					después de la URL base.</small>
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('youtubeTrailerId')}"
+					th:errors="*{youtubeTrailerId}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="portada" class="form-label">Portada: </label> <input
+					type="file" name="portada" id="portada" class="form-control"
+					th:field="*{portada}"
+					th:classappend="${#fields.hasErrors('portada')} ? 'is-invalid'">
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('portada')}" th:errors="*{portada}"></div>
+			</div>
+			<div class="mb-3">
+				<label class="form-label">Géneros:</label><br />
+				<div style="display: flex; flex-wrap: wrap;">
+					<div th:each="genero : ${generos}" style="width: 33.33%;">
+						<input type="checkbox" th:field="*{generos}"
+							th:value="${genero.id}" th:id="'genero-' + ${genero.id}"
+							class="form-check-input" /> <label
+							th:for="'genero-' + ${genero.id}" class="form-check-label"
+							th:text="${genero.titulo}"></label><br />
+					</div>
+				</div>
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('generos')}" th:errors="*{generos}"></div>
+			</div>
+			<div class="text-end">
+				<button type="submit" class="btn btn-primary">Guardar</button>
+			</div>
+		</form>
+	</div>
 
 </body>
 </html>
