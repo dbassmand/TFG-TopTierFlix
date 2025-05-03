@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
 	  layout:decorate="~{master.html}">
 <head>
 <meta charset="UTF-8">
@@ -20,6 +21,13 @@
 						class="btn btn-danger" data-fancybox="">Ver Trailer
 					</a>
 					<a class="btn btn-primary" href="/peliculas">Volver</a>
+					
+					<form th:action="@{/peliculas/{id}/favorito(id=*{id})}" method="post" th:if="${#authorization.expression('isAuthenticated()')}">
+                    <button type="submit" class="btn"
+                            th:classappend="${esFavorita ? 'btn-warning' : 'btn-success'}"
+                            th:text="${esFavorita ? 'Eliminar de Favoritos' : 'Añadir a Favoritos'}">
+                        </button>
+                </form>
 				</div>
 				<div class="detalle">				
 				<h2 th:text="*{titulo}"></h2>

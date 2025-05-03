@@ -22,8 +22,23 @@ form .invalid-feedback {
 
 .card-body{
 	color: #ffd700; 
-	background: #5f5f61;
-	
+	background: #5f5f61;	
+}
+
+.card-favorita{
+	padding:10px;
+	color: #ffbb00; 
+	background: #5f5f61;	
+	border: 3px solid #ffd700;
+	border-radius:5px; 
+}
+
+.card-favorita:hover {
+  border: 3px solid #60befa;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px 5px #60befa, /* Resplandor azul */
+              0 10px 25px rgba(0, 0, 0, 0.8); /* Sombra */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out; /* Añade transición para el borde */
 }
 
 .card img.card-img-top {

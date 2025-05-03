@@ -12,23 +12,30 @@ import com.tfg.TopTierFlix.modelo.Pelicula;
 
 public interface PeliculaServicio {
 
-	
 	List<PeliculaCardDTO> obtenerPeliculasInicio();
-	
+
 	Page<PeliculaCardDTO> obtenerTodasPeliculasPaginado(Pageable pageable);
 
 	PeliculaDetalleDTO obtenerPeliculaDetallePorId(Integer id);
-	
-	Page<PeliculaListadoAdminDTO>obtenerTodasPeliculasAdmin(Pageable pageable);			
-	
+
+	Page<PeliculaListadoAdminDTO> obtenerTodasPeliculasAdmin(Pageable pageable);
+
 	Page<Pelicula> obtenerTodasPaginado(Pageable pageable);
-	
+
 	Pelicula obtenerPeliculaPorId(Integer id);
-	
+
 	Pelicula guardarPelicula(Pelicula pelicula);
-	
+
 	void eliminarPelicula(Pelicula pelicula);
+
+	Page<Pelicula> buscarPeliculaPorTitulo(String termino, Pageable pageable);
+
+	public boolean esFavorita(Integer peliculaId, String userEmail);
+
+	void agregarFavorito(Integer peliculaId, String userEmail);
+
+	void eliminarFavorito(Integer peliculaId, String userEmail); 
 	
-	Page<Pelicula>buscarPeliculaPorTitulo(String termino, Pageable pageable);
-	
+	List<Pelicula> obtenerPeliculasFavoritasDelUsuario(String userEmail);
+
 }

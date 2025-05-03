@@ -1,25 +1,31 @@
 package com.tfg.TopTierFlix.servicio;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import jakarta.transaction.Transactional;
 import com.tfg.TopTierFlix.dto.PeliculaDetalleDTO;
 import com.tfg.TopTierFlix.dto.PeliculaCardDTO;
 import com.tfg.TopTierFlix.dto.PeliculaListadoAdminDTO;
 import com.tfg.TopTierFlix.mapper.PeliculaMapper;
 import com.tfg.TopTierFlix.modelo.Pelicula;
+import com.tfg.TopTierFlix.modelo.Usuario;
 import com.tfg.TopTierFlix.repositorios.PeliculaRepositorio;
+import com.tfg.TopTierFlix.repositorios.UsuarioRepositorio;
 
 @Service
 public class PeliculaServicioImpl implements PeliculaServicio{
 	
 	@Autowired
 	private PeliculaRepositorio peliculaRepositorio;
+	
+	@Autowired
+    private UsuarioRepositorio usuarioRepositorio;
 	
 	@Autowired
 	private PeliculaMapper peliculaMapper;
@@ -75,4 +81,47 @@ public class PeliculaServicioImpl implements PeliculaServicio{
 		 Page<Pelicula> peliculasPage = peliculaRepositorio.findAll(pageable);
 	        return peliculasPage.map(peliculaMapper::toPeliculaListadoAdminDTO);
 	}	
+	
+	@Override
+    public boolean esFavorita(Integer peliculaId, String userEmail) {
+        Optional<Usuario> usuarioOptional = usuarioRepositorio.findByEmail(userEmail);
+        Optional<Pelicula> peliculaOptional = peliculaRepositorio.findById(peliculaId);
+
+        return usuarioOptional.isPresent() && peliculaOptional.isPresent() &&
+               usuarioOptional.get().getPeliculasFavoritas().contains(peliculaOptional.get());
+    }
+	
+	@Override
+    @Transactional
+    public void agregarFavorito(Integer peliculaId, String userEmail) {
+        Optional<Usuario> usuarioOptional = usuarioRepositorio.findByEmail(userEmail);
+        Optional<Pelicula> peliculaOptional = peliculaRepositorio.findById(peliculaId);
+
+        if (usuarioOptional.isPresent() && peliculaOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            Pelicula pelicula = peliculaOptional.get();
+            usuario.getPeliculasFavoritas().add(pelicula);
+            usuarioRepositorio.save(usuario);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void eliminarFavorito(Integer peliculaId, String userEmail) {
+        Optional<Usuario> usuarioOptional = usuarioRepositorio.findByEmail(userEmail);
+        Optional<Pelicula> peliculaOptional = peliculaRepositorio.findById(peliculaId);
+
+        if (usuarioOptional.isPresent() && peliculaOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            Pelicula pelicula = peliculaOptional.get();
+            usuario.getPeliculasFavoritas().remove(pelicula);
+            usuarioRepositorio.save(usuario);
+        }
+    }
+    
+    @Override
+    public List<Pelicula> obtenerPeliculasFavoritasDelUsuario(String userEmail) {
+        Optional<Usuario> usuarioOptional = usuarioRepositorio.findByEmailWithFavoritas(userEmail);
+        return usuarioOptional.map(usuario -> usuario.getPeliculasFavoritas()).orElse(List.of());
+    }
 }

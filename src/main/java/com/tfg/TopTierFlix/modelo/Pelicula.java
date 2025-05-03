@@ -1,9 +1,7 @@
 package com.tfg.TopTierFlix.modelo;
 
-
 import java.time.LocalDate;
 import java.util.List;
-
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -26,54 +24,53 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pelicula {
-	
-	
+
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY) //se indica que este atricuto sea autoincremental
-	@Column(name= "id_pelicula")//se indca la columna que hará referencia en la BBDD
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // se indica que este atricuto sea autoincremental
+	@Column(name = "id_pelicula") // se indca la columna que hará referencia en la BBDD
 	private Integer id;
-	
-	
-	@NotBlank //Que el valor no sea null, ni vacío, ni solo espacios- Solo Strings
+
+	@NotBlank // Que el valor no sea null, ni vacío, ni solo espacios- Solo Strings
 	private String titulo;
-	
-	@NotBlank	
-	@Column(length = 1000, nullable = false) //se añaden prpiedades para sincronizar con cambio manuales hechos desde MySQL Workbench, hibernate asigna por defecto varchar (255)
+
+	@NotBlank
+	@Column(length = 1000, nullable = false) // se añaden prpiedades para sincronizar con cambio manuales hechos desde
+												// MySQL Workbench, hibernate asigna por defecto varchar (255)
 	private String sinopsis;
-	
+
 	@NotNull
 	@DateTimeFormat(iso = ISO.DATE)
-	
+
 	private LocalDate fechaEstreno;
-	
-	@NotBlank	
+
+	@NotBlank
 	private String youtubeTrailerId;
-	
-	
+
 	private String rutaPortada;
-	
-	 @NotEmpty
-	 @ManyToMany (fetch = FetchType.LAZY)//Se establece una relación de mucho a muchos entre Peliculas y Generos. LAZY solo se cargará cuando se necesite.	 
-	 @JoinTable(name = "genero_pelicula", //Se vinculan las claves primarias de la tabla intermedia "genero_pelicula" de la relación muchos a muchos
-	 			joinColumns = @JoinColumn(name = "id_pelicula"),
-	 			inverseJoinColumns = @JoinColumn(name="id_genero"))	 
-	 private List<Genero> generos;
-	 
-	@Transient //esta notación hace que la variale sea temporal y no se almacene en la BBDD. Las portadas se almacenan en la carpeta assets	
+
+	@NotEmpty
+	@ManyToMany(fetch = FetchType.LAZY) // Se establece una relación de mucho a muchos entre Peliculas y Generos. LAZY
+										// solo se cargará cuando se necesite.
+	@JoinTable(name = "genero_pelicula", // Se vinculan las claves primarias de la tabla intermedia "genero_pelicula" de
+											// la relación muchos a muchos
+			joinColumns = @JoinColumn(name = "id_pelicula"), inverseJoinColumns = @JoinColumn(name = "id_genero"))
+	private List<Genero> generos;
+
+	@ManyToMany(mappedBy = "peliculasFavoritas", fetch = FetchType.LAZY)
+	private List<Usuario> usuariosFavoritos;
+
+	@Transient // esta notación hace que la variale sea temporal y no se almacene en la BBDD.
+				// Las portadas se almacenan en la carpeta assets
 	private MultipartFile portada;
 
-	
-	
-	//Constructor para Mapper peliculaCardDTOtoPelicula
-	public Pelicula(Integer id, @NotBlank String titulo,  @NotNull LocalDate fechaEstreno, 
-			String rutaPortada, MultipartFile portada) {
+	// Constructor para Mapper peliculaCardDTOtoPelicula
+	public Pelicula(Integer id, @NotBlank String titulo, @NotNull LocalDate fechaEstreno, String rutaPortada,
+			MultipartFile portada) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -81,8 +78,10 @@ public class Pelicula {
 		this.fechaEstreno = fechaEstreno;
 	}
 
-	//constructor completo menos id
-	public Pelicula(@NotBlank String titulo, @NotBlank String sinopsis, @NotNull LocalDate fechaEstreno, //constructor completo menos Id
+	// constructor completo menos id
+	public Pelicula(@NotBlank String titulo, @NotBlank String sinopsis, @NotNull LocalDate fechaEstreno, // constructor
+																											// completo
+																											// menos Id
 			@NotBlank String youtubeTrailerId, String rutaPortada, @NotEmpty List<Genero> generos,
 			MultipartFile portada) {
 		super();
@@ -93,5 +92,5 @@ public class Pelicula {
 		this.rutaPortada = rutaPortada;
 		this.generos = generos;
 		this.portada = portada;
-	}			
+	}
 }

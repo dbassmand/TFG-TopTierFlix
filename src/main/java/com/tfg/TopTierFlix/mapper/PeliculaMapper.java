@@ -23,11 +23,12 @@ public interface PeliculaMapper {
 	
 	PeliculaListadoAdminDTO toPeliculaListadoAdminDTO (Pelicula pelicula);
 	
-	//Se mapea en sentido inverso por si acaso, pero realmente no se usa
+	/*Se mapea en sentido inverso por si acaso, pero realmente no se usa
 
 	Pelicula peliculaCardDTOtoPelicula (PeliculaCardDTO peliculaIncioDTO);
 	
 	Pelicula peliculaDetalleDTOtoPelicula (PeliculaDetalleDTO peliculaDetalleDTO);
 	
 	Pelicula peliculaListadoAdminDTOtoPelicula (PeliculaListadoAdminDTO peliculaListadoAdminDTO);
+	*/
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="es"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
 <meta charset="UTF-8">
 <title>TopTierFlix</title>
@@ -10,73 +10,84 @@
 	rel="stylesheet"
 	integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
 	crossorigin="anonymous">
-	<!-- Funcionalidad Jquery para los cuadros de selección -->
-	<link
+<!-- Funcionalidad Jquery para los cuadros de selección -->
+<link
 	href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
 	rel="stylesheet">
-	 <link
-	  rel="stylesheet"
-	  href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
-	/>
-	
-	<link th:href="@{/css/style.css}" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
+<link th:href="@{/css/style.css}" rel="stylesheet">
 
 </head>
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="/">TopTierFlix</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					
-					<li class="nav-item"><a class="nav-link active" href="/">Incio</a></li>
-					<li class="nav-item"><a class="nav-link" href="/peliculas">Peliculas</a></li>
-					<li class="nav-item"><a class="nav-link" href="/admin">Administración</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" role="button"
-						data-bs-toggle="dropdown" aria-expanded="false"> Secciones </a>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Series</a></li>
-							<li><a class="dropdown-item" href="#">Música</a></li>
-							<li><a class="dropdown-item" href="#">Videojuegos</a></li>
-							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="#">Something else
-									here</a></li>
-						</ul></li>
-					
-				</ul>
-				
-				<!-- 
-				
-				<form th:action="@{/admin/buscar}" method="get" class="d-flex" role="search">
-					<input class="form-control me-2" type="search" placeholder="Buscar..."
-						aria-label="Search" name="termino">
-					<button class="btn btn-outline-success" type="submit">Buscar</button>
-				</form>
-				 -->
-			</div>
-		</div>
-	</nav>
-	
-	
-
-	<div layout:fragment="content" class="container my-5">
-	</div>
-	
-	<footer th:fragment="footer" class="bg-dark text-light py-1 mt-3">
-        <div class="container text-center">
-            <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> TopTierFlix - Todos los derechos reservados.</p>
-          
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">TopTierFlix</a>
+        <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" href="/">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="/peliculas">Peliculas</a></li>
+                <li class="nav-item" sec:authorize="hasRole('USER')"><a class="nav-link" href="/favoritas">Mis Favoritas</a></li>
+                <!-- 
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')"><a class="nav-link" href="/admin">Administración</a></li>
+                 -->
+                <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')"><a
+                    class="nav-link dropdown-toggle" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false"> Administración </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admin">Peliculas</a></li>
+                        <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/users">Usuarios</a></li>                    
+                    </ul></li>
+                <li class="nav-item dropdown"><a
+                    class="nav-link dropdown-toggle" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false"> Secciones </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Series</a></li>
+                        <li><a class="dropdown-item" href="#">Música</a></li>
+                        <li><a class="dropdown-item" href="#">Videojuegos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else
+                                here</a></li>
+                    </ul></li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <span class="nav-link">
+                        Hola <span sec:authentication="principal.username"></span>!
+                    </span>
+                </li>          
+            </ul>
+            <div class="d-flex">
+                <form th:fragment="logoutButton" th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
+                </form>
+            </div>
         </div>
-    </footer>
-    
+    </div>
+</nav>
+
+
+
+	<div layout:fragment="content" class="container my-5"></div>
+
+	<footer th:fragment="footer" class="bg-dark text-light py-1 mt-3">
+		<div class="container text-center">
+			<p>
+				&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span>
+				TopTierFlix - Todos los derechos reservados.
+			</p>
+
+		</div>
+	</footer>
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
@@ -86,14 +97,14 @@
 		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-	<script 
+	<script
 		src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-		
-	<div layout:fragment="scripts" th:remove="tag"></div>	
-<!-- 
+
+	<div layout:fragment="scripts" th:remove="tag"></div>
+	<!-- 
 	He tenido que forzar manualmente la inicialización de Fancybox ya que no funcionaba. No he descubierto la causa.
  -->
-	 <script>
+	<script>
 	    document.addEventListener('DOMContentLoaded', function() {
 	        Fancybox.bind('[data-fancybox]', {	            
 	        });

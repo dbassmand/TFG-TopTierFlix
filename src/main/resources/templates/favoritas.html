@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{master.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Películas Favoritas</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 class="texto_superior">Mis Películas Favoritas</h1>
+    <div>
+	<br><br>			
+
+    <div th:if="${#lists.isEmpty(favoritas)}">
+        <p>Aún no has añadido ninguna película a tu lista de favoritos.</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4" th:unless="${#lists.isEmpty(favoritas)}">
+        <div class="col" th:each="pelicula : ${favoritas}">
+            <div class="card-favorita">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img th:if="${pelicula.rutaPortada}" th:src="@{/assets/{filename}(filename=${pelicula.rutaPortada})}" class="img-fluid rounded-start" th:alt="${pelicula.titulo}" style="max-height: 150px; width: auto;">
+                        <img th:unless="${pelicula.rutaPortada}" src="https://via.placeholder.com/150" class="img-fluid rounded-start" th:alt="Sin portada" style="max-height: 150px; width: auto;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${pelicula.titulo}"></h5>
+                            <p class="card-text"><small class="badge rounded-pull bg-grey text-white me-1">Fecha de Estreno: <span th:text="${#temporals.format(pelicula.fechaEstreno, 'dd/MM/yyyy')}"></span></small></p>
+                            <a th:href="@{/peliculas/{id}(id=${pelicula.id})}" class="btn btn-sm btn-info">Ver Detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
