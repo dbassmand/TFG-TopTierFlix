@@ -35,11 +35,13 @@ public class PeliculaServicioImpl implements PeliculaServicio{
 		return peliculaRepositorio.findAll(pageable);
 	}
 	
+	//Se crea Test Unitario para el siguiente metodo
 	@Override
 	public Pelicula obtenerPeliculaPorId(Integer id) {
-		return peliculaRepositorio.findById(id).orElse(null);
+		return peliculaRepositorio.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Película no encontrada con ID: " + id));
 	}
-	
+			
 	@Override
 	public Pelicula guardarPelicula(Pelicula pelicula) {
 		return peliculaRepositorio.save(pelicula);

@@ -44,9 +44,9 @@ public class UsuarioServicioImpl implements UsuarioServicio {
             rolUsuario = new Rol("ROLE_USER");
             rolRepositorio.save(rolUsuario);
         }
-
+        //Se mapea de Usuario a UsuarioRegistroDTO
         Usuario usuario = new Usuario(registroDTO.getNombre(), registroDTO.getApellido(), registroDTO.getEmail(),
-                passwordEncoder.encode(registroDTO.getPassword()), Arrays.asList(rolUsuario));
+                passwordEncoder.encode(registroDTO.getPassword()), Arrays.asList(rolUsuario));//se codifica la contraseña
         return usuarioRepositorio.save(usuario);
     }
 

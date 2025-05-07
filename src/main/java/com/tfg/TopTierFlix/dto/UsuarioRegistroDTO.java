@@ -37,11 +37,8 @@ public class UsuarioRegistroDTO {
 		this.password = password;
 	}
 
-
 	public UsuarioRegistroDTO(String email) {
 		super();
 		this.email = email;
-	}	
-	
-	
+	}		
 }

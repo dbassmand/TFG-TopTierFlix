@@ -35,7 +35,7 @@ public class AdminInitializer {
     @PostConstruct
     @Transactional
     public void initializeAdmin() {
-        Rol adminRol = rolRepositorio.findByNombre("ROLE_ADMIN");
+        Rol adminRol = rolRepositorio.findByNombre("ROLE_ADMIN");//Al ser POJO no necesita @Autowired
 
         if (usuarioRepositorio.findByEmail(adminEmail) == null) {
             if (adminRol == null) {

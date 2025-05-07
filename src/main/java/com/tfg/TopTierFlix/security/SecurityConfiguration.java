@@ -18,28 +18,26 @@ public class SecurityConfiguration {
     @Autowired
     private UserDetailsService usuarioServicio;
 
-   
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
+    @Autowired // Inyecta el bean de BCryptPasswordEncoder creado en PasswordEncoderConfig
+    private BCryptPasswordEncoder passwordEncoder;
+    
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(usuarioServicio);
-        auth.setPasswordEncoder(passwordEncoder());
+        auth.setPasswordEncoder(passwordEncoder);
         return auth;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorize -> authorize//Spring Securirty añade ROLE_ al método hasRole()
-                        .requestMatchers("/registro**", "/js/**", "/css/**", "/img/**", "/login").permitAll() // Permitir acceso sin autenticar a registro, recursos estáticos, página principal y login
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Solo los usuarios con el rol ADMIN pueden acceder a /admin/**
-                        .requestMatchers("/user/**").hasRole("USER")   // Solo los usuarios con el rol USER pueden acceder a /user/**
-                        .requestMatchers("/peliculas/**").authenticated() // Los usuarios autenticados pueden acceder a /peliculas/**
-                        .anyRequest().authenticated() // Cualquier otra petición requiere autenticación
+                .authorizeHttpRequests(authorize -> authorize													//Spring Securirty añade ROLE_ al método hasRole()
+                        .requestMatchers("/registro**", "/js/**", "/css/**", "/img/**", "/login").permitAll() 	// Permitir acceso sin autenticar a registro, recursos estáticos, página principal y login
+                        .requestMatchers("/admin/**").hasRole("ADMIN") 											// Solo los usuarios con el rol ADMIN pueden acceder a /admin/**
+                        .requestMatchers("/user/**").hasRole("USER")   											// Solo los usuarios con el rol USER pueden acceder a /user/**
+                        .requestMatchers("/peliculas/**").authenticated() 										// Los usuarios autenticados pueden acceder a /peliculas/**
+                        .anyRequest().authenticated() 															// Cualquier otra petición requiere autenticación
                 )
                 .formLogin(form -> form
                         .loginPage("/login")

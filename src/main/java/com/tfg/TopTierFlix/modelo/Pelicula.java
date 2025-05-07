@@ -39,13 +39,11 @@ public class Pelicula {
 	private String titulo;
 
 	@NotBlank
-	@Column(length = 1000, nullable = false) // se añaden prpiedades para sincronizar con cambio manuales hechos desde
-												// MySQL Workbench, hibernate asigna por defecto varchar (255)
+	@Column(length = 1000, nullable = false) // MySQL Workbench, hibernate asigna por defecto varchar (255)										
 	private String sinopsis;
 
 	@NotNull
 	@DateTimeFormat(iso = ISO.DATE)
-
 	private LocalDate fechaEstreno;
 
 	@NotBlank

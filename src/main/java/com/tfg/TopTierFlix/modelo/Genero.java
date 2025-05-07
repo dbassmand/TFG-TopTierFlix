@@ -19,12 +19,11 @@ public class Genero {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // AUTOINCREMENT
-	@Column(name="id_genero")		
-	
+	@Column(name="id_genero")			
 	private Integer id;
 	
 
-	private String titulo;
+	private String titulo; //no son necesarias anotaciones Spring ya que estos datos se insertan en la BBDD por DML.
 	
 	
 	

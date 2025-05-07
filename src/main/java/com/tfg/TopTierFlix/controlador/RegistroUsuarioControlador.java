@@ -37,6 +37,5 @@ public class RegistroUsuarioControlador {
 
         usuarioServicio.guardar(registroDTO);
         return "redirect:/registro?exito";
-	}
-	
+	}	
 }

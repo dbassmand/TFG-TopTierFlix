@@ -1,3 +1,6 @@
+                <!-- 
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')"><a class="nav-link" href="/admin">Administración</a></li>
+                 -->
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
@@ -36,9 +39,6 @@
                 <li class="nav-item"><a class="nav-link active" href="/">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" href="/peliculas">Peliculas</a></li>
                 <li class="nav-item" sec:authorize="hasRole('USER')"><a class="nav-link" href="/favoritas">Mis Favoritas</a></li>
-                <!-- 
-                <li class="nav-item" sec:authorize="hasRole('ADMIN')"><a class="nav-link" href="/admin">Administración</a></li>
-                 -->
                 <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')"><a
                     class="nav-link dropdown-toggle" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false"> Administración </a>

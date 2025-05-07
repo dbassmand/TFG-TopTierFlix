@@ -49,8 +49,8 @@ public class AdminControlador {
 		
 	@GetMapping("")
 	public ModelAndView verPaginaDeInicio(@PageableDefault(sort="titulo", size=5)Pageable pageable) { //Spring Data Web -- valores por defecto: ordenar por el campo "titulo" y mostrar 5 elementos por página
-		Page<Pelicula> peliculas = peliculaServicio.obtenerTodasPaginado(pageable); //Se crea objeto Page con peliculas aplicando paginación
-		return new ModelAndView("admin/index").addObject("peliculas", peliculas); //se devuelve objeto ModelAndView de nombre index
+		Page<Pelicula> peliculas = peliculaServicio.obtenerTodasPaginado(pageable);                   //Se crea objeto Page con peliculas aplicando paginación
+		return new ModelAndView("admin/index").addObject("peliculas", peliculas);                     //Se devuelve objeto ModelAndView de nombre index
 	}
 	
 	@GetMapping("/buscar")
@@ -83,7 +83,7 @@ public class AdminControlador {
 				bindingResult.rejectValue("portada", "MultipartNotEmpty");
 			}
 			
-			List<Genero> generos = generoServicio.obtenerTodosGeneros(Sort.by("titulo"));
+			List<Genero> generos = generoServicio.obtenerTodosGeneros(Sort.by("titulo"));//Se aplica criterio de ordenación
 			return new ModelAndView("admin/nueva-pelicula")
 					.addObject("pelicula", pelicula) //asigna pelicula ya existente
 					.addObject("generos", generos);
