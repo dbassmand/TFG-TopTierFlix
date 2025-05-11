@@ -8,14 +8,11 @@ body {
     color: #333;    
     margin: 0;
     padding: 0;
-   
-   
 }
 
 .container {
     margin-top: 30px;
-	margin-left: 56rem; 
-    
+	margin-left: 56rem;     
 }
 
 h1 {
@@ -29,6 +26,7 @@ h1 {
 .navbar {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .navbar-brand{
 	
 	 font-family: 'Valonik Personal Use', sans-serif;      
