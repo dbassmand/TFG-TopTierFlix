@@ -1,5 +1,6 @@
 package com.tfg.TopTierFlix.controlador;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,20 +73,6 @@ public class AdminControlador {
 				.addObject("terminoBusqueda",termino);
 	}
 	
-	@GetMapping("/users/buscar")
-	public ModelAndView buscarUsuarios(@RequestParam(value = "termino", required = false) String termino,
-										@PageableDefault(sort="nombre", size=5)Pageable pageable) {
-		Page<Usuario> resultados;
-		if (termino != null && !termino.trim().isEmpty()) {
-			resultados = usuarioServicio.buscarPorNombreApellidoEmail(termino, pageable);		
-		}else {
-			return new ModelAndView("redirect:/admin/users");
-			//resultados = usuarioServicio.obtenerTodosUsuariosPaginado(pageable);
-		}
-		return new ModelAndView("admin/lista-usuarios")
-				.addObject("usuarios",resultados)
-				.addObject("terminoBusqueda",termino);
-	}
 	
 	@GetMapping("/peliculas/nuevo")
 	public ModelAndView mostrarFormularioDeNuevaPelicula() {
@@ -181,4 +168,24 @@ public class AdminControlador {
 	 return new ModelAndView("admin/lista-usuarios").addObject("usuarios",usuarios);
 	}
 	
+	@GetMapping("/users/buscar")
+	public ModelAndView buscarUsuarios(@RequestParam(value = "termino", required = false) String termino,
+			@PageableDefault(sort="nombre", size=5)Pageable pageable) {
+		Page<Usuario> resultados;
+		if (termino != null && !termino.trim().isEmpty()) {
+			resultados = usuarioServicio.buscarPorNombreApellidoEmail(termino, pageable);		
+		}else {
+			return new ModelAndView("redirect:/admin/users");
+			//resultados = usuarioServicio.obtenerTodosUsuariosPaginado(pageable);
+		}
+		return new ModelAndView("admin/lista-usuarios")
+				.addObject("usuarios",resultados)
+				.addObject("terminoBusqueda",termino);
+	}
+	
+	/*
+	@GetMapping("admin/detalle-usuario/{id}")
+	public ModelAndView mostrarDetalleDeUsuario(@PathVariable Integer id, Principal principal) {
+		
+	}*/
 }

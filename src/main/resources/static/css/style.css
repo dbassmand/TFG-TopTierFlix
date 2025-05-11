@@ -12,6 +12,10 @@ form .invalid-feedback {
   display: block;
 }
 
+
+.video{
+	margin-left: 14rem
+}
 .card:hover {
   border: 3px solid #60befa;
   transform: scale(1.05);

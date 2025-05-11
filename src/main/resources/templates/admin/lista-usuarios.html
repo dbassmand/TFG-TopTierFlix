@@ -46,7 +46,7 @@
 								<div th:text="*{email}"></div>
 							</td>
 							<td>
-								<button class="btn btn-outline-primary" type="submit">Detalles</button>
+								<a th:href="@{/admin/users/{id}/detalles(id=*{id})}" class="btn btn-outline-primary">Detalles</a>
 								<button class="btn btn-outline-danger" type="submit">Eliminar</button>
 							</td>
 							
