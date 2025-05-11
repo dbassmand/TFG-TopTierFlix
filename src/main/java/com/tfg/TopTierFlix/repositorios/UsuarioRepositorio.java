@@ -1,6 +1,9 @@
 package com.tfg.TopTierFlix.repositorios;
 
 import com.tfg.TopTierFlix.modelo.Usuario;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +15,14 @@ import java.util.Optional;
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
 
     Optional<Usuario> findByEmail(String email); // Cambiado el tipo de retorno a Optional<Usuario>, para manejar una posible ausencia de valor, mejor que con null.
+    
+       
+    @Query("SELECT u FROM Usuario u WHERE " +
+            "LOWER(u.nombre) LIKE %:termino% OR " +
+            "LOWER(u.apellido) LIKE %:termino% OR " +
+            "LOWER(u.email) LIKE %:termino%")
+     Page<Usuario> buscarPorNombreApellidoEmail(@Param("termino") String termino, Pageable pageable);
+ 
     
  
     @Query("SELECT u FROM Usuario u JOIN FETCH u.peliculasFavoritas pf WHERE u.email = :email")

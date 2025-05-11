@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 //import org.springframework.security.core.userdetails.User;
@@ -64,4 +66,16 @@ public class UsuarioServicioImpl implements UsuarioServicio {
                 .map(rol -> new SimpleGrantedAuthority(rol.getNombre()))
                 .collect(Collectors.toList());
     }
+
+       
+	@Override
+	public Page<Usuario> obtenerTodosUsuariosPaginado(Pageable pageable) {
+		return usuarioRepositorio.findAll(pageable);
+	}
+	
+	@Override
+    public Page<Usuario> buscarPorNombreApellidoEmail(String termino, Pageable pageable) {
+        return usuarioRepositorio.buscarPorNombreApellidoEmail(termino, pageable);
+    }
+
 }

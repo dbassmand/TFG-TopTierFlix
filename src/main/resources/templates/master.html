@@ -43,8 +43,8 @@
                     class="nav-link dropdown-toggle" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false"> Administración </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admin">Peliculas</a></li>
-                        <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/users">Usuarios</a></li>                    
+                        <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Peliculas</a></li>
+                        <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/users}">Usuarios</a></li>                
                     </ul></li>
                 <li class="nav-item dropdown"><a
                     class="nav-link dropdown-toggle" href="#" role="button"
@@ -52,10 +52,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Series</a></li>
                         <li><a class="dropdown-item" href="#">Música</a></li>
-                        <li><a class="dropdown-item" href="#">Videojuegos</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else
-                                here</a></li>
+                        <li><a class="dropdown-item" href="#">Videojuegos</a></li>                        
                     </ul></li>
             </ul>
             <ul class="navbar-nav">

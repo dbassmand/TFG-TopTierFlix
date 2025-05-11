@@ -1,49 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
-	  layout:decorate="~{master.html}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+	layout:decorate="~{master.html}">
 <head>
 <meta charset="UTF-8">
 <title>[[${pelicula.titulo}]]</title>
 </head>
 <body>
-	<div layout:fragment="content" th:object="${pelicula}">	
-				
+	<div layout:fragment="content" th:object="${pelicula}">
+
 		<div class="row">
 			<div class="col-md-6">
-				<img th:src="@{/assets/{filename}(filename=*{rutaPortada})}" th:alt="*{titulo}" class="img-fluid rounded w-100">
+				<img th:src="@{/assets/{filename}(filename=*{rutaPortada})}"
+					th:alt="*{titulo}" class="img-fluid rounded w-100">
 			</div>
 			<div class="col-md-6">
 				<div class="text-end my-3">
-					<a
-						th:href="@{http://www.youtube.com/watch?v={youtubeId}(youtubeId=*{youtubeTrailerId})}"
-						class="btn btn-danger" data-fancybox="">Ver Trailer
-					</a>
+					<a	th:href="@{http://www.youtube.com/watch?v={youtubeId}(youtubeId=*{youtubeTrailerId})}"
+						class="btn btn-danger" data-fancybox="">Ver Trailer </a> 
+						
 					<a class="btn btn-primary" href="/peliculas">Volver</a>
-					
-					<form th:action="@{/peliculas/{id}/favorito(id=*{id})}" method="post" th:if="${#authorization.expression('isAuthenticated()')}">
-                    <button type="submit" class="btn"
-                            th:classappend="${esFavorita ? 'btn-warning' : 'btn-success'}"
-                            th:text="${esFavorita ? 'Eliminar de Favoritos' : 'Añadir a Favoritos'}">
-                        </button>
-                </form>
+
+					<form th:action="@{/peliculas/{id}/favorito(id=*{id})}"
+						method="post"
+						th:if="${#authorization.expression('isAuthenticated()')}" style="display: inline-block;">
+						<button type="submit" class="btn"
+							th:classappend="${esFavorita ? 'btn-warning' : 'btn-success'}"
+							th:text="${esFavorita ? 'Eliminar de Favoritos' : 'Añadir a Favoritos'}">
+						</button>
+					</form>
 				</div>
-				<div class="detalle">				
-				<h2 th:text="*{titulo}"></h2>
-				<div class="mb-3">
-					<span class="badge rounded-pull bg-light text-dark me-1"
-					th:each="genero:*{generos}" th:text="${genero.titulo}"></span>
-					<p>
-					<p th:text="*{sinopsis}"></p>
-				</div>
+				<div class="detalle">
+					<h2 th:text="*{titulo}"></h2>
+					<div class="mb-3">
+						<span class="badge rounded-pull bg-light text-dark me-1"
+							th:each="genero:*{generos}" th:text="${genero.titulo}"></span>
+						<p>
+						<p th:text="*{sinopsis}"></p>
+					</div>
 				</div>
 			</div>
-		</div>		
-	</div>		
+		</div>
+	</div>
 </body>
 </html>
-
-
-
-			

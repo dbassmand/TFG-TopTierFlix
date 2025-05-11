@@ -1,0 +1,149 @@
+/* style-login.css */
+
+@import url('https://fonts.cdnfonts.com/css/valonik-personal-use');
+
+body {
+	background: linear-gradient(to right, #e3e5e3, #545353);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;    
+    margin: 0;
+    padding: 0;
+   
+   
+}
+
+.container {
+    margin-top: 30px;
+	margin-left: 56rem; 
+    
+}
+
+h1 {
+	font-family: 'Valonik Personal Use', sans-serif;      
+    margin-bottom: 30px;
+    color: #ffd700;
+    text-shadow: 4px 4px 10px #d36e19;
+    text-align: center;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.navbar-brand{
+	
+	 font-family: 'Valonik Personal Use', sans-serif;      
+	font-size: 24px;
+	color: #60befa;
+	text-shadow: 4px 4px 10px #b265ec;
+}
+
+
+.dots {
+  width: 3.5em;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dots div {
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 50%;
+  background-color: #fc2f70;
+  animation: fade 0.8s ease-in-out alternate infinite;
+}
+
+.dots div:nth-of-type(1) {
+  animation-delay: -0.4s;
+}
+
+.dots div:nth-of-type(2) {
+  animation-delay: -0.2s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
+
+form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #5a67d8;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #434190;
+}
+
+.alert {
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+span {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+}
+
+a {
+    color: #5a67d8;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+ 
+
+
+/* Asegura que el footer esté siempre en la parte inferior */
+.footer-custom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #212529; /* Fondo oscuro */
+  color: #bdbfbd; /* Color claro */
+  font-size: 0.75em;
+  text-align: center;
+  padding: 5px 0;
+  white-space: nowrap; /* Para evitar saltos de línea */
+  overflow: hidden; /* Ocultar si el contenido es muy largo */
+  text-overflow: ellipsis; /* Indicar el recorte */
+  z-index: 1000;
+}
+
+/* En caso de que haya algún margen o padding en .container, remuévelo */
+.container {
+  padding: 0 !important; /* Remueve el padding que podría estar causando el problema */
+}

@@ -21,9 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tfg.TopTierFlix.modelo.Genero;
 import com.tfg.TopTierFlix.modelo.Pelicula;
+import com.tfg.TopTierFlix.modelo.Usuario;
 import com.tfg.TopTierFlix.servicio.AlmacenServicioImpl;
 import com.tfg.TopTierFlix.servicio.GeneroServicioImpl;
 import com.tfg.TopTierFlix.servicio.PeliculaServicio;
+import com.tfg.TopTierFlix.servicio.UsuarioServicioImpl;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,6 +39,9 @@ public class AdminControlador {
 	
 	@Autowired
 	private AlmacenServicioImpl almacenServicio;
+	
+	@Autowired
+	private UsuarioServicioImpl usuarioServicio;
 	
 	@ModelAttribute("pelicula") //se vincula el formulario al objeto pelicula
 	public Pelicula getPelicula(@RequestParam(required = false) Integer id) {
@@ -67,6 +72,21 @@ public class AdminControlador {
 				.addObject("terminoBusqueda",termino);
 	}
 	
+	@GetMapping("/users/buscar")
+	public ModelAndView buscarUsuarios(@RequestParam(value = "termino", required = false) String termino,
+										@PageableDefault(sort="nombre", size=5)Pageable pageable) {
+		Page<Usuario> resultados;
+		if (termino != null && !termino.trim().isEmpty()) {
+			resultados = usuarioServicio.buscarPorNombreApellidoEmail(termino, pageable);		
+		}else {
+			return new ModelAndView("redirect:/admin/users");
+			//resultados = usuarioServicio.obtenerTodosUsuariosPaginado(pageable);
+		}
+		return new ModelAndView("admin/lista-usuarios")
+				.addObject("usuarios",resultados)
+				.addObject("terminoBusqueda",termino);
+	}
+	
 	@GetMapping("/peliculas/nuevo")
 	public ModelAndView mostrarFormularioDeNuevaPelicula() {
 		List<Genero> generos = generoServicio.obtenerTodosGeneros(Sort.by("titulo"));
@@ -77,6 +97,7 @@ public class AdminControlador {
 	
 	@PostMapping("/peliculas/nuevo")
 	public ModelAndView registrarPelicula(@Validated @ModelAttribute("pelicula") Pelicula pelicula, BindingResult bindingResult) {
+		System.out.println("Se recibió una petición POST a /peliculas/nuevo");
 		if(bindingResult.hasErrors() || pelicula.getPortada().isEmpty()) {
 			System.out.println(bindingResult);
 			if(pelicula.getPortada().isEmpty()) {
@@ -151,6 +172,13 @@ public class AdminControlador {
 		peliculaServicio.eliminarPelicula(pelicula);
 		almacenServicio.eliminarArchivo(pelicula.getRutaPortada());		
 		return "redirect:/admin";
+	}
+	
+	
+	@GetMapping("/users")
+	public ModelAndView verListadoUsuarios(@PageableDefault(sort="nombre",size=15)Pageable pageable) {
+	 Page<Usuario> usuarios = usuarioServicio.obtenerTodosUsuariosPaginado(pageable);
+	 return new ModelAndView("admin/lista-usuarios").addObject("usuarios",usuarios);
 	}
 	
 }

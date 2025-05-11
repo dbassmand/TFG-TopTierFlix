@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.tfg.TopTierFlix.dto.UsuarioRegistroDTO;
 import com.tfg.TopTierFlix.servicio.UsuarioServicio;
 
@@ -37,5 +36,5 @@ public class RegistroUsuarioControlador {
 
         usuarioServicio.guardar(registroDTO);
         return "redirect:/registro?exito";
-	}	
+	}			
 }

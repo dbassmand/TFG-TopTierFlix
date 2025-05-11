@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	xmlns:sd="http://www.thymeleaf.org/extras/spring-data"
+	layout:decorate="~{master.html}">
+<head>
+<meta charset="UTF-8">
+<title>Administrar Usuarios</title>
+</head>
+<body class="body-administracion">
+	<div layout:fragment="content">
+		<div class="container my-5">
+			<h2>Usuarios</h2>
+			<br>
+			<div>
+				<form th:action="@{/admin/users/buscar}" method="get" class="d-flex"
+					role="search">
+					<input class="form-control me-2" type="search"
+						placeholder="Buscar..." aria-label="Search" name="termino">
+					<button class="btn btn-outline-success" type="submit">Buscar</button>
+				</form>
+				<br>
+				<br>
+			</div>
+			<div>
+				<table class="table table-over">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Nombre</th>
+							<th>Apellido</th>
+							<th>Email</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="usuario : ${usuarios}" th:object="${usuario}">
+							<td>
+							<td>
+								<div th:text="*{nombre}"></div>
+							</td>
+							<td>
+								<div th:text="*{apellido}"></div>
+							</td>
+							<td>
+								<div th:text="*{email}"></div>
+							</td>
+							<td>
+								<button class="btn btn-outline-primary" type="submit">Detalles</button>
+								<button class="btn btn-outline-danger" type="submit">Eliminar</button>
+							</td>
+							
+						</tr>
+					</tbody>
+				</table>
+				<nav th:if="${usuarios.totalPages > 1}">
+					<ul class="pagination justify-content-center">
+						<li class="page-item"
+							th:classappend="${usuarios.first} ? 'disabled'"><a
+							class="page-link"
+							th:href="@{/admin/users(page=${usuarios.number - 1})}">Anterior</a>
+						</li>
+
+						<li class="page-item"
+							th:each="i : ${#numbers.sequence(0, usuarios.totalPages - 1)}"
+							th:classappend="${usuarios.number == i} ? 'active'"><a
+							class="page-link" th:href="@{/admin/users(page=${i})}"
+							th:text="${i + 1}"></a></li>
+
+						<li class="page-item"
+							th:classappend="${usuarios.last} ? 'disabled'"><a
+							class="page-link"
+							th:href="@{/admin/users(page=${usuarios.number + 1})}">Siguiente</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
