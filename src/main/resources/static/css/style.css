@@ -63,6 +63,19 @@ form .invalid-feedback {
 	border-radius:5px; 
 }
 
+.comentario-detalle{
+	padding:3px;
+	background: #8f8f93;
+	border-radius:5px; 	
+}
+
+.respuestas{
+	border: 1px solid #676565;
+	background: #bebec6;
+	border-radius:5px;
+	padding:3px;
+}
+
 .detalle-inicio{
 	text-aling: center;
 	padding:10px;

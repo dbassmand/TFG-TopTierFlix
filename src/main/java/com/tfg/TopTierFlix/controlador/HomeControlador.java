@@ -2,6 +2,7 @@ package com.tfg.TopTierFlix.controlador;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.tfg.TopTierFlix.dto.PeliculaDetalleDTO;
 import com.tfg.TopTierFlix.dto.PeliculaCardDTO;
+import com.tfg.TopTierFlix.modelo.Comentario;
 import com.tfg.TopTierFlix.modelo.Pelicula;
+import com.tfg.TopTierFlix.modelo.Usuario;
 import com.tfg.TopTierFlix.servicio.PeliculaServicio;
+import com.tfg.TopTierFlix.servicio.UsuarioServicio;
 
 @Controller
 @RequestMapping("")
@@ -29,6 +35,9 @@ public class HomeControlador {
 	
 	@Autowired
 	private PeliculaServicio peliculaServicio;
+	
+	@Autowired
+	private UsuarioServicio usuarioServicio;
 	
 	@GetMapping
 	public ModelAndView verPaginaInicio() {
@@ -62,7 +71,9 @@ public class HomeControlador {
 	@GetMapping("/peliculas/{id}")
     public ModelAndView mostrarDetallesDePelicula(@PathVariable Integer id, Principal principal) { //Principal en Spring Security es la identidad del usuario actualmente autenticado
         PeliculaDetalleDTO peliculaDetalleDTO = peliculaServicio.obtenerPeliculaDetallePorId(id);
-        ModelAndView modelAndView = new ModelAndView("pelicula").addObject("pelicula", peliculaDetalleDTO);
+        ModelAndView modelAndView = new ModelAndView("pelicula").addObject("pelicula", peliculaDetalleDTO)
+        		.addObject("comentarios", peliculaServicio.obtenerComentariosPorPeliculaId(id))
+        		.addObject("nuevoComentario", new Comentario());;
 
         if (principal != null) {
             String userEmail = principal.getName();
@@ -71,9 +82,32 @@ public class HomeControlador {
         } else {
             modelAndView.addObject("esFavorita", false);
         }
-
         return modelAndView;
     }
+	
+	@PostMapping("/peliculas/{peliculaId}/comentar")
+	public String guardarNuevoComentario(@PathVariable Integer peliculaId,
+	                                     @ModelAttribute("nuevoComentario") Comentario comentario,
+	                                     Principal principal,
+	                                     Model model) {
+	    String usuarioEmail = principal.getName();
+	    Optional<Usuario> usuarioOptional = usuarioServicio.obtenerUsuarioPorEmail(usuarioEmail);
+
+	    Pelicula pelicula = peliculaServicio.obtenerPeliculaPorId(peliculaId);
+
+	    if (usuarioOptional.isPresent()) {
+	        Usuario usuario = usuarioOptional.get();
+
+	        comentario.setPelicula(pelicula);
+	        comentario.setUsuario(usuario);
+
+	        peliculaServicio.guardarComentario(comentario);
+	        return "redirect:/peliculas/" + peliculaId;
+	    } else {
+	        model.addAttribute("error", "No se pudo guardar el comentario. El usuario no existe.");
+	        return "error/error-generico";
+	    }
+	}
 	
 	@PostMapping("/peliculas/{id}/favorito")
     public String toggleFavorito(@PathVariable Integer id, Principal principal) {
@@ -114,4 +148,6 @@ public class HomeControlador {
             return new ModelAndView("redirect:/login"); // Ejemplo de redirección al login
         }
     }
+	
+	
 }

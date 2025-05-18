@@ -43,5 +43,7 @@ public interface PeliculaServicio {
 	Comentario guardarComentario(Comentario comentario);
 	
 	List<ComentarioDTO> obtenerComentariosPorPeliculaId(Integer peliculaId);
+	
+	 void eliminarComentarioPorId(Integer comentarioId);
 
 }

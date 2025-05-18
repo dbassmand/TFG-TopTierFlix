@@ -41,7 +41,7 @@ public class Pelicula {
 	private String titulo;
 
 	@NotBlank
-	@Column(length = 1000, nullable = false) // MySQL Workbench, hibernate asigna por defecto varchar (255)										
+	@Column(length = 2000, nullable = false) // MySQL Workbench, hibernate asigna por defecto varchar (255)										
 	private String sinopsis;
 
 	@NotNull

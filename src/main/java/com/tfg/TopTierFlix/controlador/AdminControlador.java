@@ -1,6 +1,6 @@
 package com.tfg.TopTierFlix.controlador;
 
-import java.security.Principal;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,14 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tfg.TopTierFlix.modelo.Genero;
 import com.tfg.TopTierFlix.modelo.Pelicula;
-import com.tfg.TopTierFlix.modelo.Usuario;
 import com.tfg.TopTierFlix.servicio.AlmacenServicioImpl;
 import com.tfg.TopTierFlix.servicio.GeneroServicioImpl;
 import com.tfg.TopTierFlix.servicio.PeliculaServicio;
-import com.tfg.TopTierFlix.servicio.UsuarioServicioImpl;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -41,8 +42,7 @@ public class AdminControlador {
 	@Autowired
 	private AlmacenServicioImpl almacenServicio;
 	
-	@Autowired
-	private UsuarioServicioImpl usuarioServicio;
+
 	
 	@ModelAttribute("pelicula") //se vincula el formulario al objeto pelicula
 	public Pelicula getPelicula(@RequestParam(required = false) Integer id) {
@@ -159,5 +159,15 @@ public class AdminControlador {
 		peliculaServicio.eliminarPelicula(pelicula);
 		almacenServicio.eliminarArchivo(pelicula.getRutaPortada());		
 		return "redirect:/admin";
-	}		
+	}
+	
+	@Secured("ROLE_ADMIN") // Asegura que solo los usuarios con el rol ADMIN puedan acceder
+	@PostMapping("/peliculas/{peliculaId}/comentarios/{comentarioId}/eliminar")
+    public String eliminarComentario(@PathVariable Integer peliculaId,
+                                     @PathVariable Integer comentarioId,
+                                     RedirectAttributes redirectAttributes) {
+        peliculaServicio.eliminarComentarioPorId(comentarioId);
+        redirectAttributes.addFlashAttribute("mensaje", "Comentario eliminado correctamente.");
+        return "redirect:/peliculas/" + peliculaId;
+    }
 }

@@ -95,4 +95,9 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 		
 	}
 
+	@Override
+	public Optional<Usuario> obtenerUsuarioPorEmail(String email) {
+	    return usuarioRepositorio.findByEmail(email);
+	}
+
 }

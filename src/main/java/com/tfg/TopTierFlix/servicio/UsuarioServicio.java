@@ -1,5 +1,7 @@
 package com.tfg.TopTierFlix.servicio;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +20,8 @@ public interface UsuarioServicio extends UserDetailsService{
 	Usuario obtenerUsuarioPorId(Integer id);
 	
 	Usuario obtenerUsuarioPorIdConFavoritas(Integer id);
+	
+	Optional<Usuario> obtenerUsuarioPorEmail(String email);
 	
 	void eliminarUsuario(Usuario usuario);
 

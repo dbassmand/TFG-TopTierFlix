@@ -1,3 +1,115 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+	layout:decorate="~{master.html}">
+<head>
+<meta charset="UTF-8">
+<title>[[${pelicula.titulo}]]</title>
+</head>
+<body>
+	<div layout:fragment="content" th:object="${pelicula}">
+
+
+		<div class="row">
+			<div class="col-md-6">
+				<img th:src="@{/assets/{filename}(filename=*{rutaPortada})}"
+					th:alt="*{titulo}" class="img-fluid rounded w-100">
+			</div>
+			<div class="col-md-6">
+				<div class="text-end my-3">
+					<a
+						th:href="@{http://www.youtube.com/watch?v={youtubeId}(youtubeId=*{youtubeTrailerId})}"
+						class="btn btn-danger" data-fancybox="">Ver Trailer </a> <a
+						class="btn btn-primary" href="/peliculas">Volver</a>
+
+
+					<form th:action="@{/peliculas/{id}/favorito(id=*{id})}"
+						method="post"
+						th:if="${#authorization.expression('isAuthenticated()')}"
+						style="display: inline-block;">
+						<button type="submit" class="btn"
+							th:classappend="${esFavorita ? 'btn-warning' : 'btn-success'}"
+							th:text="${esFavorita ? 'Eliminar de Favoritos' : 'Añadir a Favoritos'}">
+						</button>
+					</form>
+				</div>
+				<div class="detalle">
+					<h2 th:text="*{titulo}"></h2>
+					<div class="mb-3">
+						<span class="badge rounded-pull bg-light text-dark me-1"
+							th:each="genero:*{generos}" th:text="${genero.titulo}"></span>
+						<p>
+						<p th:text="*{sinopsis}"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br> <br>
+		<div class="comentario-detalle">
+			<div class="">
+				<div class="">
+					<h3>Añadir un comentario:</h3>
+					<form
+						th:action="@{/peliculas/{peliculaId}/comentar(peliculaId=${pelicula.id})}"
+						method="post" th:object="${nuevoComentario}">
+						<div class="mb-3">
+
+							<textarea class="form-control" id="comentario" rows="3"
+								th:field="*{comentario}" required></textarea>
+						</div>
+						<div class="text-end my-3">
+
+							<button type="submit" class="btn btn-primary">Publicar
+								comentario</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+
+
+			<div class="">
+				<div class="">
+					<h3>Comentarios:</h3>
+					<div th:if="${comentarios.isEmpty()}">
+						<p>No hay comentarios para esta película.</p>
+					</div>
+					<div th:unless="${comentarios.isEmpty()}"
+						th:each="comentario : ${comentarios}" class="respuestas">
+						<div class="card-comentarios">
+							<p class="card-text" th:text="${comentario.comentario}"></p>
+							<p class="card-text">
+								<small class="text-muted"> Por <span
+									th:text="${comentario.usuarioEmail}"></span> el <span
+									th:text="${#temporals.format(comentario.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></span>
+								</small> 
+								<span sec:authorize="hasRole('ADMIN')">
+									<form
+										th:action="@{/admin/peliculas/{peliculaId}/comentarios/{comentarioId}/eliminar(peliculaId=${pelicula.id}, comentarioId=${comentario.id})}"
+										method="post" style="display: inline;">
+										<input type="hidden" th:name="_method" value="delete" /> <input
+											type="hidden" th:name="${_csrf.parameterName}"
+											th:value="${_csrf.token}" />
+										<div class="text-end my-3">
+
+											<button type="submit" class="btn btn-danger btn-sm ms-2" sec:authorize="hasRole('ADMIN')">Eliminar</button>
+										</div>
+									</form>
+								</span>
+							</p>
+						</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<!-- 
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
@@ -45,3 +157,5 @@
 	</div>
 </body>
 </html>
+
+ -->

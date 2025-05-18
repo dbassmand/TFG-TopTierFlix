@@ -144,7 +144,16 @@ public class PeliculaServicioImpl implements PeliculaServicio{
 
 	@Override
 	public List<ComentarioDTO> obtenerComentariosPorPeliculaId(Integer peliculaId) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Pelicula> peliculaOptional = peliculaRepositorio.findById(peliculaId);
+		if(peliculaOptional.isPresent()) {
+				List<Comentario> comentarios = comentarioRepositorio.findByPelicula(peliculaOptional.get());
+				return comentarios.stream().map(comentarioMapper::toComentarioDTO).collect(Collectors.toList());
+		}
+		return List.of();
 	}
+
+	@Override
+    public void eliminarComentarioPorId(Integer comentarioId) {
+        comentarioRepositorio.deleteById(comentarioId);
+    }
 }
