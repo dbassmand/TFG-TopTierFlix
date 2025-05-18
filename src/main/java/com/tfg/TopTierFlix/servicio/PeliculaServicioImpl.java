@@ -10,11 +10,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import com.tfg.TopTierFlix.dto.PeliculaDetalleDTO;
+import com.tfg.TopTierFlix.dto.ComentarioDTO;
 import com.tfg.TopTierFlix.dto.PeliculaCardDTO;
 import com.tfg.TopTierFlix.dto.PeliculaListadoAdminDTO;
+import com.tfg.TopTierFlix.mapper.ComentarioMapper;
 import com.tfg.TopTierFlix.mapper.PeliculaMapper;
+import com.tfg.TopTierFlix.modelo.Comentario;
 import com.tfg.TopTierFlix.modelo.Pelicula;
 import com.tfg.TopTierFlix.modelo.Usuario;
+import com.tfg.TopTierFlix.repositorios.ComentarioRepositorio;
 import com.tfg.TopTierFlix.repositorios.PeliculaRepositorio;
 import com.tfg.TopTierFlix.repositorios.UsuarioRepositorio;
 
@@ -28,7 +32,13 @@ public class PeliculaServicioImpl implements PeliculaServicio{
     private UsuarioRepositorio usuarioRepositorio;
 	
 	@Autowired
+	private ComentarioRepositorio comentarioRepositorio;
+	
+	@Autowired
 	private PeliculaMapper peliculaMapper;
+	
+	@Autowired
+	private ComentarioMapper comentarioMapper;
 	
 	@Override
 	public Page<Pelicula> obtenerTodasPaginado(Pageable pageable){
@@ -126,4 +136,15 @@ public class PeliculaServicioImpl implements PeliculaServicio{
         Optional<Usuario> usuarioOptional = usuarioRepositorio.findByEmailWithFavoritas(userEmail);
         return usuarioOptional.map(usuario -> usuario.getPeliculasFavoritas()).orElse(List.of());
     }
+
+	@Override
+	public Comentario guardarComentario(Comentario comentario) {
+		return comentarioRepositorio.save(comentario);
+	}
+
+	@Override
+	public List<ComentarioDTO> obtenerComentariosPorPeliculaId(Integer peliculaId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

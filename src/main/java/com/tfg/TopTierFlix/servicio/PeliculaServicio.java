@@ -6,8 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.tfg.TopTierFlix.dto.PeliculaDetalleDTO;
+import com.tfg.TopTierFlix.dto.ComentarioDTO;
 import com.tfg.TopTierFlix.dto.PeliculaCardDTO;
 import com.tfg.TopTierFlix.dto.PeliculaListadoAdminDTO;
+import com.tfg.TopTierFlix.modelo.Comentario;
 import com.tfg.TopTierFlix.modelo.Pelicula;
 
 public interface PeliculaServicio {
@@ -37,5 +39,9 @@ public interface PeliculaServicio {
 	void eliminarFavorito(Integer peliculaId, String userEmail); 
 	
 	List<Pelicula> obtenerPeliculasFavoritasDelUsuario(String userEmail);
+	
+	Comentario guardarComentario(Comentario comentario);
+	
+	List<ComentarioDTO> obtenerComentariosPorPeliculaId(Integer peliculaId);
 
 }

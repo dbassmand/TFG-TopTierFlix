@@ -15,5 +15,5 @@ public class PeliculaDetalleDTO {
 	private String sinopsis;
 	private String youtubeTrailerId;
 	private List<GeneroDTO> generos;
-
+	private List<ComentarioDTO> comentarios;
 }
