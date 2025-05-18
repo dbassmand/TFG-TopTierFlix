@@ -159,33 +159,5 @@ public class AdminControlador {
 		peliculaServicio.eliminarPelicula(pelicula);
 		almacenServicio.eliminarArchivo(pelicula.getRutaPortada());		
 		return "redirect:/admin";
-	}
-	
-	
-	@GetMapping("/users")
-	public ModelAndView verListadoUsuarios(@PageableDefault(sort="nombre",size=15)Pageable pageable) {
-	 Page<Usuario> usuarios = usuarioServicio.obtenerTodosUsuariosPaginado(pageable);
-	 return new ModelAndView("admin/lista-usuarios").addObject("usuarios",usuarios);
-	}
-	
-	@GetMapping("/users/buscar")
-	public ModelAndView buscarUsuarios(@RequestParam(value = "termino", required = false) String termino,
-			@PageableDefault(sort="nombre", size=5)Pageable pageable) {
-		Page<Usuario> resultados;
-		if (termino != null && !termino.trim().isEmpty()) {
-			resultados = usuarioServicio.buscarPorNombreApellidoEmail(termino, pageable);		
-		}else {
-			return new ModelAndView("redirect:/admin/users");
-			//resultados = usuarioServicio.obtenerTodosUsuariosPaginado(pageable);
-		}
-		return new ModelAndView("admin/lista-usuarios")
-				.addObject("usuarios",resultados)
-				.addObject("terminoBusqueda",termino);
-	}
-	
-	/*
-	@GetMapping("admin/detalle-usuario/{id}")
-	public ModelAndView mostrarDetalleDeUsuario(@PathVariable Integer id, Principal principal) {
-		
-	}*/
+	}		
 }

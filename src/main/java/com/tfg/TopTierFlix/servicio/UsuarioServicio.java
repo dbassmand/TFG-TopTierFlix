@@ -14,5 +14,9 @@ public interface UsuarioServicio extends UserDetailsService{
 	Page<Usuario> obtenerTodosUsuariosPaginado(Pageable pageable);
 	
 	Page<Usuario> buscarPorNombreApellidoEmail(String termino, Pageable pageable);
+	
+	Usuario obtenerUsuarioPorId(Integer id);
+	
+	 Usuario obtenerUsuarioPorIdConFavoritas(Integer id);
 
 }

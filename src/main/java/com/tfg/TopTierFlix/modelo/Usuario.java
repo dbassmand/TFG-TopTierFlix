@@ -17,12 +17,14 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name="usuarios", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "peliculasFavoritas") // Excluye la colección de la generación del toString() para evitar StackOverflow
 public class Usuario {
 
 	@Id
@@ -64,4 +66,17 @@ public class Usuario {
 		this.roles=roles;
 	}
 
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Usuario)) return false;
+        Usuario usuario = (Usuario) o;
+        return id != null && id.equals(usuario.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31; // Un número constante si solo usas el ID, o puedes usar Objects.hash(id) si id no es null
+    }
+	
 }

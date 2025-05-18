@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+<div layout:fragment="content">
+	<div class="container my-5">
+		<h2>Detalle del Usuario</h2>
+		<br>
+		<div class="card">
+			<div class="card-body">
+				<p class="card-text">
+					<strong>Nombre:</strong><span th:text="${usuario.nombre}"></span><br>
+					<strong>Apellido:</strong><span th:text="${usuario.apellido}"></span><br>
+					<strong>ID:</strong> <span th:text="${usuario.id}"></span><br>
+					<strong>Email:</strong> <span th:text="${usuario.email}"></span><br>
+				</p>
+				
+				<h4 class="card-subtitle mb-2 text-muted">Películas Favoritas:</h4>
+				<ul th:if="${not #lists.isEmpty(usuario.peliculasFavoritas)}"
+					class="list-group">
+					<li th:each="pelicula : ${usuario.peliculasFavoritas}"
+						class="list-group-item"><span th:text="${pelicula.titulo}">Título
+							de la Película</span></li>
+				</ul>
+				<p th:if="${#lists.isEmpty(usuario.peliculasFavoritas)}">Este
+					usuario no tiene películas favoritas.</p>
+				<br> <a th:href="@{/admin/users}" class="btn btn-primary">Volver
+					a la lista de usuarios</a>
+			</div>
+		</div>
+	</div>
+</div>

@@ -23,11 +23,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "peliculasFavoritas") //evita error StackOverflow
 public class Pelicula {
 
 	@Id
@@ -91,4 +93,17 @@ public class Pelicula {
 		this.generos = generos;
 		this.portada = portada;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pelicula)) return false;
+        Pelicula pelicula = (Pelicula) o;
+        return id != null && id.equals(pelicula.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31; // Un número constante si solo usas el ID, o puedes usar Objects.hash(id) si id no es null
+    }
 }

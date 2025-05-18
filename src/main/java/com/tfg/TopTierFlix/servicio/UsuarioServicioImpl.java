@@ -78,4 +78,15 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return usuarioRepositorio.buscarPorNombreApellidoEmail(termino, pageable);
     }
 
+	@Override
+	public Usuario obtenerUsuarioPorId(Integer id) {
+		return usuarioRepositorio.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+	}
+
+	@Override
+	public Usuario obtenerUsuarioPorIdConFavoritas(Integer id) {
+        return usuarioRepositorio.findByIdWithFavoritas(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    }
+
 }

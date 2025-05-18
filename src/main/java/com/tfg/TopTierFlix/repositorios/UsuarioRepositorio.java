@@ -27,4 +27,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
  
     @Query("SELECT u FROM Usuario u JOIN FETCH u.peliculasFavoritas pf WHERE u.email = :email")
     Optional<Usuario> findByEmailWithFavoritas(@Param("email") String email);
+    
+    @Query("SELECT u FROM Usuario u LEFT JOIN FETCH u.peliculasFavoritas pf WHERE u.id = :id")
+    Optional<Usuario> findByIdWithFavoritas(@Param("id") Integer id);
 }
