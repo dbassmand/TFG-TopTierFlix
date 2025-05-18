@@ -47,7 +47,10 @@
 							</td>
 							<td>
 								<a th:href="@{/admin/users/{id}/detalles(id=*{id})}" class="btn btn-outline-primary">Detalles</a>
-								<button class="btn btn-outline-danger" type="submit">Eliminar</button>
+								<a href="javascript:void(0)" class="btn btn-outline-danger" th:onclick="'eliminarUsuario(' + *{id}+')'">Eliminar</a>
+								<form th:id="'eliminarUsuarioForm'+ *{id}"
+								th:action="@{/admin/users/{id}/eliminar(id=*{id})}"
+								method="post" class="d-none"></form>
 							</td>
 							
 						</tr>
@@ -77,6 +80,16 @@
 			</div>
 		</div>
 
+	</div>
+	<div layout:fragment="scripts">
+		<script>
+			function eliminarUsuario(id) {
+				if (!confirm('¿Desea continuar?, el usuario se eliminará!')) {
+					return;
+				}
+				$('#eliminarUsuarioForm' + id).submit();
+			}
+		</script>
 	</div>
 </body>
 </html>

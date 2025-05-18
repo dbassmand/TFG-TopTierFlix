@@ -17,6 +17,8 @@ public interface UsuarioServicio extends UserDetailsService{
 	
 	Usuario obtenerUsuarioPorId(Integer id);
 	
-	 Usuario obtenerUsuarioPorIdConFavoritas(Integer id);
+	Usuario obtenerUsuarioPorIdConFavoritas(Integer id);
+	
+	void eliminarUsuario(Usuario usuario);
 
 }

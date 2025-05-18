@@ -89,4 +89,10 @@ public class UsuarioServicioImpl implements UsuarioServicio {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
 
+	@Override
+	public void eliminarUsuario(Usuario usuario) {
+		usuarioRepositorio.delete(usuario);
+		
+	}
+
 }

@@ -1,14 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	xmlns:sd="http://www.thymeleaf.org/extras/spring-data"
+	layout:decorate="~{master.html}">
+<head>
+<meta charset="UTF-8">
+<title>Administrar Usuarios</title>
+</head>
+<body class="user-administracion">
+
 <div layout:fragment="content">
-	<div class="container my-5">
+	<div class="user-container my-5">
 		<h2>Detalle del Usuario</h2>
 		<br>
-		<div class="card">
-			<div class="card-body">
-				<p class="card-text">
-					<strong>Nombre:</strong><span th:text="${usuario.nombre}"></span><br>
-					<strong>Apellido:</strong><span th:text="${usuario.apellido}"></span><br>
-					<strong>ID:</strong> <span th:text="${usuario.id}"></span><br>
-					<strong>Email:</strong> <span th:text="${usuario.email}"></span><br>
+		<div class="user-card">
+			<div class="user-card-body">
+				<p class="user-card-text">
+					<strong>Nombre: </strong><span th:text="${usuario.nombre}"></span><br>
+					<strong>Apellido: </strong><span th:text="${usuario.apellido}"></span><br>
+					<strong>ID: </strong> <span th:text="${usuario.id}"></span><br>
+					<strong>Email: </strong> <span th:text="${usuario.email}"></span><br>
 				</p>
 				
 				<h4 class="card-subtitle mb-2 text-muted">Películas Favoritas:</h4>
@@ -26,3 +37,5 @@
 		</div>
 	</div>
 </div>
+</body>
+</html>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,7 +44,7 @@ public class AdminUsusarioControlador {
 	
 	@GetMapping("/users/buscar")
 	public ModelAndView buscarUsuarios(@RequestParam(value = "termino", required = false) String termino,
-			@PageableDefault(sort="nombre", size=5)Pageable pageable) {
+			@PageableDefault(sort="nombre", size=15)Pageable pageable) {
 		Page<Usuario> resultados;
 		if (termino != null && !termino.trim().isEmpty()) {
 			resultados = usuarioServicio.buscarPorNombreApellidoEmail(termino, pageable);		
@@ -55,13 +56,19 @@ public class AdminUsusarioControlador {
 				.addObject("usuarios",resultados)
 				.addObject("terminoBusqueda",termino);
 	}
-	
-	
+		
 	@GetMapping("/users/{id}/detalles")
 	public ModelAndView mostrarDetalleDeUsuario(@PathVariable Integer id) {
 		Usuario usuario = usuarioServicio.obtenerUsuarioPorIdConFavoritas(id);
 		ModelAndView modelAndView = new ModelAndView("admin/detalle-usuario").addObject("usuario",usuario);
 		return modelAndView;
+	}
+	
+	@PostMapping("/users/{id}/eliminar")
+	public String eliminarUsuario(@PathVariable Integer id) {
+		Usuario usuario = usuarioServicio.obtenerUsuarioPorId(id);
+		usuarioServicio.eliminarUsuario(usuario);
+		return "redirect:/admin/users";
 	}
 
 }
