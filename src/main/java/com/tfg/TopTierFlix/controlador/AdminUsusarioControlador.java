@@ -1,6 +1,5 @@
 package com.tfg.TopTierFlix.controlador;
 
-import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.tfg.TopTierFlix.dto.UsuarioRegistroDTO;
 import com.tfg.TopTierFlix.modelo.Usuario;
 import com.tfg.TopTierFlix.servicio.UsuarioServicioImpl;
 

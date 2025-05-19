@@ -24,7 +24,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "peliculasFavoritas") // Excluye la colección de la generación del toString() para evitar StackOverflow
+@ToString(exclude = {"peliculasFavoritas", "seriesFavoritas"}) // Excluye la colección de la generación del toString() para evitar StackOverflow
 public class Usuario {
 
 	@Id
@@ -55,6 +55,13 @@ public class Usuario {
 	        joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
 	        inverseJoinColumns = @JoinColumn(name = "pelicula_id", referencedColumnName = "id_pelicula")) 
 	private List<Pelicula> peliculasFavoritas;
+	
+	@ManyToMany(fetch = FetchType.LAZY) // Carga lazy para no cargar todas las favoritas al cargar el usuario
+    @JoinTable(
+            name = "usuarios_favoritas",
+            joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "serie_id", referencedColumnName = "id_serie"))
+    private List<Serie> seriesFavoritas; 
 	
 	//Constructor sin Id
 	public Usuario(String nombre, String apellido, String email, String password, Collection<Rol> roles) {

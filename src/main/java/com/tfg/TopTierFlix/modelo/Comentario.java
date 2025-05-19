@@ -41,6 +41,10 @@ public class Comentario {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pelicula_id", nullable = false)
     private Pelicula pelicula;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "serie_id")
+    private Serie serie;
 
     // Relación ManyToOne con Usuario
     @ManyToOne(fetch = FetchType.LAZY)
