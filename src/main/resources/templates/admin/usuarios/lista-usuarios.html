@@ -13,14 +13,13 @@
 			<h2>Usuarios</h2>
 			<br>
 			<div>
-				<form th:action="@{/admin/users/buscar}" method="get" class="d-flex"
-					role="search">
+				<form th:action="@{/admin/usuarios/buscar}" method="get"
+					class="d-flex" role="search">
 					<input class="form-control me-2" type="search"
 						placeholder="Buscar..." aria-label="Search" name="termino">
 					<button class="btn btn-outline-success" type="submit">Buscar</button>
 				</form>
-				<br>
-				<br>
+				<br> <br>
 			</div>
 			<div>
 				<table class="table table-over">
@@ -45,14 +44,14 @@
 							<td>
 								<div th:text="*{email}"></div>
 							</td>
-							<td>
-								<a th:href="@{/admin/users/{id}/detalles(id=*{id})}" class="btn btn-outline-primary">Detalles</a>
-								<a href="javascript:void(0)" class="btn btn-outline-danger" th:onclick="'eliminarUsuario(' + *{id}+')'">Eliminar</a>
+							<td><a th:href="@{/admin/usuarios/{id}/detalles(id=*{id})}"
+								class="btn btn-outline-primary">Detalles</a> <a
+								href="javascript:void(0)" class="btn btn-outline-danger"
+								th:onclick="'eliminarUsuario(' + *{id}+')'">Eliminar</a>
 								<form th:id="'eliminarUsuarioForm'+ *{id}"
-								th:action="@{/admin/users/{id}/eliminar(id=*{id})}"
-								method="post" class="d-none"></form>
-							</td>
-							
+									th:action="@{/admin/usuarios/{id}/eliminar(id=*{id})}"
+									method="post" class="d-none"></form></td>
+
 						</tr>
 					</tbody>
 				</table>
@@ -61,19 +60,19 @@
 						<li class="page-item"
 							th:classappend="${usuarios.first} ? 'disabled'"><a
 							class="page-link"
-							th:href="@{/admin/users(page=${usuarios.number - 1})}">Anterior</a>
+							th:href="@{/admin/usuarios(page=${usuarios.number - 1})}">Anterior</a>
 						</li>
 
 						<li class="page-item"
 							th:each="i : ${#numbers.sequence(0, usuarios.totalPages - 1)}"
 							th:classappend="${usuarios.number == i} ? 'active'"><a
-							class="page-link" th:href="@{/admin/users(page=${i})}"
+							class="page-link" th:href="@{/admin/usuarios(page=${i})}"
 							th:text="${i + 1}"></a></li>
 
 						<li class="page-item"
 							th:classappend="${usuarios.last} ? 'disabled'"><a
 							class="page-link"
-							th:href="@{/admin/users(page=${usuarios.number + 1})}">Siguiente</a>
+							th:href="@{/admin/usuarios(page=${usuarios.number + 1})}">Siguiente</a>
 						</li>
 					</ul>
 				</nav>

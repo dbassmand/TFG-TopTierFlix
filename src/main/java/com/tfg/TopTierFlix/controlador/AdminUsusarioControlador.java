@@ -18,7 +18,7 @@ import com.tfg.TopTierFlix.servicio.UsuarioServicioImpl;
 
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/usuarios")
 public class AdminUsusarioControlador {
 	
 	@Autowired
@@ -33,13 +33,13 @@ public class AdminUsusarioControlador {
 		return new Usuario();
 	}
 	
-	@GetMapping("/users")
+	@GetMapping("")
 	public ModelAndView verListadoUsuarios(@PageableDefault(sort="nombre",size=15)Pageable pageable) {
 	 Page<Usuario> usuarios = usuarioServicio.obtenerTodosUsuariosPaginado(pageable);
-	 return new ModelAndView("admin/lista-usuarios").addObject("usuarios",usuarios);
+	 return new ModelAndView("admin/usuarios/lista-usuarios").addObject("usuarios",usuarios);
 	}
 	
-	@GetMapping("/users/buscar")
+	@GetMapping("/buscar")
 	public ModelAndView buscarUsuarios(@RequestParam(value = "termino", required = false) String termino,
 			@PageableDefault(sort="nombre", size=15)Pageable pageable) {
 		Page<Usuario> resultados;
@@ -49,23 +49,23 @@ public class AdminUsusarioControlador {
 			return new ModelAndView("redirect:/admin/users");
 			//resultados = usuarioServicio.obtenerTodosUsuariosPaginado(pageable);
 		}
-		return new ModelAndView("admin/lista-usuarios")
+		return new ModelAndView("admin/usuarios/lista-usuarios")
 				.addObject("usuarios",resultados)
 				.addObject("terminoBusqueda",termino);
 	}
 		
-	@GetMapping("/users/{id}/detalles")
+	@GetMapping("/{id}/detalles")
 	public ModelAndView mostrarDetalleDeUsuario(@PathVariable Integer id) {
 		Usuario usuario = usuarioServicio.obtenerUsuarioPorIdConFavoritas(id);
-		ModelAndView modelAndView = new ModelAndView("admin/detalle-usuario").addObject("usuario",usuario);
+		ModelAndView modelAndView = new ModelAndView("admin/usuarios/detalle-usuario").addObject("usuario",usuario);
 		return modelAndView;
 	}
 	
-	@PostMapping("/users/{id}/eliminar")
+	@PostMapping("/{id}/eliminar")
 	public String eliminarUsuario(@PathVariable Integer id) {
 		Usuario usuario = usuarioServicio.obtenerUsuarioPorId(id);
 		usuarioServicio.eliminarUsuario(usuario);
-		return "redirect:/admin/users";
+		return "redirect:/admin/usuarios";
 	}
 
 }

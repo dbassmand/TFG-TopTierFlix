@@ -29,9 +29,8 @@ import com.tfg.TopTierFlix.servicio.UsuarioServicio;
 
 @Controller
 @RequestMapping("")
-public class HomeControlador {
-	
-	
+public class PeliculaControlador {
+		
 	
 	@Autowired
 	private PeliculaServicio peliculaServicio;

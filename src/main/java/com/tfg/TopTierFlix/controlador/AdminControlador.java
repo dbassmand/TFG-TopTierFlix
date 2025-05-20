@@ -103,7 +103,7 @@ public class AdminControlador {
 	}
 	
 	@GetMapping("/peliculas/{id}/editar")
-	public ModelAndView mostrarFormilarioDeEditarPelicula(@PathVariable Integer id) {
+	public ModelAndView mostrarFormularioDeEditarPelicula(@PathVariable Integer id) {
 		
 		Pelicula pelicula = peliculaServicio.obtenerPeliculaPorId(id);
 		List<Genero> generos = generoServicio.obtenerTodosGeneros(Sort.by("titulo"));

@@ -1,4 +1,5 @@
-                <!-- 
+
+<!-- 
                 <li class="nav-item" sec:authorize="hasRole('ADMIN')"><a class="nav-link" href="/admin">Administración</a></li>
                  -->
 <!DOCTYPE html>
@@ -26,50 +27,60 @@
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">TopTierFlix</a>
-        <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" href="/">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="/peliculas">Peliculas</a></li>
-                <li class="nav-item" sec:authorize="hasRole('USER')"><a class="nav-link" href="/favoritas">Mis Favoritas</a></li>
-                <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')"><a
-                    class="nav-link dropdown-toggle" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"> Administración </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Peliculas</a></li>
-                        <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/users}">Usuarios</a></li>                
-                    </ul></li>
-                <li class="nav-item dropdown"><a
-                    class="nav-link dropdown-toggle" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"> Secciones </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Series</a></li>
-                        <li><a class="dropdown-item" href="#">Música</a></li>
-                        <li><a class="dropdown-item" href="#">Videojuegos</a></li>                        
-                    </ul></li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <span class="nav-link">
-                        Hola <span sec:authentication="principal.username"></span>!
-                    </span>
-                </li>          
-            </ul>
-            <div class="d-flex">
-                <form th:fragment="logoutButton" th:action="@{/logout}" method="post" style="display: inline;">
-                    <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</nav>
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/}">TopTierFlix</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-between"
+				id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active" th:href="@{/}">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/peliculas}">Peliculas</a></li>
+					<li class="nav-item" sec:authorize="hasRole('USER')"><a
+						class="nav-link" th:href="@{/favoritas}">Mis Favoritas</a></li>
+					<li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')"><a
+						class="nav-link dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+							Administración </a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item"
+								sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Peliculas</a></li>
+							<li><a class="dropdown-item"
+								sec:authorize="hasRole('ADMIN')" th:href="@{/admin/series}">Series</a></li>
+							<li><a class="dropdown-item"
+								sec:authorize="hasRole('ADMIN')" th:href="@{/admin/usuarios}">Usuarios</a></li>
+						</ul></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false"> Secciones </a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" th:href="@{/peliculas}">Peliculas</a></li>
+							<li><a class="dropdown-item" th:href="@{/series}">Series</a></li>
+							<li><a class="dropdown-item" href="#">Música</a></li>
+							<li><a class="dropdown-item" href="#">Videojuegos</a></li>
+						</ul></li>
+				</ul>
+				<ul class="navbar-nav">
+					<li class="nav-item" sec:authorize="isAuthenticated()"><span
+						class="nav-link"> Hola <span
+							sec:authentication="principal.username"></span>!
+					</span></li>
+				</ul>
+				<div class="d-flex">
+					<form th:fragment="logoutButton" th:action="@{/logout}"
+						method="post" style="display: inline;">
+						<button type="submit" class="btn btn-danger">Cerrar
+							Sesión</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</nav>
 
 
 
