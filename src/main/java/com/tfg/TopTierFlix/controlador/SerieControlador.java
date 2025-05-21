@@ -39,14 +39,16 @@ public class SerieControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
     
+    /*
     @GetMapping
     public ModelAndView verPaginaInicio() {
     	
     	List<SerieCardDTO> uiltimasSeriesInicioDTO = serieServicio.obtenerSeriesIncio();
     	return new ModelAndView("series/series").addObject("ultimasSeries", uiltimasSeriesInicioDTO);
     }
+     * */
     
-    @GetMapping("/series")
+    @GetMapping
     public ModelAndView listarSeries(@RequestParam(value="page", defaultValue = "0")int page,
 			@PageableDefault(size = 8, sort = "fechaEstreno", direction = Sort.Direction.DESC) Pageable pageable) {
     	Page<SerieCardDTO> seriePageDTO = serieServicio.obtenerTodasSeriesPaginado(pageable);
@@ -120,7 +122,7 @@ public class SerieControlador {
     	}
     	return "redirect:/series/"+ id;
     }
-    
+    /*
     @GetMapping("/favoritas")
     public ModelAndView mostrarFavoritas(Principal principal) {
     	if(principal !=null) {
@@ -130,15 +132,17 @@ public class SerieControlador {
     		List<SerieCardDTO> favoritasDTO = favoritas.stream()
     				.map(serie -> new SerieCardDTO(
     						
-    					serie.getId(),
-    					serie.getTitulo(),
-    					serie.getRutaPortada(),
-    					serie.getFechaEstreno()
-    				))
+    						serie.getId(),
+    						serie.getTitulo(),
+    						serie.getRutaPortada(),
+    						serie.getFechaEstreno()
+    						))
     				.collect(Collectors.toList());
     		return new ModelAndView("series/favoritas").addObject("favoritas", favoritasDTO);
     	}else {
     		return new ModelAndView("redirect:/login");
     	}
     }
+     * */
+    
 }

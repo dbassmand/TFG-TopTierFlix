@@ -124,6 +124,8 @@ public class PeliculaControlador {
         return "redirect:/peliculas/" + id;
     }
 	
+	/*
+	 * 
 	@GetMapping("/favoritas")
     public ModelAndView mostrarFavoritas(Principal principal) {
         if (principal != null) {
@@ -147,6 +149,7 @@ public class PeliculaControlador {
             return new ModelAndView("redirect:/login"); // Ejemplo de redirección al login
         }
     }
+	 * */
 	
 	
 }

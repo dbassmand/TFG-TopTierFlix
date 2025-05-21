@@ -70,8 +70,9 @@ public class AdminSerieControlador {
     @GetMapping("/nuevo") // Mapea a /admin/series/nuevo
     public ModelAndView mostrarFormularioDeNuevaSerie() {
         List<Genero> generos = generoServicio.obtenerTodosGeneros(Sort.by("titulo"));
-        return new ModelAndView("admin/series/nueva-serie").addObject("serie", new Serie()).addObject("generos",
-                generos);
+        return new ModelAndView("admin/series/nueva-serie")
+        		.addObject("serie", new Serie())
+        		.addObject("generos",generos);
     }
 
     @PostMapping("/nuevo") // Mapea a /admin/series/nuevo (POST)

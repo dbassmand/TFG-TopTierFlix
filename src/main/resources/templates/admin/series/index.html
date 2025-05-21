@@ -1,11 +1,91 @@
-<!-- FORMULARIO PARA NUEVAS SERIES -->
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	xmlns:sd="http://www.thymeleaf.org/extras/spring-data"
+	layout:decorate="~{master.html}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Administrar Series</title>
 </head>
-<body>
-<a>AQUI FORMULARIO PARA NUEVAS SERIES</a>
+<body class="body-administracion">
+
+	<div layout:fragment="content">
+		<div class="container my-5">
+
+			<h2>Series</h2>
+			<br>
+			<div>
+				<form th:action="@{/admin/series/buscar}" method="get" class="d-flex"
+					role="search">
+					<input class="form-control me-2" type="search"
+						placeholder="Buscar..." aria-label="Search" name="termino">
+					<button class="btn btn-outline-success" type="submit">Buscar</button>
+				</form>
+				<br>
+				<br>
+			</div>
+			<div class="text-end">
+				<a th:href="@{/admin/series/nuevo}" class="btn btn-primary mb-3">
+					Agregar Serie </a>
+			</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Serie</th>
+						<th>F.Estreno</th>
+                        <th></th> </tr>
+				</thead>
+				<tbody>
+					<tr th:each="serie : ${series}" th:object="${serie}"> <td style="width: 150px;"><a data-fancybox
+							th:href="@{/assets/{filename}(filename=*{rutaPortada})}"> <img
+								th:src="@{/assets/{filename}(filename=*{rutaPortada})}" alt=""
+								class="img-thumbnail w-100">
+						</a></td>
+						<td>
+							<div th:text="*{titulo}" class="fs-5 fw-bold"></div>
+							<p th:text="*{sinopsis}"></p>
+							<div>
+								<span class="badge rounded-pill bg-light text-dark me-1"
+									th:each="genero: *{generos}" th:text="${genero.titulo}"></span>
+							</div>
+						</td>
+						<td th:text="*{#temporals.format(fechaEstreno, 'dd/MM/yyyy')}"></td>
+						<td class="text-end"><a
+							th:href="@{/admin/series/{id}/editar(id=*{id})}">Editar</a> 
+							<a href="javascript:void(0)" class="text-danger ms-3"
+							th:onclick="'eliminarSerie(' + *{id}+')'">Eliminar</a>
+							<form th:id="'eliminarSerieForm'+ *{id}"
+								th:action="@{/admin/series/{id}/eliminar(id=*{id})}"
+								method="post" class="d-none"></form></td>
+					</tr>
+				</tbody>
+			</table>
+			<nav th:if="${series.totalPages > 1}">
+				<ul class="pagination justify-content-center">
+					<li class="page-item"
+						th:classappend="${series.first} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/admin/series(page=${series.number - 1})}">Anterior</a></li> <li class="page-item"
+						th:each="i : ${#numbers.sequence(0, series.totalPages - 1)}"
+						th:classappend="${series.number == i} ? 'active'"><a
+						class="page-link" th:href="@{/admin/series(page=${i})}"
+						th:text="${i + 1}"></a></li> <li class="page-item"
+						th:classappend="${series.last} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/admin/series(page=${series.number + 1})}">Siguiente</a></li> </ul>
+			</nav>
+		</div>
+	</div>
+	<div layout:fragment="scripts">
+		<script>
+			function eliminarSerie(id) {
+				if (!confirm('¿Desea continuar?, la serie se eliminará!')) {
+					return;
+				}
+				$('#eliminarSerieForm' + id).submit();
+			}
+		</script>
+	</div>
 </body>
 </html>

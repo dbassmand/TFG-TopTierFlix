@@ -116,7 +116,17 @@ footer.bg-dark a{
   text-shadow: 4px 4px 10px #ff0000;
 }
 
-
+.texto_seccion_favoritas{
+	text-align: center;
+	
+  font-size: 25px;
+  font-weight: bold;
+  color: #ffd700; /* Dorado */
+  font-family: 'Valonik Personal Use', sans-serif;                                              
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 4px 4px 10px #ff0000;
+}
 
 .neon-text {
 	font-family: 'Gambetta', serif;

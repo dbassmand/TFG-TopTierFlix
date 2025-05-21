@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+       layout:decorate="~{master.html}">  
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
 </head>
 <body>
+
+<div layout:fragment="form">
+    <br>
+		<div th:if="${#fields.hasErrors('*')}">
+			<p style="color: red;">¡Hay errores en el formulario!</p>
+			<ul>
+				<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+			</ul>
+		</div>
+		<form th:action="@{'/admin/series/' + ${serie.id} + '/editar'}" method="post" th:object="${serie}" enctype="multipart/form-data" >
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título: </label>
+            <input type="text" id="titulo" placeholder="Introduce título"
+                   th:field="*{titulo}"
+                   th:classappend="'form-control ' + (${#fields.hasErrors('titulo')} ? 'is-invalid' : '')">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('titulo')}"
+                 th:errors="*{titulo}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="sinopsis" class="form-label">Sinopsis: </label>
+            <textarea id="sinopsis" placeholder="Introduce sinopsis"
+                      th:field="*{sinopsis}"
+                      th:classappend="'form-control ' + (${#fields.hasErrors('sinopsis')} ? 'is-invalid' : '')" rows="8" cols="60"></textarea>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('sinopsis')}"
+                 th:errors="*{sinopsis}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="fechaEstreno" class="form-label">Fecha de estreno: </label>
+            <input type="date" id="fechaEstreno" placeholder="Introduce fecha de estreno"
+                   th:field="*{fechaEstreno}"
+                   th:classappend="'form-control ' + (${#fields.hasErrors('fechaEstreno')} ? 'is-invalid' : '')">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('fechaEstreno')}"
+                 th:errors="*{fechaEstreno}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="youtubeTrailerId" class="form-label">Enlace a YouTube: </label>
+            <input type="text" id="youtubeTrailerId" placeholder="Introduce enlace a YouTube"
+                   th:field="*{youtubeTrailerId}"
+                   th:classappend="'form-control ' + (${#fields.hasErrors('youtubeTrailerId')} ? 'is-invalid' : '')">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('youtubeTrailerId')}"
+                 th:errors="*{youtubeTrailerId}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="portada" class="form-label">Portada: </label>
+            <input type="file" name="portada" id="portada"
+                   th:field="*{portada}"
+                   th:classappend="'form-control ' + (${#fields.hasErrors('portada')} ? 'is-invalid' : '')">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('portada')}"
+                 th:errors="*{portada}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="generos" class="form-label">Género: </label>
+            <select id="generos" multiple
+                    th:field="*{generos}"
+                    th:classappend="'form-control ' + (${#fields.hasErrors('generos')} ? 'is-invalid' : '')" size="7">
+                <option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.titulo}"></option>
+            </select>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('generos')}"
+                 th:errors="*{generos}"></div>
+        </div>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
+</div>
+
+<!-- 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/js/jquery.fancybox.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ -->
 
 </body>
 </html>
