@@ -35,7 +35,7 @@
 			<div class="collapse navbar-collapse justify-content-between"
 				id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active" th:href="@{/}">Inicio</a></li>					
+					<li class="nav-item"><a class="nav-link active" th:href="@{/}">Inicio</a></li>
 					<li class="nav-item" sec:authorize="hasRole('USER')"><a
 						class="nav-link" th:href="@{/favoritas}">Mis Favoritas</a></li>
 					<li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')"><a
@@ -48,7 +48,10 @@
 							<li><a class="dropdown-item"
 								sec:authorize="hasRole('ADMIN')" th:href="@{/admin/series}">Series</a></li>
 							<li><a class="dropdown-item"
+								sec:authorize="hasRole('ADMIN')" th:href="@{/admin/videojuegos}">VideoJuegos</a></li>
+							<li><a class="dropdown-item"
 								sec:authorize="hasRole('ADMIN')" th:href="@{/admin/usuarios}">Usuarios</a></li>
+
 						</ul></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" role="button"
@@ -57,7 +60,7 @@
 							<li><a class="dropdown-item" th:href="@{/peliculas}">Peliculas</a></li>
 							<li><a class="dropdown-item" th:href="@{/series}">Series</a></li>
 							<li><a class="dropdown-item" href="#">Música</a></li>
-							<li><a class="dropdown-item" href="#">Videojuegos</a></li>
+							<li><a class="dropdown-item" th:href="@{/videojuegos}">Videojuegos</a></li>
 						</ul></li>
 				</ul>
 				<ul class="navbar-nav">

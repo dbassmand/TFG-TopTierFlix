@@ -30,7 +30,7 @@ import com.tfg.TopTierFlix.servicio.PeliculaServicio;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminControlador {
+public class AdminPeliculaControlador {
 	
 	@Autowired
 	private PeliculaServicio peliculaServicio;

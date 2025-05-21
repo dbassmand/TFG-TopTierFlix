@@ -13,7 +13,7 @@ public interface SerieRepositorio extends JpaRepository<Serie, Integer>{
 
 	Page<Serie> findBytituloContainingIgnoreCase(String termino, Pageable pageable);
 
-	//Para obtener las 4 películas más recientes SIN filtro de término
+	
 	 List<Serie> findTop4ByOrderByFechaEstrenoDesc();
 	
 }

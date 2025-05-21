@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ComentarioDTO {
-    
+public class ComentarioVideojuegoDTO {
+
 	private Integer id;
     private String comentario;
     private String usuarioEmail; 

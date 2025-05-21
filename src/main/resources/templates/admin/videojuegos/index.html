@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	xmlns:sd="http://www.thymeleaf.org/extras/spring-data"
+	layout:decorate="~{master.html}">
+<head>
+<meta charset="UTF-8">
+<title>Administrar Videojuegos</title>
+</head>
+<body class="body-administracion">
+
+	<div layout:fragment="content">
+		<div class="container my-5">
+
+			<h2>Videojuegos</h2>
+			<br>
+			<div>
+				<form th:action="@{/admin/videojuegos/buscar}" method="get" class="d-flex"
+					role="search">
+					<input class="form-control me-2" type="search"
+						placeholder="Buscar..." aria-label="Search" name="termino">
+					<button class="btn btn-outline-success" type="submit">Buscar</button>
+				</form>
+				<br>
+				<br>
+			</div>
+			<div class="text-end">
+				<a th:href="@{/admin/videojuegos/nuevo}" class="btn btn-primary mb-3">
+					Agregar Videojuego </a>
+			</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Videojuego</th>
+						<th>F.Estreno</th>
+                        <th></th> </tr>
+				</thead>
+				<tbody>
+					<tr th:each="videojuego : ${videojuegos}" th:object="${videojuego}"> <td style="width: 150px;"><a data-fancybox
+							th:href="@{/assets/{filename}(filename=*{rutaPortada})}"> <img
+								th:src="@{/assets/{filename}(filename=*{rutaPortada})}" alt=""
+								class="img-thumbnail w-100">
+						</a></td>
+						<td>
+							<div th:text="*{titulo}" class="fs-5 fw-bold"></div>
+							<p th:text="*{descripcion}"></p>
+							<div>
+								<span class="badge rounded-pill bg-light text-dark me-1"
+    th:each="generoVideojuego: *{generos}" th:text="${generoVideojuego.nombre}"></span>
+							</div>
+						</td>
+						<td th:text="*{#temporals.format(fechaEstreno, 'dd/MM/yyyy')}"></td>
+						<td class="text-end"><a
+							th:href="@{/admin/videojuegos/{id}/editar(id=*{id})}">Editar</a> 
+							<a href="javascript:void(0)" class="text-danger ms-3"
+							th:onclick="'eliminarVideojuego(' + *{id}+')'">Eliminar</a>
+							<form th:id="'eliminarVideojuegoForm'+ *{id}"
+								th:action="@{/admin/videojuegos/{id}/eliminar(id=*{id})}"
+								method="post" class="d-none"></form></td>
+					</tr>
+				</tbody>
+			</table>
+			<nav th:if="${videojuegos.totalPages > 1}">
+				<ul class="pagination justify-content-center">
+					<li class="page-item"
+						th:classappend="${videojuegos.first} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/admin/videojuegos(page=${videojuegos.number - 1})}">Anterior</a></li> <li class="page-item"
+						th:each="i : ${#numbers.sequence(0, videojuegos.totalPages - 1)}"
+						th:classappend="${videojuegos.number == i} ? 'active'"><a
+						class="page-link" th:href="@{/admin/videojuegos(page=${i})}"
+						th:text="${i + 1}"></a></li> <li class="page-item"
+						th:classappend="${videojuegos.last} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/admin/videojuegos(page=${videojuegos.number + 1})}">Siguiente</a></li> </ul>
+			</nav>
+		</div>
+	</div>
+	<div layout:fragment="scripts">
+		<script>
+			function eliminarVideojuego(id) {
+				if (!confirm('¿Desea continuar?, el videojuego se eliminará!')) {
+					return;
+				}
+				$('#eliminarVideojuegoForm' + id).submit();
+			}
+		</script>
+	</div>
+</body>
+</html>

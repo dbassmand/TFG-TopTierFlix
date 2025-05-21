@@ -3,10 +3,14 @@ package com.tfg.TopTierFlix.controlador;
 
 import com.tfg.TopTierFlix.dto.PeliculaCardDTO;
 import com.tfg.TopTierFlix.dto.SerieCardDTO;
+import com.tfg.TopTierFlix.dto.VideojuegoCardDTO;
 import com.tfg.TopTierFlix.modelo.Pelicula;
 import com.tfg.TopTierFlix.modelo.Serie;
+import com.tfg.TopTierFlix.modelo.Videojuego;
 import com.tfg.TopTierFlix.servicio.PeliculaServicio;
 import com.tfg.TopTierFlix.servicio.SerieServicio;
+import com.tfg.TopTierFlix.servicio.VideojuegoServicio;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("") // Una URL más genérica para "mis favoritos"
+@RequestMapping("") 
 public class FavoritosControlador {
 
     @Autowired
@@ -26,6 +30,9 @@ public class FavoritosControlador {
 
     @Autowired
     private SerieServicio serieServicio;
+    
+    @Autowired
+    private VideojuegoServicio videojuegoServicio;
 
     @GetMapping("/favoritas")
     public ModelAndView mostrarMisFavoritos(Principal principal) {
@@ -57,10 +64,27 @@ public class FavoritosControlador {
                 ))
                 .collect(Collectors.toList());
 
+        
+        
+        List<Videojuego> videojuegosFavoritas = videojuegoServicio.obtenerVideojuegosFavoritasDelUsuario(userEmail);
+        List<VideojuegoCardDTO> videojuegosFavoritasDTO = videojuegosFavoritas.stream()
+                .map(videojuego -> new VideojuegoCardDTO( // Asegúrate de que SerieCardDTO tiene un constructor similar
+                		videojuego.getId(),
+                		videojuego.getTitulo(),
+                		videojuego.getRutaPortada(),
+                		videojuego.getFechaEstreno()
+                ))
+                .collect(Collectors.toList());
+
         ModelAndView modelAndView = new ModelAndView("favoritas"); // Mantén el nombre de la vista
         modelAndView.addObject("peliculasFavoritas", peliculasFavoritasDTO);
         modelAndView.addObject("seriesFavoritas", seriesFavoritasDTO);
+        modelAndView.addObject("videojuegosFavoritas", videojuegosFavoritasDTO);
 
         return modelAndView;
     }
+    
+    
+
+    
 }

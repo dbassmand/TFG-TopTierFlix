@@ -101,7 +101,7 @@ public class Usuario {
 		return 31;
 	}
 
-
+	/*
 	public void addSerieFavorita(Serie serie) {
 		if (!this.seriesFavoritas.contains(serie)) {
 			this.seriesFavoritas.add(serie);
@@ -195,7 +195,7 @@ public class Usuario {
         }
     }
     
-    // --- NUEVOS MÉTODOS DE AYUDA PARA COMENTARIOS DE VIDEOJUEGOS ---
+    
     public void addComentarioVideojuego(ComentarioVideojuego comentarioVideojuego) {
         if (comentarioVideojuego != null && !this.comentariosVideojuegos.contains(comentarioVideojuego)) {
             this.comentariosVideojuegos.add(comentarioVideojuego);
@@ -209,4 +209,5 @@ public class Usuario {
             comentarioVideojuego.setUsuario(null); // Desvincula el comentario de este usuario
         }
     }
+	 * */
 }
