@@ -9,16 +9,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.tfg.TopTierFlix.dto.ComentarioDTO;
+
+import com.tfg.TopTierFlix.dto.ComentarioSerieDTO;
 import com.tfg.TopTierFlix.dto.SerieCardDTO;
 import com.tfg.TopTierFlix.dto.SerieDetalleDTO;
 import com.tfg.TopTierFlix.dto.SerieListadoAdminDTO;
-import com.tfg.TopTierFlix.mapper.ComentarioMapper;
+import com.tfg.TopTierFlix.mapper.ComentarioSerieMapper;
 import com.tfg.TopTierFlix.mapper.SerieMapper;
-import com.tfg.TopTierFlix.modelo.Comentario;
+import com.tfg.TopTierFlix.modelo.ComentarioSerie;
 import com.tfg.TopTierFlix.modelo.Serie;
 import com.tfg.TopTierFlix.modelo.Usuario;
-import com.tfg.TopTierFlix.repositorios.ComentarioRepositorio;
+import com.tfg.TopTierFlix.repositorios.ComentarioSerieRepositorio;
 import com.tfg.TopTierFlix.repositorios.SerieRepositorio;
 import com.tfg.TopTierFlix.repositorios.UsuarioRepositorio;
 
@@ -34,13 +35,13 @@ public class SerieServicioImpl implements SerieServicio{
 	private UsuarioRepositorio usuarioRepositorio;
 	
 	@Autowired
-	private ComentarioRepositorio comentarioRepositorio;
+	private ComentarioSerieRepositorio comentarioSerieRepositorio;
 	
 	@Autowired
 	private SerieMapper serieMapper;
 	
 	@Autowired
-	private ComentarioMapper comentarioMapper;
+	private ComentarioSerieMapper comentarioSerieMapper;
 
 	@Override
 	public List<SerieCardDTO> obtenerSeriesIncio() {
@@ -138,23 +139,23 @@ public class SerieServicioImpl implements SerieServicio{
 	}
 
 	@Override
-	public Comentario guardarComentario(Comentario comentario) {		
-		return comentarioRepositorio.save(comentario);
+	public ComentarioSerie guardarComentario(ComentarioSerie comentarioSerie) {		
+		return comentarioSerieRepositorio.save(comentarioSerie);
 	}
 
 	@Override
-	public List<ComentarioDTO> obtenerComentariosPorSerieId(Integer serieId) {
+	public List<ComentarioSerieDTO> obtenerComentariosPorSerieId(Integer serieId) {
 		Optional<Serie> serieOptional = serieRepositorio.findById(serieId);
 		if(serieOptional.isPresent()) {
-			List<Comentario> comentarios = comentarioRepositorio.findBySerie(serieOptional.get());
-			return comentarios.stream().map(comentarioMapper::toComentarioDTO).collect(Collectors.toList());
+			List<ComentarioSerie> comentarios = comentarioSerieRepositorio.findBySerie(serieOptional.get());
+			return comentarios.stream().map(comentarioSerieMapper::toComentarioSerieDTO).collect(Collectors.toList());
 		}
 		return List.of();
 	}
 
 	@Override
 	public void eliminarComentarioPorId(Integer comentarioId) {
-		comentarioRepositorio.deleteById(comentarioId);
+		comentarioSerieRepositorio.deleteById(comentarioId);
 		
 	}
 

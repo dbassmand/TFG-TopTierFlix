@@ -6,10 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.tfg.TopTierFlix.dto.ComentarioDTO;
+import com.tfg.TopTierFlix.dto.ComentarioSerieDTO;
 import com.tfg.TopTierFlix.dto.SerieCardDTO;
 import com.tfg.TopTierFlix.dto.SerieDetalleDTO;
 import com.tfg.TopTierFlix.dto.SerieListadoAdminDTO;
 import com.tfg.TopTierFlix.modelo.Comentario;
+import com.tfg.TopTierFlix.modelo.ComentarioSerie;
 import com.tfg.TopTierFlix.modelo.Serie;
 
 public interface SerieServicio {
@@ -40,9 +42,9 @@ public interface SerieServicio {
 	
 	List<Serie> obtenerSeriesFavoritasDelUsuario(String userEmail);
 	
-	Comentario guardarComentario(Comentario comentario);
+	ComentarioSerie guardarComentario(ComentarioSerie comentarioSerie);
 	
-	List<ComentarioDTO> obtenerComentariosPorSerieId(Integer serieId);
+	List<ComentarioSerieDTO> obtenerComentariosPorSerieId(Integer serieId);
 	
 	void eliminarComentarioPorId(Integer comentarioId);
 

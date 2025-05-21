@@ -13,20 +13,22 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "comentario_serie")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comentario {
+public class ComentarioSerie {
 		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
-	@Column(name = "id_comentario") 
+	@Column(name = "id_comentario_serie") 
 	private Integer id;
 
 	@NotBlank
@@ -36,11 +38,10 @@ public class Comentario {
 	@CreationTimestamp
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
-	
-	// Relación ManyToOne con Pelicula
+		
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pelicula_id", nullable = false)
-    private Pelicula pelicula;
+    @JoinColumn(name = "serie_id", nullable = false)
+    private Serie serie;
        
 
     // Relación ManyToOne con Usuario

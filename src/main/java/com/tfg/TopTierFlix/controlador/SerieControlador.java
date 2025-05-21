@@ -1,10 +1,8 @@
 package com.tfg.TopTierFlix.controlador;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tfg.TopTierFlix.dto.SerieCardDTO;
 import com.tfg.TopTierFlix.dto.SerieDetalleDTO;
 import com.tfg.TopTierFlix.modelo.Comentario;
+import com.tfg.TopTierFlix.modelo.ComentarioSerie;
 import com.tfg.TopTierFlix.modelo.Serie;
 import com.tfg.TopTierFlix.modelo.Usuario;
 import com.tfg.TopTierFlix.servicio.SerieServicio;
@@ -88,7 +87,7 @@ public class SerieControlador {
     
     @PostMapping("/{serieId}/comentar")
     public String guardarNuevoComentario(@PathVariable Integer serieId,
-    									 @ModelAttribute("nuevoComentario")Comentario comentario, 
+    									 @ModelAttribute("nuevoComentario")ComentarioSerie comentarioSerie, 
     									 Principal principal, 
     									 Model model) {
     	String usuarioEmail = principal.getName();
@@ -99,10 +98,10 @@ public class SerieControlador {
     	if(usuarioOptional.isPresent()) {
     		Usuario usuario = usuarioOptional.get();
     		
-    		comentario.setSerie(serie);
-    		comentario.setUsuario(usuario);
+    		comentarioSerie.setSerie(serie);
+    		comentarioSerie.setUsuario(usuario);
     		
-    		serieServicio.guardarComentario(comentario);
+    		serieServicio.guardarComentario(comentarioSerie);
     		return "redirect:/series/"+serieId;
     	}else {
     		model.addAttribute("error", "No se pudo guardar el comentario. El usuario no existe.");

@@ -1,47 +1,57 @@
 <!-- Index inicio -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
-	   xmlns:sd="http://www.thymeleaf.org/extras/spring-data"
-	  layout:decorate="~{master.html}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	xmlns:sd="http://www.thymeleaf.org/extras/spring-data"
+	layout:decorate="~{master.html}">
 <head>
 <meta charset="UTF-8">
-<title>Inicio</title> 
+<title>Inicio</title>
 </head>
 <body>
 
-	<div layout:fragment="content">	
+	<div layout:fragment="content">
 		<div class="neon-container">
-	    	<h1 class="neon-text">TOPTIERFLIX</h1>
+			<h1 class="neon-text">TOPTIERFLIX</h1>
 		</div>
-		
-		 	<br><br><br>
-			<p class="cursor typewriter-animation">Bienvenido a tu espacio personal. Comparte cine, series, musica y videojuegos!.</p>
-			<div class="row">
-				<div class="col-md-3 my-5" th:each="pelicula : ${ultimasPeliculas}" th:object="${pelicula}">			
-				<a th:href="@{/peliculas/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration:none;">
-					<img th:src="@{/assets/{filename}(filename=*{rutaPortada})}" th:alt="*{titulo}" class="card-img-top">
+
+		<br>
+		<br>
+		<br>
+		<p class="cursor typewriter-animation">Bienvenido a tu espacio
+			personal. Comparte cine, series, musica y videojuegos!.</p>
+		<div class="row">
+			<div class="col-md-3 my-5" th:each="pelicula : ${ultimasPeliculas}"
+				th:object="${pelicula}">
+				<a th:href="@{/peliculas/{id}(id=*{id})}" class="card shadow-lg"
+					style="text-decoration: none;"> <img
+					th:src="@{/assets/{filename}(filename=*{rutaPortada})}"
+					th:alt="*{titulo}" class="card-img-top">
 					<div class="card-body">
 						<h2 class="card-title fs-6" th:text="*{titulo}"></h2>
-						<p th:text="*{#temporals.format(fechaEstreno, 'dd/MM/yyyy')}" class="text-muted small"></p>
+						<p th:text="*{#temporals.format(fechaEstreno, 'dd/MM/yyyy')}"
+							class="text-muted small"></p>
 					</div>
 				</a>
-				</div>
 			</div>
+		</div>
 		<iframe class="video" width="860" height="615"
-			src="https://www.youtube.com/embed/XdTloMu31_s?autoplay=1&mute=1&si=NuSkfSZ9lcaHwxYt" 
+			src="https://www.youtube.com/embed/XdTloMu31_s?autoplay=1&mute=1&si=NuSkfSZ9lcaHwxYt"
 			title="YouTube video player" frameborder="0"
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 			referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
 		</iframe>
-		<br><br><br>
-			
-			<div class="texto-inicio">
-  <h1 contenteditable class="h1-inicio">José Daniel Romero Pérez</h1>
-  <p class="p-inicio">(TFG) Trabajo Fin de Grado  //  (DAM) Desarrollo Aplicaciones Multiplataformas</p> 
-  <p class="p-inicio">-Curso 2023/25-</p>
-</div>
-				</div>
-	</div>	
+		<br>
+		<br>
+		<br>
+
+		<div class="texto-inicio">
+			<h1 contenteditable class="h1-inicio">José Daniel Romero Pérez</h1>
+			<p class="p-inicio">(TFG) Trabajo Fin de Grado // (DAM)
+				Desarrollo Aplicaciones Multiplataformas</p>
+			<p class="p-inicio">-Curso 2023/25-</p>
+		</div>
+	</div>
+	</div>
 </body>
 </html>

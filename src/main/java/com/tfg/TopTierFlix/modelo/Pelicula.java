@@ -1,12 +1,14 @@
 package com.tfg.TopTierFlix.modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -29,7 +32,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "peliculasFavoritas") //evita error StackOverflow
+@ToString(exclude = {"peliculasFavoritas", "comentarios"}) //evita error StackOverflow
 public class Pelicula {
 
 	@Id
@@ -67,6 +70,9 @@ public class Pelicula {
 	@Transient // esta notación hace que la variale sea temporal y no se almacene en la BBDD.
 				// Las portadas se almacenan en la carpeta assets
 	private MultipartFile portada;
+	
+	@OneToMany(mappedBy = "pelicula", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comentario> comentarios = new ArrayList<>();
 
 	// Constructor para Mapper peliculaCardDTOtoPelicula
 	public Pelicula(Integer id, @NotBlank String titulo, @NotNull LocalDate fechaEstreno, String rutaPortada,

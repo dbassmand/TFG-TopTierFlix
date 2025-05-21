@@ -46,7 +46,7 @@ public class AdminUsusarioControlador {
 		if (termino != null && !termino.trim().isEmpty()) {
 			resultados = usuarioServicio.buscarPorNombreApellidoEmail(termino, pageable);		
 		}else {
-			return new ModelAndView("redirect:/admin/users");
+			return new ModelAndView("redirect:/admin/usuarios");
 			//resultados = usuarioServicio.obtenerTodosUsuariosPaginado(pageable);
 		}
 		return new ModelAndView("admin/usuarios/lista-usuarios")

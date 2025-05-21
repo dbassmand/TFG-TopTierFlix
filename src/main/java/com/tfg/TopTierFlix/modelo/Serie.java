@@ -1,12 +1,14 @@
 package com.tfg.TopTierFlix.modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -29,7 +32,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "seriesFavoritas") //evita error StackOverflow
+@ToString(exclude = {"seriesFavoritas", "comentarios"}) //evita error StackOverflow
 public class Serie {
 
 	@Id
@@ -63,12 +66,15 @@ public class Serie {
 
 	@ManyToMany(mappedBy = "seriesFavoritas", fetch = FetchType.LAZY)
 	private List<Usuario> usuariosFavoritos;
+	
+	 @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	    private List<ComentarioSerie> comentarios = new ArrayList<>();
 
 	@Transient // esta notación hace que la variale sea temporal y no se almacene en la BBDD.
 				// Las portadas se almacenan en la carpeta assets
 	private MultipartFile portada;
 
-	// Constructor para Mapper peliculaCardDTOtoPelicula
+	// Constructor para Mapper peliculaCardDTOtoSerie
 	public Serie (Integer id, @NotBlank String titulo, @NotNull LocalDate fechaEstreno, String rutaPortada,
 			MultipartFile portada) {
 		super();

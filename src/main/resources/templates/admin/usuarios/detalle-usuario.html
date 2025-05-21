@@ -29,10 +29,21 @@
 						class="list-group-item"><span th:text="${pelicula.titulo}">Título
 							de la Película</span></li>
 				</ul>
+				<h4 class="card-subtitle mb-2 text-muted">Series Favoritas:</h4>
+				<ul th:if="${not #lists.isEmpty(usuario.seriesFavoritas)}"
+					class="list-group">
+					<li th:each="serie : ${usuario.seriesFavoritas}"
+						class="list-group-item"><span th:text="${serie.titulo}">Título
+							de la Serie</span></li>
+				</ul>
 				<p th:if="${#lists.isEmpty(usuario.peliculasFavoritas)}">Este
-					usuario no tiene películas favoritas.</p>
-				<br> <a th:href="@{/admin/usuarios}" class="btn btn-primary">Volver
+					usuario no tiene películas favoritas.</p>					
+				<br> 
+				<div class="text-end my-3">
+				
+				<a th:href="@{/admin/usuarios}" class="btn btn-primary btn-sm ms-2">Volver
 					a la lista de usuarios</a>
+				</div>
 			</div>
 		</div>
 	</div>

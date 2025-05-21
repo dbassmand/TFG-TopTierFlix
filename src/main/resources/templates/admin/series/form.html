@@ -65,35 +65,29 @@
                  th:if="${#fields.hasErrors('portada')}"
                  th:errors="*{portada}"></div>
         </div>
+        
+		<div class="mb-3">
+				<label class="form-label">Géneros:</label><br />
+				<div style="display: flex; flex-wrap: wrap;">
+					<div th:each="genero : ${generos}" style="width: 33.33%;">
+						<input type="checkbox" th:field="*{generos}"
+							th:value="${genero.id}" th:id="'genero-' + ${genero.id}"
+							class="form-check-input" /> <label
+							th:for="'genero-' + ${genero.id}" class="form-check-label"
+							th:text="${genero.titulo}"></label><br />
+					</div>
+				</div>
+				<div class="invalid-feedback"
+					th:if="${#fields.hasErrors('generos')}" th:errors="*{generos}"></div>
+			</div>
 
-        <div class="mb-3">
-            <label for="generos" class="form-label">Género: </label>
-            <select id="generos" multiple
-                    th:field="*{generos}"
-                    th:classappend="'form-control ' + (${#fields.hasErrors('generos')} ? 'is-invalid' : '')" size="7">
-                <option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.titulo}"></option>
-            </select>
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('generos')}"
-                 th:errors="*{generos}"></div>
-        </div>
+
+
 
         <div class="text-end">
             <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
     </form>
 </div>
-
-<!-- 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-        crossorigin="anonymous"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/js/jquery.fancybox.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
- -->
-
 </body>
 </html>
