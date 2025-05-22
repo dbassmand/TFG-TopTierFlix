@@ -36,8 +36,10 @@
             </div>
         </div>
 
-        <br><br>
-        <hr> <br><br>
+        <br>
+        <br>       
+        <br>
+        <br>
 
         <h2 class="texto_seccion_favoritas">Series Favoritas</h2>
         <br>
@@ -63,6 +65,37 @@
                 </div>
             </div>
         </div>
+
+		<br>
+        <br>
+		<br>
+        <br>
+
+        <h2 class="texto_seccion_favoritas">Videojuegos Favoritos</h2>
+        <br>
+        <div th:if="${#lists.isEmpty(videojuegosFavoritas)}">
+            <p>Aún no has añadido ningun videojuego a tu lista de favoritos.</p>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4" th:unless="${#lists.isEmpty(videojuegosFavoritas)}">
+            <div class="col" th:each="videojuego : ${videojuegosFavoritas}">
+                <div class="card-favorita">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img th:if="${videojuego.rutaPortada}" th:src="@{/assets/{filename}(filename=${videojuego.rutaPortada})}" class="img-fluid rounded-start" th:alt="${videojuego.titulo}" style="max-height: 150px; width: auto;">
+                            <img th:unless="${videojuego.rutaPortada}" src="https://via.placeholder.com/150" class="img-fluid rounded-start" th:alt="Sin portada" style="max-height: 150px; width: auto;">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${videojuego.titulo}"></h5>
+                                <p class="card-text"><small class="badge rounded-pull bg-grey text-white me-1">Fecha de Estreno: <span th:text="${#temporals.format(videojuego.fechaEstreno, 'dd/MM/yyyy')}"></span></small></p>
+                                <a th:href="@{/videojuegos/{id}(id=${videojuego.id})}" class="btn btn-sm btn-info">Ver Detalle</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>

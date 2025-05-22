@@ -115,8 +115,7 @@ public class AdminVideojuegoControlador {
 		if (bindingResult.hasErrors()) {
 			System.out.println("Errores encontrados:");
 			bindingResult.getAllErrors().forEach(System.out::println);
-
-			// CAMBIO AQUÍ: Nombre del atributo del modelo para la lista de géneros (en caso de errores)
+			
 			List<GeneroVideojuego> generosVideojuego = generoVideojuegoServicio.obtenerTodosGeneros(Sort.by("nombre"));
 			return new ModelAndView("admin/videojuegos/editar-videojuego").addObject("videojuego", videojuego)
 					.addObject("generosVideojuego", generosVideojuego); // <--- ¡UNIFICADO A "generosVideojuego"!
@@ -140,7 +139,7 @@ public class AdminVideojuegoControlador {
 	}
 
 	@PostMapping("/{id}/eliminar") // Mapea a /admin/videojuegos/{id}/eliminar
-	public String eliminarvideojuego(@PathVariable Integer id) {
+	public String eliminarVideojuego(@PathVariable Integer id) {
 		Videojuego videojuego = videojuegoServicio.obtenerVideojuegoPorId(id);
 		videojuegoServicio.eliminarVideojuego(videojuego);
 		almacenServicio.eliminarArchivo(videojuego.getRutaPortada());

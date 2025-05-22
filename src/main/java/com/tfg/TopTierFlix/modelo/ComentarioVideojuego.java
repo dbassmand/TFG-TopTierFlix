@@ -19,6 +19,8 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Table(name = "comentario_videojuego")
 @Data
@@ -29,30 +31,26 @@ public class ComentarioVideojuego {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_comentario_videojuego") 
     private Integer id;
 
     @NotBlank(message = "El comentario no puede estar vacío")
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(length = 2000, nullable = false) 	
     private String comentario;
 
-    @NotNull(message = "La fecha de creación es obligatoria")
+    //@NotNull(message = "La fecha de creación es obligatoria")
+	@CreationTimestamp
+    @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", nullable = false)
-    @NotNull(message = "El usuario del comentario es obligatorio")
-    private Usuario usuario; // Relación con el usuario que hizo el comentario
+    //@NotNull(message = "El videojuego del comentario es obligatorio")
+    @JoinColumn(name = "videojuego_id", nullable = false)
+    private Videojuego videojuego; 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_videojuego", nullable = false)
-    @NotNull(message = "El videojuego del comentario es obligatorio")
-    private Videojuego videojuego; // <-- ¡ESTE ES EL CAMPO 'videojuego' QUE ESPERA Videojuego.java!
-
-    // Constructor para facilitar la creación de comentarios (sin ID y fecha que se generan automáticamente)
-    public ComentarioVideojuego(String comentario, Usuario usuario, Videojuego videojuego) {
-        this.comentario = comentario;
-        this.usuario = usuario;
-        this.videojuego = videojuego;
-        this.fechaCreacion = LocalDateTime.now(); // Establecer la fecha actual por defecto
-    }
+    //@NotNull(message = "El usuario del comentario es obligatorio")
+    @JoinColumn(name = "usuario_email", referencedColumnName = "email", nullable = false)
+    private Usuario usuario; // Relación con el usuario que hizo el comentario
+            
 }

@@ -43,7 +43,6 @@ public class ComentarioSerie {
     @JoinColumn(name = "serie_id", nullable = false)
     private Serie serie;
        
-
     // Relación ManyToOne con Usuario
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_email", referencedColumnName = "email", nullable = false)

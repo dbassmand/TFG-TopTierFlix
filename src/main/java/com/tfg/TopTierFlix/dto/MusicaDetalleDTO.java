@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class VideojuegoDetalleDTO {
+public class MusicaDetalleDTO {
 	
 	private Integer id;
 	private String titulo;
@@ -15,7 +15,7 @@ public class VideojuegoDetalleDTO {
 	private String fechaEstreno;
 	private String descripcion;
 	private String youtubeTrailerId;
-	private List<GeneroVideojuegoDTO> generoVideojuegos;
+	private List<GeneroMusicaDTO> generoMusicas;
 	private List<ComentarioDTO> comentarios;
 
 }

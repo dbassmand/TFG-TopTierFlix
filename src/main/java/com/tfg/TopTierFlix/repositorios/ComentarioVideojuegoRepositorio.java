@@ -10,8 +10,6 @@ import com.tfg.TopTierFlix.modelo.Usuario;
 import com.tfg.TopTierFlix.modelo.Videojuego;
 
 public interface ComentarioVideojuegoRepositorio extends JpaRepository<ComentarioVideojuego, Integer> {
-
-
 	
     List<ComentarioVideojuego> findByVideojuego(Videojuego videojuego);
     

@@ -49,6 +49,8 @@
 								sec:authorize="hasRole('ADMIN')" th:href="@{/admin/series}">Series</a></li>
 							<li><a class="dropdown-item"
 								sec:authorize="hasRole('ADMIN')" th:href="@{/admin/videojuegos}">VideoJuegos</a></li>
+								<li><a class="dropdown-item"
+								sec:authorize="hasRole('ADMIN')" th:href="@{/admin/musicas}">Musica</a></li>
 							<li><a class="dropdown-item"
 								sec:authorize="hasRole('ADMIN')" th:href="@{/admin/usuarios}">Usuarios</a></li>
 
@@ -59,7 +61,7 @@
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" th:href="@{/peliculas}">Peliculas</a></li>
 							<li><a class="dropdown-item" th:href="@{/series}">Series</a></li>
-							<li><a class="dropdown-item" href="#">Música</a></li>
+							<li><a class="dropdown-item" th:href="@{/musicas}">Música</a></li>
 							<li><a class="dropdown-item" th:href="@{/videojuegos}">Videojuegos</a></li>
 						</ul></li>
 				</ul>

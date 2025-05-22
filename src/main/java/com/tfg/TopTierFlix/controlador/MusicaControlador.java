@@ -17,56 +17,57 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.tfg.TopTierFlix.dto.VideojuegoCardDTO;
-import com.tfg.TopTierFlix.dto.VideojuegoDetalleDTO;
+import com.tfg.TopTierFlix.dto.MusicaCardDTO;
+import com.tfg.TopTierFlix.dto.MusicaDetalleDTO;
 import com.tfg.TopTierFlix.modelo.Comentario;
-import com.tfg.TopTierFlix.modelo.ComentarioVideojuego;
+import com.tfg.TopTierFlix.modelo.ComentarioMusica;
+import com.tfg.TopTierFlix.modelo.Musica;
 import com.tfg.TopTierFlix.modelo.Usuario;
-import com.tfg.TopTierFlix.modelo.Videojuego;
+import com.tfg.TopTierFlix.servicio.MusicaServicio;
 import com.tfg.TopTierFlix.servicio.UsuarioServicio;
-import com.tfg.TopTierFlix.servicio.VideojuegoServicio;
+
 
 @Controller
-@RequestMapping("/videojuegos")
-public class VideojuegoControlador {
-
+@RequestMapping("/musicas")
+public class MusicaControlador {
+	
 	@Autowired
-	private VideojuegoServicio videojuegoServicio;
+	private MusicaServicio musicaServicio;
 	
 	@Autowired
 	private UsuarioServicio usuarioServicio;
 	
 	@GetMapping
-    public ModelAndView listarVideojuegos(@RequestParam(value="page", defaultValue = "0")int page,
+    public ModelAndView listarMusica(@RequestParam(value="page", defaultValue = "0")int page,
 			@PageableDefault(size = 8, sort = "fechaEstreno", direction = Sort.Direction.DESC) Pageable pageable) {
-    	Page<VideojuegoCardDTO> videojuegoPageDTO = videojuegoServicio.obtenerTodasVideojuegosPaginado(pageable);
-    	return new ModelAndView("videojuegos/videojuegos").addObject("videojuegos",videojuegoPageDTO);
+    	Page<MusicaCardDTO> musicaPageDTO = musicaServicio.obtenerTodasMusicasPaginado(pageable);
+    	return new ModelAndView("musicas/musicas").addObject("musicas",musicaPageDTO);
     }
 
     @GetMapping("/buscar")
-    public ModelAndView buscarVideojuegosUsuarios(@RequestParam(value = "termino", required = false) String termino,
+    public ModelAndView buscarMusicaUsuarios(@RequestParam(value = "termino", required = false) String termino,
 											@PageableDefault(sort="fechaEstreno", size=8, direction = Sort.Direction.DESC)Pageable pageable) {
-    	Page<Videojuego> resultados;
+    	Page<Musica> resultados;
     	if(termino !=null && !termino.trim().isEmpty()) {
-    		resultados = videojuegoServicio.buscarVideojuegoPorTitulo(termino, pageable);
+    		resultados = musicaServicio.buscarMusicaPorTitulo(termino, pageable);
     	}else {
-    		resultados = videojuegoServicio.obtenerTodasPaginado(pageable);
+    		resultados = musicaServicio.obtenerTodasPaginado(pageable);
     	}
-    	return new ModelAndView("videojuegos/videojuegos")
-    			.addObject("videojuegos",resultados)
+    	return new ModelAndView("musicas/musicas")
+    			.addObject("musicas",resultados)
     			.addObject("terminoBusqueda",termino);
     }
     
     @GetMapping("/{id}")
-    public ModelAndView mostrarDetallesDeVideojuego(@PathVariable Integer id, Principal principal) {
-    	VideojuegoDetalleDTO videojuegoDetalleDTO = videojuegoServicio.obtenerVideojuegoDetallePorId(id);
-    	ModelAndView modelAnView = new ModelAndView("videojuegos/videojuego")
-    			.addObject("videojuego",videojuegoDetalleDTO)
-    			.addObject("comentarios", videojuegoServicio.obtenerComentariosPorVideojuegoId(id))
+    public ModelAndView mostrarDetallesDeMusica(@PathVariable Integer id, Principal principal) {
+    	MusicaDetalleDTO musicaDetalleDTO = musicaServicio.obtenerMusicaDetallePorId(id);
+    	ModelAndView modelAnView = new ModelAndView("musicas/musicas")
+    			.addObject("musica",musicaDetalleDTO)
+    			.addObject("comentarios", musicaServicio.obtenerComentariosPorMusicaId(id))
     			.addObject("nuevoComentario", new Comentario());
     	if (principal !=null) {
     		String userEmail = principal.getName();
-    		boolean esFavorita = videojuegoServicio.esFavorita(id, userEmail);
+    		boolean esFavorita = musicaServicio.esFavorita(id, userEmail);
     		modelAnView.addObject("esFavorita", esFavorita);
     	}else {
     		modelAnView.addObject("esFavorita", false);
@@ -74,24 +75,24 @@ public class VideojuegoControlador {
     	return modelAnView;
     }
     
-    @PostMapping("/{videojuegoId}/comentar")
-    public String guardarNuevoComentario(@PathVariable Integer videojuegoId,
-    									 @ModelAttribute("nuevoComentario")ComentarioVideojuego comentariovideojuego, 
+    @PostMapping("/{musicaId}/comentar")
+    public String guardarNuevoComentario(@PathVariable Integer musicaId,
+    									 @ModelAttribute("nuevoComentario")ComentarioMusica comentariomusica, 
     									 Principal principal, 
     									 Model model) {
     	String usuarioEmail = principal.getName();
     	Optional<Usuario> usuarioOptional = usuarioServicio.obtenerUsuarioPorEmail(usuarioEmail);
     	
-    	Videojuego videojuego = videojuegoServicio.obtenerVideojuegoPorId(videojuegoId);
+    	Musica musica = musicaServicio.obtenerMusicaPorId(musicaId);
     	
     	if(usuarioOptional.isPresent()) {
     		Usuario usuario = usuarioOptional.get();
     		
-    		comentariovideojuego.setVideojuego(videojuego);
-    		comentariovideojuego.setUsuario(usuario);
+    		comentariomusica.setMusica(musica);
+    		comentariomusica.setUsuario(usuario);
     		
-    		videojuegoServicio.guardarComentario(comentariovideojuego);
-    		return "redirect:/videojuegos/"+videojuegoId;
+    		musicaServicio.guardarComentario(comentariomusica);
+    		return "redirect:/musicas/"+musicaId;
     	}else {
     		model.addAttribute("error", "No se pudo guardar el comentario. El usuario no existe.");
     	    return "error/error-generico";
@@ -102,13 +103,13 @@ public class VideojuegoControlador {
     public String toggleFavorito(@PathVariable Integer id, Principal principal) {
     	if(principal !=null) {
     		String userEmail = principal.getName();
-    		if(videojuegoServicio.esFavorita(id, userEmail)) {
-    		videojuegoServicio.eliminarFavorito(id, userEmail);
+    		if(musicaServicio.esFavorita(id, userEmail)) {
+    			musicaServicio.eliminarFavorito(id, userEmail);
     		}else {
-    			videojuegoServicio.agregarFavorito(id, userEmail);
+    			musicaServicio.agregarFavorito(id, userEmail);
     		}    		
     	}
-    	return "redirect:/videojuegos/"+ id;
+    	return "redirect:/musicas/"+ id;
     }
-	
+
 }

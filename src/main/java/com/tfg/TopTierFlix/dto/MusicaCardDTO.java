@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideojuegoCardDTO {
-
+public class MusicaCardDTO {
+	
 	private Integer id;
 	private String titulo;
 	private String rutaPortada;

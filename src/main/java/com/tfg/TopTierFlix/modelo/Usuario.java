@@ -46,26 +46,36 @@ public class Usuario {
 	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), 
+			inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private Collection<Rol> roles;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "usuario_pelicula_favorita",
-			joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pelicula_id", referencedColumnName = "id_pelicula"))
+			joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), 
+			inverseJoinColumns = @JoinColumn(name = "pelicula_id", referencedColumnName = "id_pelicula"))
 	private List<Pelicula> peliculasFavoritas = new ArrayList<>();
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "usuario_serie_favorita",
-			joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "serie_id", referencedColumnName = "id_serie"))
+			joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), 
+			inverseJoinColumns = @JoinColumn(name = "serie_id", referencedColumnName = "id_serie"))
 	private List<Serie> seriesFavoritas = new ArrayList<>();
-
-
+		
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "usuario_videojuego_favorita",
             joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "videojuego_id", referencedColumnName = "id_videojuego"))
     private List<Videojuego> videojuegosFavoritas = new ArrayList<>(); 
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "usuario_musica_favorita",
+            joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "musica_id", referencedColumnName = "id_musica"))
+    private List<Musica> musicasFavoritas = new ArrayList<>(); 
    
+    
+    
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comentario> comentariosPeliculas = new ArrayList<>();
     
@@ -74,8 +84,12 @@ public class Usuario {
     
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ComentarioVideojuego> comentariosVideojuegos = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ComentarioVideojuego> comentariosMusicas = new ArrayList<>();
 
 
+    
 	// Constructor sin Id
 	public Usuario(String nombre, String apellido, String email, String password, Collection<Rol> roles) {
 		super();

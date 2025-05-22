@@ -5,14 +5,15 @@ import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @NoArgsConstructor
-public class VideojuegoListadoAdminDTO {
-
+public class MusicaListadoAdminDTO {
+	
 	private Integer id;
 	private String nombre;	
 	private String fechaEstreno;
 	private String sinopsis;	
-	private List<GeneroVideojuegoDTO> generos;
+	private List<GeneroMusicaDTO> generos;
 
 }
