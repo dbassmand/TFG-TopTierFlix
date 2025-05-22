@@ -21,7 +21,7 @@
 					<strong>ID: </strong> <span th:text="${usuario.id}"></span><br>
 					<strong>Email: </strong> <span th:text="${usuario.email}"></span><br>
 				</p>
-				
+					<br> 	<br> 
 				<h4 class="card-subtitle mb-2 text-muted">Películas Favoritas:</h4>
 				<ul th:if="${not #lists.isEmpty(usuario.peliculasFavoritas)}"
 					class="list-group">
@@ -29,6 +29,9 @@
 						class="list-group-item"><span th:text="${pelicula.titulo}">Título
 							de la Película</span></li>
 				</ul>
+				<p th:if="${#lists.isEmpty(usuario.peliculasFavoritas)}">Este
+					usuario no tiene películas favoritas.</p>		
+						<br> 
 				<h4 class="card-subtitle mb-2 text-muted">Series Favoritas:</h4>
 				<ul th:if="${not #lists.isEmpty(usuario.seriesFavoritas)}"
 					class="list-group">
@@ -36,8 +39,21 @@
 						class="list-group-item"><span th:text="${serie.titulo}">Título
 							de la Serie</span></li>
 				</ul>
-				<p th:if="${#lists.isEmpty(usuario.peliculasFavoritas)}">Este
-					usuario no tiene películas favoritas.</p>					
+				<p th:if="${#lists.isEmpty(usuario.seriesFavoritas)}">Este
+					usuario no tiene series favoritas.</p>					
+				
+				<br> 
+				
+				<h4 class="card-subtitle mb-2 text-muted">Videojuegos Favoritos:</h4>
+				<ul th:if="${not #lists.isEmpty(usuario.videojuegosFavoritas)}"
+					class="list-group">
+					<li th:each="videojuego : ${usuario.videojuegosFavoritas}"
+						class="list-group-item"><span th:text="${videojuego.titulo}">Título
+							de el Videojuego</span></li>
+				</ul>
+				<p th:if="${#lists.isEmpty(usuario.seriesFavoritas)}">Este
+					usuario no tiene videojuegos favoritos.</p>					
+				
 				<br> 
 				<div class="text-end my-3">
 				
