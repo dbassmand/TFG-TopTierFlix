@@ -4,7 +4,7 @@
        layout:decorate="~{master.html}">  
 <head>
     <meta charset="UTF-8">
-    <title>Editar Videojuego</title> </head>
+    <title>Editar Música</title> </head>
 <body>
 
 <div layout:fragment="form">
@@ -15,7 +15,7 @@
 				<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
 			</ul>
 		</div>
-		<form th:action="@{'/admin/videojuegos/' + ${videojuego.id} + '/editar'}" method="post" th:object="${videojuego}" enctype="multipart/form-data" >
+		<form th:action="@{'/admin/musicas/' + ${musica.id} + '/editar'}" method="post" th:object="${musica}" enctype="multipart/form-data" >
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
             <div class="mb-3">
@@ -58,8 +58,8 @@
 
             <div class="mb-3">
                 <label for="portada" class="form-label">Portada: </label>
-                <div th:if="${videojuego.rutaPortada != null and videojuego.rutaPortada != ''}">
-                    <img th:src="@{/assets/{filename}(filename=${videojuego.rutaPortada})}" alt="Portada actual" style="max-width: 150px; margin-bottom: 10px;">
+                <div th:if="${musica.rutaPortada != null and musica.rutaPortada != ''}">
+                    <img th:src="@{/assets/{filename}(filename=${musica.rutaPortada})}" alt="Portada actual" style="max-width: 150px; margin-bottom: 10px;">
                     <p class="form-text text-muted">Portada actual. Para cambiarla, sube un nuevo archivo.</p>
                 </div>
                 <input type="file" name="portada" id="portada"
@@ -71,14 +71,14 @@
             </div>
             
             <div class="mb-3">
-                <label class="form-label">Géneros de Videojuego:</label>
+                <label class="form-label">Géneros de Música:</label>
                 <br />
                 <div style="display: flex; flex-wrap: wrap;">
-                    <div th:each="generoVideojuego : ${generosVideojuego}" style="width: 33.33%;">
-                        <input type="checkbox" th:field="*{generos}" th:value="${generoVideojuego.id}" th:id="'genero-' + ${generoVideojuego.id}"
+                    <div th:each="generoMusica : ${generosMusica}" style="width: 33.33%;">
+                        <input type="checkbox" th:field="*{generos}" th:value="${generoMusica.id}" th:id="'genero-' + ${generoMusica.id}"
                             class="form-check-input" />
-                        <label th:for="'genero-' + ${generoVideojuego.id}" class="form-check-label"
-                            th:text="${generoVideojuego.nombre}"></label>
+                        <label th:for="'genero-' + ${generoMusica.id}" class="form-check-label"
+                            th:text="${generoMusica.nombre}"></label>
                             <br /> 
                      </div>
                 </div>

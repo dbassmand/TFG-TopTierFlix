@@ -37,15 +37,7 @@ public class SerieControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
-    /*
-    @GetMapping
-    public ModelAndView verPaginaInicio() {
-    	
-    	List<SerieCardDTO> uiltimasSeriesInicioDTO = serieServicio.obtenerSeriesIncio();
-    	return new ModelAndView("series/series").addObject("ultimasSeries", uiltimasSeriesInicioDTO);
-    }
-     * */
+        
     
     @GetMapping
     public ModelAndView listarSeries(@RequestParam(value="page", defaultValue = "0")int page,

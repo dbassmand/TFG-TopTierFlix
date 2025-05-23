@@ -50,7 +50,7 @@ public class AdminMusicaControlador {
 	@GetMapping("")
 	public ModelAndView listarMusicaAdmin(@PageableDefault(sort = "titulo", size = 5) Pageable pageable) {
 		Page<Musica> musica = musicaServicio.obtenerTodasPaginado(pageable);
-		return new ModelAndView("admin/musica/index").addObject("musica", musica);
+		return new ModelAndView("admin/musicas/index").addObject("musicas", musica);
 	}
 
 	@GetMapping("/buscar") 
@@ -62,14 +62,14 @@ public class AdminMusicaControlador {
 		} else {
 			resultados = musicaServicio.obtenerTodasPaginado(pageable);
 		}
-		return new ModelAndView("admin/musica/index").addObject("musica", resultados)
+		return new ModelAndView("admin/musicas/index").addObject("musicas", resultados)
 				.addObject("terminoBusqueda", termino);
 	}
 
 	@GetMapping("/nuevo") 
 	public ModelAndView mostrarFormularioDeNuevaMusica() {
 		List<GeneroMusica> generosMusica = generoMusicaServicio.obtenerTodosGeneros(Sort.by("nombre")); 
-		return new ModelAndView("admin/musica/nueva-musica")
+		return new ModelAndView("admin/musicas/nueva-musica")
 				.addObject("musica", new Musica())
 				.addObject("generosMusica", generosMusica); 
 	}
@@ -84,14 +84,14 @@ public class AdminMusicaControlador {
 			}
 
 			List<GeneroMusica> generosMusica = generoMusicaServicio.obtenerTodosGeneros(Sort.by("nombre")); 
-			return new ModelAndView("admin/musica/nueva-musica").addObject("musica", musica)
+			return new ModelAndView("admin/musicas/nueva-musica").addObject("musica", musica)
 					.addObject("generosMusica", generosMusica); 
 		}
 
 		String rutaPortada = almacenServicio.almacenarArchivo(musica.getPortada());
 		musica.setRutaPortada(rutaPortada);
 		musicaServicio.guardarMusica(musica);
-		return new ModelAndView("redirect:/admin/musica");
+		return new ModelAndView("redirect:/admin/musicas");
 	}
 
 	@GetMapping("/{id}/editar") 

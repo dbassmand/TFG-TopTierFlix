@@ -39,8 +39,8 @@ public interface VideojuegoServicio {
 
 	List<Videojuego> obtenerVideojuegosFavoritasDelUsuario(String userEmail);
 
-	ComentarioVideojuego guardarComentario(ComentarioVideojuego comentarioVideojuego);
-
+	ComentarioVideojuego guardarComentario(ComentarioVideojuego comentarioVideojuego);	
+	
 	List<ComentarioVideojuegoDTO> obtenerComentariosPorVideojuegoId(Integer videojuegoId);
 
 	void eliminarComentarioPorId(Integer comentarioId);

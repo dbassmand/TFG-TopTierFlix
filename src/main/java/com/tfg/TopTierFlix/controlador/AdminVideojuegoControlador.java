@@ -65,15 +65,15 @@ public class AdminVideojuegoControlador {
 				.addObject("terminoBusqueda", termino);
 	}
 
-	@GetMapping("/nuevo") // Mapea a /admin/videojuegos/nuevo
+	@GetMapping("/nuevo") 
 	public ModelAndView mostrarFormularioDeNuevaVideojuego() {
 		List<GeneroVideojuego> generosVideojuego = generoVideojuegoServicio.obtenerTodosGeneros(Sort.by("nombre")); // CAMBIO DE NOMBRE DE VARIABLE PARA CLARIDAD
 		return new ModelAndView("admin/videojuegos/nueva-videojuego")
 				.addObject("videojuego", new Videojuego())
-				.addObject("generosVideojuego", generosVideojuego); // <--- ¡UNIFICADO A "generosVideojuego"!
+				.addObject("generosVideojuego", generosVideojuego);
 	}
 
-	@PostMapping("/nuevo") // Mapea a /admin/videojuegos/nuevo (POST)
+	@PostMapping("/nuevo") 
 	public ModelAndView registrarVideojuego(@Validated @ModelAttribute("videojuego") Videojuego videojuego,
 			BindingResult bindingResult) {
 		if (bindingResult.hasErrors() || videojuego.getPortada().isEmpty()) {

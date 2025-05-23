@@ -3,10 +3,13 @@ package com.tfg.TopTierFlix.controlador;
 
 import com.tfg.TopTierFlix.dto.PeliculaCardDTO;
 import com.tfg.TopTierFlix.dto.SerieCardDTO;
+import com.tfg.TopTierFlix.dto.MusicaCardDTO;
 import com.tfg.TopTierFlix.dto.VideojuegoCardDTO;
+import com.tfg.TopTierFlix.modelo.Musica;
 import com.tfg.TopTierFlix.modelo.Pelicula;
 import com.tfg.TopTierFlix.modelo.Serie;
 import com.tfg.TopTierFlix.modelo.Videojuego;
+import com.tfg.TopTierFlix.servicio.MusicaServicio;
 import com.tfg.TopTierFlix.servicio.PeliculaServicio;
 import com.tfg.TopTierFlix.servicio.SerieServicio;
 import com.tfg.TopTierFlix.servicio.VideojuegoServicio;
@@ -33,6 +36,9 @@ public class FavoritosControlador {
     
     @Autowired
     private VideojuegoServicio videojuegoServicio;
+    
+    @Autowired
+    private MusicaServicio musicaServicio;
 
     @GetMapping("/favoritas")
     public ModelAndView mostrarMisFavoritos(Principal principal) {
@@ -75,11 +81,23 @@ public class FavoritosControlador {
                 		videojuego.getFechaEstreno()
                 ))
                 .collect(Collectors.toList());
+        
+        List<Musica> musicasFavoritas = musicaServicio.obtenerMusicasFavoritasDelUsuario(userEmail);
+        List<MusicaCardDTO> musicasFavoritasDTO = musicasFavoritas.stream()
+                .map(musica -> new MusicaCardDTO( // Asegúrate de que SerieCardDTO tiene un constructor similar
+                		musica.getId(),
+                		musica.getTitulo(),
+                		musica.getRutaPortada(),
+                		musica.getFechaEstreno()
+                ))
+                .collect(Collectors.toList());
 
         ModelAndView modelAndView = new ModelAndView("favoritas"); // Mantén el nombre de la vista
         modelAndView.addObject("peliculasFavoritas", peliculasFavoritasDTO);
         modelAndView.addObject("seriesFavoritas", seriesFavoritasDTO);
         modelAndView.addObject("videojuegosFavoritas", videojuegosFavoritasDTO);
+        modelAndView.addObject("musicasFavoritas", musicasFavoritasDTO);
+        
 
         return modelAndView;
     }

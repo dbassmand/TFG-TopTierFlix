@@ -35,13 +35,13 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(authorize -> authorize													//Spring Securirty añade ROLE_ al método hasRole()
                         .requestMatchers("/fondo/**","/registro**", "/js/**", "/css/**", "/img/**", "/login").permitAll() 	// Permitir acceso sin autenticar a registro, recursos estáticos, página principal y login
-                        //.requestMatchers(HttpMethod.POST, "/peliculas/nuevo").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/peliculas/nuevo").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/peliculas/{id}/editar").hasRole("ADMIN") 
                         .requestMatchers(HttpMethod.POST, "/peliculas/{id}/eliminar").hasRole("ADMIN") 
-                        .requestMatchers("/admin/**").hasRole("ADMIN") 											// Solo los usuarios con el rol ADMIN pueden acceder a /admin/**
-                        .requestMatchers("/user/**").hasRole("USER")   											// Solo los usuarios con el rol USER pueden acceder a /user/**
-                        .requestMatchers("/peliculas/**").authenticated() 										// Los usuarios autenticados pueden acceder a /peliculas/**
-                        .anyRequest().authenticated() 															// Cualquier otra petición requiere autenticación
+                        .requestMatchers("/admin/**").hasRole("ADMIN") 											
+                        .requestMatchers("/user/**").hasRole("USER")   											
+                        .requestMatchers("/peliculas/**").authenticated() 										
+                        .anyRequest().authenticated() 															
                 )
                 .formLogin(form -> form
                         .loginPage("/login")

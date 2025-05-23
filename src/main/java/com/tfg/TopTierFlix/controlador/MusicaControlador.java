@@ -61,7 +61,7 @@ public class MusicaControlador {
     @GetMapping("/{id}")
     public ModelAndView mostrarDetallesDeMusica(@PathVariable Integer id, Principal principal) {
     	MusicaDetalleDTO musicaDetalleDTO = musicaServicio.obtenerMusicaDetallePorId(id);
-    	ModelAndView modelAnView = new ModelAndView("musicas/musicas")
+    	ModelAndView modelAnView = new ModelAndView("musicas/musica")
     			.addObject("musica",musicaDetalleDTO)
     			.addObject("comentarios", musicaServicio.obtenerComentariosPorMusicaId(id))
     			.addObject("nuevoComentario", new Comentario());

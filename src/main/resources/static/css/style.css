@@ -1,4 +1,3 @@
-
 .user-administracion{
 	background: #ffffff;
 }
@@ -37,7 +36,7 @@ form .invalid-feedback {
 	padding:10px;
 	color: #ffbb00; 
 	background: #5f5f61;	
-	border: 3px solid #ffd700;
+	border: 1px solid #57b0ea;
 	border-radius:5px; 
 }
 
@@ -116,6 +115,39 @@ footer.bg-dark a{
   text-shadow: 4px 4px 10px #ff0000;
 }
 
+.texto_superior_series {
+	text-align: center;
+	font-size: 45px;
+	font-weight: bold;
+	color: #ADD8E6; /* Azul claro (Light Blue) */
+	font-family: 'Valonik Personal Use', sans-serif;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	text-shadow: 4px 4px 10px #8A2BE2; /* Azul violeta (Blue Violet) */
+}
+
+.texto_superior_videojuegos {
+	text-align: center;
+	font-size: 45px;
+	font-weight: bold;
+	color: #088eba; /* Teal oscuro */
+	font-family: 'Valonik Personal Use', sans-serif;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	text-shadow: 4px 4px 10px #4B0082; /* Turquesa oscuro */
+}
+
+.texto_superior_musica {
+	text-align: center;
+	font-size: 45px;
+	font-weight: bold;
+	color: #7ddc24; /* Coral vibrante */
+	font-family: 'Valonik Personal Use', sans-serif;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	text-shadow: 4px 4px 10px #6060cd; /* Azul Marino (Navy) */
+}
+
 .texto_seccion_favoritas{
 	text-align: center;
 	
@@ -156,7 +188,7 @@ footer.bg-dark a{
     width: 24em;
     margin: 0 auto;
     border-right: 2px solid rgba(255,255,255,.75);
-    font-size: 27px;
+    font-size: 26px;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -213,14 +245,3 @@ footer.bg-dark a{
   color: MintCream;
   letter-spacing: .5px;
 }
-
-
-
-
-
-
-
-
-
-
-

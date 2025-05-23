@@ -4,10 +4,91 @@
 	xmlns:sd="http://www.thymeleaf.org/extras/spring-data"
 	layout:decorate="~{master.html}">
 <head>
-<meta charset="UTF-8">
-<title>Administrar Usuarios</title>
+	<meta charset="UTF-8">
+	<title>Administrar Usuarios</title>
+	<style>
+		body.user-administracion {
+			background-color: #f5f5f5;
+			color: #333;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		.user-container {
+			max-width: 800px;
+			margin: 0 auto;
+			background-color: #fff;
+			padding: 2rem;
+			border-radius: 12px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+		}
+
+		h2 {
+			color: #1e40af;
+			border-bottom: 2px solid #e0e0e0;
+			padding-bottom: 0.5rem;
+			margin-bottom: 1.5rem;
+		}
+
+		.user-card-body {
+			padding: 1rem;
+			background-color: #fafafa;
+			border-radius: 8px;
+		}
+
+		.user-card-text strong {
+			color: #1e40af;
+		}
+
+		h4.card-subtitle {
+			margin-top: 2rem;
+			color: #555;
+			border-left: 4px solid #1e40af;
+			padding-left: 0.5rem;
+		}
+
+		.list-group {
+			margin-top: 0.5rem;
+			margin-bottom: 1rem;
+			padding-left: 0;
+			list-style: none;
+		}
+
+		.list-group-item {
+			background-color: #f0f0f0;
+			border: none;
+			border-radius: 6px;
+			padding: 0.75rem 1rem;
+			margin-bottom: 0.5rem;
+			transition: background-color 0.2s ease;
+		}
+
+		.list-group-item:hover {
+			background-color: #e0e7ff;
+		}
+
+		.btn-primary {
+			background-color: #1e40af;
+			border: none;
+			color: #fff;
+			padding: 0.5rem 1rem;
+			border-radius: 6px;
+			transition: background-color 0.2s ease;
+		}
+
+		.btn-primary:hover {
+			background-color: #1a368e;
+		}
+
+		.text-end {
+			text-align: right;
+		}
+	</style>
 </head>
 <body class="user-administracion">
+	<!-- Tu HTML original continúa aquí -->
+
 
 	<div layout:fragment="content">
 		<div class="user-container my-5">
@@ -52,8 +133,21 @@
 							class="list-group-item"><span th:text="${videojuego.titulo}">Título
 								de el Videojuego</span></li>
 					</ul>
-					<p th:if="${#lists.isEmpty(usuario.seriesFavoritas)}">Este
+					<p th:if="${#lists.isEmpty(usuario.videojuegosFavoritas)}">Este
 						usuario no tiene videojuegos favoritos.</p>
+
+					<br>
+					
+					<h4 class="card-subtitle mb-2 text-muted">Música
+						Favorita:</h4>
+					<ul th:if="${not #lists.isEmpty(usuario.musicasFavoritas)}"
+						class="list-group">
+						<li th:each="musica : ${usuario.musicasFavoritas}"
+							class="list-group-item"><span th:text="${musica.titulo}">Título
+								de el Album</span></li>
+					</ul>
+					<p th:if="${#lists.isEmpty(usuario.musicasFavoritas)}">Este
+						usuario no tiene musica favoritos.</p>
 
 					<br>
 					<div class="text-end my-3">

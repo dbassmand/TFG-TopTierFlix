@@ -139,7 +139,7 @@ public class VideojuegoServicioImpl implements VideojuegoServicio{
 	public ComentarioVideojuego guardarComentario(ComentarioVideojuego comentarioVideojuego) {		
 		return comentarioVideojuegoRepositorio.save(comentarioVideojuego);
 	}
-
+	
 	@Override
 	public List<ComentarioVideojuegoDTO> obtenerComentariosPorVideojuegoId(Integer videojuegoId) {
 		Optional<Videojuego> videojuegoOptional = videojuegoRepositorio.findById(videojuegoId);
@@ -149,7 +149,7 @@ public class VideojuegoServicioImpl implements VideojuegoServicio{
 		}
 		return List.of();
 	}
-
+	
 	@Override
 	public void eliminarComentarioPorId(Integer comentarioId) {
 		comentarioVideojuegoRepositorio.deleteById(comentarioId);

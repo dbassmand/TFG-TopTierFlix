@@ -1,10 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+	  layout:decorate="~{master.html}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Listado de Música</title>
 </head>
 <body>
-<a>Hola, música a GOGO!!!</a>
+	<div layout:fragment="content">	
+		<h4 class="texto_superior_musica">Toda la música</h4>
+		<div>
+			<form th:action="@{/musicas/buscar}" method="get" class="d-flex"
+				role="search">
+				<input class="form-control me-2" type="search"
+					placeholder="Buscar..." aria-label="Search" name="termino">
+				<button class="btn btn-outline-success" type="submit">Buscar</button>
+			</form>
+		</div>
+		
+			<div class="row">
+				<div class="row">
+					<div class="col-md-3 my-5" th:each="musica : ${musicas}" th:object="${musica}">
+						<a th:href="@{/musicas/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration:none;">
+						<img th:src="@{/assets/{filename}(filename=*{rutaPortada})}" th:alt="*{titulo}" class="card-img-top">
+						<div class="card-body">
+							<h2 class="card-title fs-6" th:text="*{titulo}"></h2>
+							<p th:text="*{#temporals.format(fechaEstreno, 'dd/MM/yyyy')}" class="text-muted small"></p>
+						</div>
+						</a>
+					</div>
+				</div>
+					<div class="row mt-5" th:if="${musicas.totalPages > 1}">
+						<div class="col-sm-12 d-flex justify-content-center">
+							<nav>
+								<ul class="pagination">
+									<li class="page-item"
+										th:classappend="${musicas.first} ? 'disabled'"><a
+										class="page-link"
+										th:href="@{/musicas(page=${musicass.number - 1})}">Anterior</a>
+									</li>
+									<li class="page-item"
+										th:each="i : ${#numbers.sequence(0, musicas.totalPages - 1)}"
+										th:classappend="${musicas.number == i} ? 'active'"><a
+										class="page-link" th:href="@{/musicas(page=${i})}"
+										th:text="${i + 1}"></a></li>		
+									<li class="page-item"
+										th:classappend="${musicas.last} ? 'disabled'"><a
+										class="page-link"
+										th:href="@{/musicas(page=${musicas.number + 1})}">Siguiente</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+				</div>				
+			</div>
+	</div>		
 </body>
 </html>

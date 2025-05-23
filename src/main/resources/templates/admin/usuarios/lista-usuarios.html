@@ -4,8 +4,92 @@
 	xmlns:sd="http://www.thymeleaf.org/extras/spring-data"
 	layout:decorate="~{master.html}">
 <head>
-<meta charset="UTF-8">
-<title>Administrar Usuarios</title>
+	<meta charset="UTF-8">
+	<title>Administrar Usuarios</title>
+	<style>
+		body.body-administracion {
+			background-color: #f0f0f0;
+			color: #333;
+			font-family: Arial, sans-serif;
+		}
+
+		.container h2 {
+			color: #1e3a8a; /* Azul oscuro */
+		}
+
+		table.table-over {
+			background-color: #fff;
+			color: #333;
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			overflow: hidden;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+		}
+
+		table thead {
+			background-color: #e0e0e0;
+		}
+
+		table th, table td {
+			padding: 12px;
+			vertical-align: middle;
+			text-align: left;
+		}
+
+		.page-link {
+			color: #1e3a8a;
+		}
+
+		.page-item.active .page-link {
+			background-color: #1e3a8a;
+			border-color: #1e3a8a;
+			color: #fff;
+		}
+
+		.page-item.disabled .page-link {
+			color: #999;
+		}
+
+		.btn-outline-success {
+			border-color: #1e3a8a;
+			color: #1e3a8a;
+		}
+
+		.btn-outline-success:hover {
+			background-color: #1e3a8a;
+			color: #fff;
+		}
+
+		.btn-outline-primary {
+			border-color: #1e3a8a;
+			color: #1e3a8a;
+		}
+
+		.btn-outline-primary:hover {
+			background-color: #1e3a8a;
+			color: #fff;
+		}
+
+		.btn-outline-danger {
+			border-color: #a00;
+			color: #a00;
+		}
+
+		.btn-outline-danger:hover {
+			background-color: #a00;
+			color: #fff;
+		}
+
+		input.form-control {
+			border: 1px solid #ccc;
+			background-color: #f9f9f9;
+			color: #333;
+		}
+
+		form.d-flex {
+			gap: 0.5rem;
+		}
+	</style>
 </head>
 <body class="body-administracion">
 	<div layout:fragment="content">

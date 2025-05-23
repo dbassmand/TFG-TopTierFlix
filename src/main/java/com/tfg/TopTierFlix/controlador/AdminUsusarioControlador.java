@@ -57,7 +57,8 @@ public class AdminUsusarioControlador {
 	@GetMapping("/{id}/detalles")
 	public ModelAndView mostrarDetalleDeUsuario(@PathVariable Integer id) {
 		Usuario usuario = usuarioServicio.obtenerUsuarioPorIdConFavoritas(id);
-		ModelAndView modelAndView = new ModelAndView("admin/usuarios/detalle-usuario").addObject("usuario",usuario);
+		ModelAndView modelAndView = new ModelAndView("admin/usuarios/detalle-usuario")
+				.addObject("usuario",usuario);
 		return modelAndView;
 	}
 	
