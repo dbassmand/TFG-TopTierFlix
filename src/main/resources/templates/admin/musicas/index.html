@@ -15,14 +15,13 @@
 			<h2>Música</h2>
 			<br>
 			<div>
-				<form th:action="@{/admin/musicas/buscar}" method="get" class="d-flex"
-					role="search">
+				<form th:action="@{/admin/musicas/buscar}" method="get"
+					class="d-flex" role="search">
 					<input class="form-control me-2" type="search"
 						placeholder="Buscar..." aria-label="Search" name="termino">
 					<button class="btn btn-outline-success" type="submit">Buscar</button>
 				</form>
-				<br>
-				<br>
+				<br> <br>
 			</div>
 			<div class="text-end">
 				<a th:href="@{/admin/musicas/nuevo}" class="btn btn-primary mb-3">
@@ -34,10 +33,12 @@
 						<th></th>
 						<th>Música</th>
 						<th>F.Estreno</th>
-                        <th></th> </tr>
+						<th></th>
+					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="musica : ${musicas}" th:object="${musica}"> <td style="width: 150px;"><a data-fancybox
+					<tr th:each="musica : ${musicas}" th:object="${musica}">
+						<td style="width: 150px;"><a data-fancybox
 							th:href="@{/assets/{filename}(filename=*{rutaPortada})}"> <img
 								th:src="@{/assets/{filename}(filename=*{rutaPortada})}" alt=""
 								class="img-thumbnail w-100">
@@ -47,13 +48,14 @@
 							<p th:text="*{descripcion}"></p>
 							<div>
 								<span class="badge rounded-pill bg-light text-dark me-1"
-    th:each="generoMusica: *{generos}" th:text="${generoMusica.nombre}"></span>
+									th:each="generoMusica: *{generos}"
+									th:text="${generoMusica.nombre}"></span>
 							</div>
 						</td>
 						<td th:text="*{#temporals.format(fechaEstreno, 'dd/MM/yyyy')}"></td>
 						<td class="text-end"><a
-							th:href="@{/admin/musicas/{id}/editar(id=*{id})}">Editar</a> 
-							<a href="javascript:void(0)" class="text-danger ms-3"
+							th:href="@{/admin/musicas/{id}/editar(id=*{id})}">Editar</a> <a
+							href="javascript:void(0)" class="text-danger ms-3"
 							th:onclick="'eliminarMusica(' + *{id}+')'">Eliminar</a>
 							<form th:id="'eliminarMusicaForm'+ *{id}"
 								th:action="@{/admin/musicas/{id}/eliminar(id=*{id})}"
@@ -66,14 +68,16 @@
 					<li class="page-item"
 						th:classappend="${musicas.first} ? 'disabled'"><a
 						class="page-link"
-						th:href="@{/admin/musicas(page=${musicas.number - 1})}">Anterior</a></li> <li class="page-item"
+						th:href="@{/admin/musicas(page=${musicas.number - 1})}">Anterior</a></li>
+					<li class="page-item"
 						th:each="i : ${#numbers.sequence(0, musicas.totalPages - 1)}"
 						th:classappend="${musicas.number == i} ? 'active'"><a
 						class="page-link" th:href="@{/admin/musicas(page=${i})}"
-						th:text="${i + 1}"></a></li> <li class="page-item"
-						th:classappend="${musicas.last} ? 'disabled'"><a
+						th:text="${i + 1}"></a></li>
+					<li class="page-item" th:classappend="${musicas.last} ? 'disabled'"><a
 						class="page-link"
-						th:href="@{/admin/musicas(page=${musicas.number + 1})}">Siguiente</a></li> </ul>
+						th:href="@{/admin/musicas(page=${musicas.number + 1})}">Siguiente</a></li>
+				</ul>
 			</nav>
 		</div>
 	</div>

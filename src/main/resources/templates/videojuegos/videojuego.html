@@ -38,8 +38,9 @@
 				<div class="detalle">
 					<h2 th:text="*{titulo}"></h2>
 					<div class="mb-3">
-						<span class="badge rounded-pull bg-light text-dark me-1"
-							th:each="generoVideojuegos:*{generoVideojuegos}" th:text="${generoVideojuegos.nombre}"></span>
+						<span class="badge rounded-pill bg-light text-dark me-1"
+									th:each="generoVideojuego: *{generos}"
+									th:text="${generoVideojuego.nombre}"></span>
 						<p>
 						<p th:text="*{descripcion}"></p>
 					</div>

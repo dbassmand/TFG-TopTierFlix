@@ -15,7 +15,7 @@ public class VideojuegoDetalleDTO {
 	private String fechaEstreno;
 	private String descripcion;
 	private String youtubeTrailerId;
-	private List<GeneroVideojuegoDTO> generoVideojuegos;
+	private List<GeneroVideojuegoDTO> generos;
 	private List<ComentarioDTO> comentarios;
 
 }

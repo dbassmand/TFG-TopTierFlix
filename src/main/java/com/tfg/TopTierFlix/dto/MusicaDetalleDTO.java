@@ -15,7 +15,7 @@ public class MusicaDetalleDTO {
 	private String fechaEstreno;
 	private String descripcion;
 	private String youtubeTrailerId;
-	private List<GeneroMusicaDTO> generoMusicas;
+	private List<GeneroMusicaDTO> generos;
 	private List<ComentarioDTO> comentarios;
 
 }
