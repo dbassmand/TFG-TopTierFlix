@@ -37,7 +37,7 @@
 									<li class="page-item"
 										th:classappend="${musicas.first} ? 'disabled'"><a
 										class="page-link"
-										th:href="@{/musicas(page=${musicass.number - 1})}">Anterior</a>
+										th:href="@{/musicas(page=${musicas.number - 1})}">Anterior</a>
 									</li>
 									<li class="page-item"
 										th:each="i : ${#numbers.sequence(0, musicas.totalPages - 1)}"

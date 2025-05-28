@@ -15,7 +15,8 @@
 			<h2 class="texto_seccion_favoritas">Películas Favoritas</h2>
 			v
 			<div th:if="${#lists.isEmpty(peliculasFavoritas)}">
-				<p>Aún no has añadido ninguna película a tu lista de favoritos.</p>
+			<br>
+				<p class="p-texto_sin_favoritas">Aún no has añadido ninguna película a tu lista de favoritos.</p>
 			</div>
 			<div class="row row-cols-1 row-cols-md-3 g-4"
 				th:unless="${#lists.isEmpty(peliculasFavoritas)}">
@@ -55,7 +56,8 @@
 			<h2 class="texto_seccion_favoritas">Series Favoritas</h2>
 			<br>
 			<div th:if="${#lists.isEmpty(seriesFavoritas)}">
-				<p>Aún no has añadido ninguna serie a tu lista de favoritos.</p>
+			<br>
+				<p class="p-texto_sin_favoritas">Aún no has añadido ninguna serie a tu lista de favoritos.</p>
 			</div>
 			<div class="row row-cols-1 row-cols-md-3 g-4"
 				th:unless="${#lists.isEmpty(seriesFavoritas)}">
@@ -95,7 +97,8 @@
 			<h2 class="texto_seccion_favoritas">Videojuegos Favoritos</h2>
 			<br>
 			<div th:if="${#lists.isEmpty(videojuegosFavoritas)}">
-				<p>Aún no has añadido ningun videojuego a tu lista de favoritos.</p>
+			<br>
+				<p class="p-texto_sin_favoritas">Aún no has añadido ningun videojuego a tu lista de favoritos.</p>
 			</div>
 			<div class="row row-cols-1 row-cols-md-3 g-4"
 				th:unless="${#lists.isEmpty(videojuegosFavoritas)}">
@@ -133,7 +136,8 @@
 			<h2 class="texto_seccion_favoritas">Música Favorita</h2>
 			<br>
 			<div th:if="${#lists.isEmpty(musicasFavoritas)}">
-				<p>Aún no has añadido ninguna música a tu lista de favoritos.</p>
+			<br>
+				<p class="p-texto_sin_favoritas">Aún no has añadido ninguna música a tu lista de favoritos.</p>
 			</div>
 			<div class="row row-cols-1 row-cols-md-3 g-4"
 				th:unless="${#lists.isEmpty(musicasFavoritas)}">

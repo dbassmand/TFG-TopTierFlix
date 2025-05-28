@@ -15,7 +15,6 @@ form .invalid-feedback {
   display: block;
 }
 
-
 .video{
 	margin-left: 14rem
 }
@@ -30,6 +29,12 @@ form .invalid-feedback {
 .card-body{
 	color: #ffd700; 
 	background: #5f5f61;	
+}
+
+.p-texto_sin_favoritas {
+	color: white;
+	font-size: 25px;
+	text-shadow: 2px 2px 5px #33b2ff;
 }
 
 .card-favorita{
@@ -245,3 +250,4 @@ footer.bg-dark a{
   color: MintCream;
   letter-spacing: .5px;
 }
+
