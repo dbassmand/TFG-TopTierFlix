@@ -34,7 +34,7 @@ TTF es una plataforma para descubrir, gestionar y comentar tus películas, serie
 
 **Cómo Ejecutar el Proyecto (para desarrolladores):**
 
-1.  Clonar el repositorio: `git clone https://github.com/dolthub/dolt`
+1.  Clonar el repositorio: `git clone https://github.com/dbassmand/TFG-TopTierFlix.git`
 2.  Configurar la base de datos (detalles en `src/main/resources/application.properties` o similar).
 3.  Ejecutar la aplicación Spring Boot (normalmente desde tu IDE o con `./mvnw spring-boot:run`).
 4.  Lanzar Script DML en caso de querer disponer de datos demo.
